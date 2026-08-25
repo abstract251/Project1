@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>发现 · 缘遇 YUANYU</title>
+  <meta name="description" content="发现让你心动的人——一次只认识一位，认真对待每一次相遇。" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%92%97%3C/text%3E%3C/svg%3E" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@300;400;500;600&family=Pacifico&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/discover.css" />
+</head>
+
+<body class="discover-page">
+
+  <!-- ======================= 顶栏 ======================= -->
+  <header class="topbar">
+    <a class="icon-btn" href="../index.html" aria-label="返回首页">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6" /></svg>
+    </a>
+    <h1 class="top-title">发现</h1>
+    <div class="topbar-right">
+      <button class="icon-btn" id="filterBtn" aria-label="筛选" aria-expanded="false">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M7 12h10M10 18h4" /></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ======================= 筛选面板 ======================= -->
+  <div class="filter-panel" id="filterPanel" hidden>
+    <p class="filter-title">年龄</p>
+    <div class="filter-row">
+      <select class="filter-select" id="ageMin" aria-label="最小年龄"></select>
+      <span class="filter-sep">—</span>
+      <select class="filter-select" id="ageMax" aria-label="最大年龄"></select>
+    </div>
+
+    <p class="filter-title">距离</p>
+    <select class="filter-select filter-select--full" id="distance" aria-label="距离">
+      <option value="0" selected>不限距离</option>
+      <option value="5">5 公里内</option>
+      <option value="10">10 公里内</option>
+      <option value="30">30 公里内</option>
+      <option value="50">50 公里内</option>
+    </select>
+
+    <p class="filter-title">兴趣标签</p>
+    <div class="filter-tags" id="filterTags"></div>
+
+    <div class="filter-actions">
+      <button class="btn btn-ghost btn-sm" id="filterReset" type="button">重置</button>
+      <button class="btn btn-primary btn-sm" id="filterApply" type="button">应用筛选</button>
+    </div>
+  </div>
+
+  <!-- ======================= 卡片区 ======================= -->
+  <main class="deck-wrap">
+    <div class="deck" id="deck"></div>
+
+    <!-- 空状态：看完 / 无匹配 -->
+    <div class="deck-empty" id="deckEmpty" hidden>
+      <svg width="96" height="88" viewBox="0 0 96 88" fill="none" aria-hidden="true">
+        <path d="M48 76C48 76 14 54 14 32a17 17 0 0 1 34-4 17 17 0 0 1 34 4c0 22-34 44-34 44z" fill="#E8A0BF" />
+        <path d="M80 30c0 12-18 23-18 23S44 42 44 30a9 9 0 0 1 18-2 9 9 0 0 1 18 2z" fill="#F7C5A8" opacity=".9" />
+        <path d="M20 12l1.6 4 4 1.6-4 1.6L20 23l-1.6-4-4-1.6 4-1.6z" fill="#C9A9A9" />
+        <path d="M78 7l1.2 3 3 1.2-3 1.2-1.2 3-1.2-3-3-1.2 3-1.2z" fill="#C9A9A9" />
+      </svg>
+      <h3 class="empty-title" id="emptyTitle">今天的人选都看完啦</h3>
+      <p class="empty-desc" id="emptyDesc">明天会有新朋友加入，晚点再来看看</p>
+      <button class="btn btn-primary" id="emptyBtn" type="button">重新浏览</button>
+    </div>
+
+    <p class="deck-progress" id="deckProgress"></p>
+
+    <!-- 底部操作栏 -->
+    <div class="actions">
+      <button class="action-btn nope" id="btnNope" type="button" aria-label="不感兴趣">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18" /></svg>
+      </button>
+      <button class="action-btn like" id="btnLike" type="button" aria-label="感兴趣">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-8-5.35-8-11.2A4.4 4.4 0 0 1 12 6.2a4.4 4.4 0 0 1 8 3.6C20 15.65 12 21 12 21z" /></svg>
+      </button>
+    </div>
+  </main>
+
+  <script src="../js/discover.js"></script>
+</body>
+</html>

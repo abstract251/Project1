@@ -1,0 +1,210 @@
+/* ============================================================
+   注册 / 登录页 · 渐变背景 + 半透明卡片
+   表单交互：焦点高亮 / 密码强度 / 显示隐藏 / 校验禁用 / 加载动画
+   ============================================================ */
+
+.signup-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 16px;
+  position: relative;
+}
+
+/* ---------- 浪漫渐变背景 ---------- */
+.signup-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  background: linear-gradient(160deg, #F9D9E4 0%, var(--cream) 62%);
+}
+.blob { position: absolute; border-radius: 50%; filter: blur(70px); }
+.b1 { width: 400px; height: 400px; background: var(--primary); top: -140px; right: -100px; opacity: .38; }
+.b2 { width: 320px; height: 320px; background: var(--coral); bottom: -120px; left: -90px; opacity: .55; }
+.b3 { width: 210px; height: 210px; background: var(--gold); top: 38%; left: 10%; opacity: .65; }
+
+/* ---------- 中央卡片 ---------- */
+.signup-wrap { width: 100%; display: flex; justify-content: center; }
+.signup-card {
+  width: min(460px, 100%);
+  background: rgba(255, 255, 255, .8);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, .65);
+  border-radius: 28px;
+  box-shadow: var(--shadow-md);
+  padding: 38px 34px 30px;
+}
+
+/* Logo */
+.signup-logo { display: flex; align-items: center; justify-content: center; gap: 11px; }
+.signup-logo .logo-mark {
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--coral));
+  display: grid;
+  place-items: center;
+  box-shadow: 0 6px 14px rgba(232, 160, 191, .45);
+}
+.signup-logo .logo-text {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--deep);
+  letter-spacing: .1em;
+  line-height: 1.1;
+}
+.signup-logo .logo-text em {
+  display: block;
+  font-style: normal;
+  font-family: var(--font-sans);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: .48em;
+  color: var(--rose);
+  margin-top: 1px;
+}
+
+/* 欢迎语 */
+.signup-welcome {
+  text-align: center;
+  margin: 14px 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.welcome-en { font-family: var(--font-hand); font-size: 21px; color: var(--deep); opacity: .8; }
+.welcome-zh { font-size: 13.5px; color: var(--gray); letter-spacing: .1em; }
+
+/* ---------- 切换标签 ---------- */
+.auth-tabs {
+  display: flex;
+  background: rgba(91, 74, 90, .06);
+  border-radius: 999px;
+  padding: 4px;
+  margin-bottom: 26px;
+}
+.auth-tab {
+  flex: 1;
+  border: 0;
+  background: none;
+  padding: 10px 0;
+  border-radius: 999px;
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--gray);
+  cursor: pointer;
+  transition: background .3s ease, color .3s ease, box-shadow .3s ease;
+}
+.auth-tab.active {
+  background: #fff;
+  color: var(--deep);
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+}
+
+/* ---------- 表单 ---------- */
+.auth-form { display: flex; flex-direction: column; gap: 16px; }
+
+/* 密码强度 */
+.strength {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 9px;
+}
+.strength i {
+  flex: 1;
+  height: 5px;
+  border-radius: 3px;
+  background: rgba(91, 74, 90, .1);
+  transition: background .35s ease;
+}
+.strength span {
+  width: 62px;
+  text-align: right;
+  font-size: 12px;
+  color: #b9aeb5;
+  transition: color .3s ease;
+}
+.strength.s1 i:nth-child(1) { background: var(--red); }
+.strength.s1 span { color: var(--red); }
+.strength.s2 i:nth-child(-n+2) { background: #E5B25E; }
+.strength.s2 span { color: #C08A3E; }
+.strength.s3 i { background: var(--green); }
+.strength.s3 span { color: #4f8f63; }
+
+/* 出生日期 */
+.birth-row { display: flex; gap: 10px; }
+.birth-row select { flex: 1; }
+
+/* 登录辅助链接 */
+.login-links { text-align: right; margin-top: -6px; }
+.link-btn {
+  border: 0;
+  background: none;
+  color: #b25f86;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 4px;
+}
+.link-btn:hover { text-decoration: underline; }
+
+/* ---------- 分隔线与社交登录 ---------- */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 24px 0 16px;
+  color: #b9aeb5;
+  font-size: 12px;
+  letter-spacing: .1em;
+}
+.divider::before, .divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: rgba(91, 74, 90, .1);
+}
+.social-row { display: flex; gap: 12px; }
+.social-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 8px;
+  border-radius: 14px;
+  border: 1.5px solid rgba(91, 74, 90, .12);
+  background: #fff;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--ink);
+  cursor: pointer;
+  transition: border-color .25s ease, background .25s ease, transform .2s ease;
+}
+.social-btn:hover {
+  border-color: var(--primary);
+  background: rgba(232, 160, 191, .06);
+  transform: translateY(-2px);
+}
+
+/* 底部条款 */
+.auth-toggle {
+  text-align: center;
+  font-size: 12px;
+  color: #b9aeb5;
+  margin-top: 20px;
+  line-height: 1.8;
+}
+.auth-toggle a { color: #b25f86; }
+.auth-toggle a:hover { text-decoration: underline; }
+
+/* ---------- 小屏适配 ---------- */
+@media (max-width: 420px) {
+  .signup-card { padding: 30px 22px 24px; }
+  .social-row { flex-direction: column; }
+}

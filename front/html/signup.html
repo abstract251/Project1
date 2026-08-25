@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>注册 / 登录 · 缘遇 YUANYU</title>
+  <meta name="description" content="加入缘遇，开启你的故事。" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%92%97%3C/text%3E%3C/svg%3E" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@300;400;500;600&family=Pacifico&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/signup.css" />
+</head>
+
+<body class="signup-page">
+
+  <!-- 浪漫渐变背景 + 柔光色块 -->
+  <div class="signup-bg" aria-hidden="true">
+    <span class="blob b1"></span>
+    <span class="blob b2"></span>
+    <span class="blob b3"></span>
+  </div>
+
+  <main class="signup-wrap">
+    <div class="signup-card">
+
+      <!-- Logo 与欢迎语 -->
+      <a class="signup-logo" href="../index.html" aria-label="返回首页">
+        <span class="logo-mark">
+          <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 21s-8-5.35-8-11.2A4.4 4.4 0 0 1 12 6.2a4.4 4.4 0 0 1 8 3.6C20 15.65 12 21 12 21z" fill="#fff" />
+          </svg>
+        </span>
+        <span class="logo-text">缘遇<em>YUANYU</em></span>
+      </a>
+      <p class="signup-welcome">
+        <span class="welcome-en">Start your journey</span>
+        <span class="welcome-zh">加入我们，开启你的故事</span>
+      </p>
+
+      <!-- 注册 / 登录 切换 -->
+      <div class="auth-tabs" role="tablist">
+        <button class="auth-tab active" type="button" role="tab" data-tab="signup" aria-selected="true">注册</button>
+        <button class="auth-tab" type="button" role="tab" data-tab="login" aria-selected="false">登录</button>
+      </div>
+
+      <!-- ======================= 注册表单 ======================= -->
+      <form class="auth-form" id="signupForm" novalidate>
+        <div>
+          <label class="form-label" for="suAccount">手机号 / 邮箱</label>
+          <div class="field">
+            <span class="field-icon">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3.5" /><path d="M4 7.5l8 6 8-6" /></svg>
+            </span>
+            <input id="suAccount" type="text" placeholder="请输入手机号或邮箱" autocomplete="username" />
+          </div>
+        </div>
+
+        <div>
+          <label class="form-label" for="suPwd">密码</label>
+          <div class="field">
+            <span class="field-icon">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10.5" width="14" height="9.5" rx="2.5" /><path d="M8 10.5V7.8a4 4 0 0 1 8 0v2.7" /></svg>
+            </span>
+            <input id="suPwd" type="password" placeholder="至少 8 位，含字母和数字" autocomplete="new-password" />
+            <button class="eye-toggle" type="button" aria-label="显示/隐藏密码" data-target="suPwd">
+              <svg class="eye-svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 12S6 5.8 12 5.8 21.5 12 21.5 12 18 18.2 12 18.2 2.5 12 2.5 12z" /><circle cx="12" cy="12" r="2.8" /></svg>
+              <svg class="eye-off-svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l16 16" /><path d="M10.3 6.4A9.6 9.6 0 0 1 12 6.3c6 0 9.5 5.7 9.5 5.7a17.5 17.5 0 0 1-3.2 3.7M6.2 6.9A17 17 0 0 0 2.5 12S6 17.7 12 17.7c1.3 0 2.5-.3 3.6-.8" /><path d="M9.9 9.9a2.8 2.8 0 0 0 4 4" /></svg>
+            </button>
+          </div>
+          <div class="strength" id="strength">
+            <i></i><i></i><i></i>
+            <span id="strengthText">密码强度</span>
+          </div>
+        </div>
+
+        <div>
+          <label class="form-label" for="suPwd2">确认密码</label>
+          <div class="field" id="pwd2Field">
+            <span class="field-icon">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10.5" width="14" height="9.5" rx="2.5" /><path d="M8 10.5V7.8a4 4 0 0 1 8 0v2.7" /></svg>
+            </span>
+            <input id="suPwd2" type="password" placeholder="请再次输入密码" autocomplete="new-password" />
+          </div>
+          <p class="field-hint" id="pwd2Hint"></p>
+        </div>
+
+        <div>
+          <label class="form-label">性别</label>
+          <div class="radio-pills" id="genderGroup">
+            <label class="radio-pill"><input type="radio" name="gender" value="male" /><span>男</span></label>
+            <label class="radio-pill"><input type="radio" name="gender" value="female" /><span>女</span></label>
+            <label class="radio-pill"><input type="radio" name="gender" value="secret" /><span>保密</span></label>
+          </div>
+        </div>
+
+        <div>
+          <label class="form-label">出生日期</label>
+          <div class="birth-row">
+            <select class="field-select" id="birthYear" aria-label="年"></select>
+            <select class="field-select" id="birthMonth" aria-label="月"></select>
+            <select class="field-select" id="birthDay" aria-label="日"></select>
+          </div>
+        </div>
+
+        <button class="btn btn-primary btn-lg btn-block" id="suSubmit" type="submit" disabled>注册</button>
+      </form>
+
+      <!-- ======================= 登录表单 ======================= -->
+      <form class="auth-form" id="loginForm" hidden novalidate>
+        <div>
+          <label class="form-label" for="liAccount">手机号 / 邮箱</label>
+          <div class="field">
+            <span class="field-icon">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3.5" /><path d="M4 7.5l8 6 8-6" /></svg>
+            </span>
+            <input id="liAccount" type="text" placeholder="请输入手机号或邮箱" autocomplete="username" />
+          </div>
+        </div>
+        <div>
+          <label class="form-label" for="liPwd">密码</label>
+          <div class="field">
+            <span class="field-icon">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10.5" width="14" height="9.5" rx="2.5" /><path d="M8 10.5V7.8a4 4 0 0 1 8 0v2.7" /></svg>
+            </span>
+            <input id="liPwd" type="password" placeholder="请输入密码" autocomplete="current-password" />
+            <button class="eye-toggle" type="button" aria-label="显示/隐藏密码" data-target="liPwd">
+              <svg class="eye-svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 12S6 5.8 12 5.8 21.5 12 21.5 12 18 18.2 12 18.2 2.5 12 2.5 12z" /><circle cx="12" cy="12" r="2.8" /></svg>
+              <svg class="eye-off-svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l16 16" /><path d="M10.3 6.4A9.6 9.6 0 0 1 12 6.3c6 0 9.5 5.7 9.5 5.7a17.5 17.5 0 0 1-3.2 3.7M6.2 6.9A17 17 0 0 0 2.5 12S6 17.7 12 17.7c1.3 0 2.5-.3 3.6-.8" /><path d="M9.9 9.9a2.8 2.8 0 0 0 4 4" /></svg>
+            </button>
+          </div>
+        </div>
+        <div class="login-links">
+          <button class="link-btn" type="button" id="forgotBtn">忘记密码？</button>
+        </div>
+        <button class="btn btn-primary btn-lg btn-block" id="liSubmit" type="submit" disabled>登录</button>
+      </form>
+
+      <!-- 分隔线与社交登录 -->
+      <div class="divider"><span>或</span></div>
+      <div class="social-row">
+        <button class="social-btn" type="button" id="wxBtn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="#4CAF63"><path d="M12 3.6C7.3 3.6 3.5 6.8 3.5 10.8c0 2.2 1.2 4.2 3 5.5v3.1l3.2-1.7c.7.2 1.5.3 2.3.3 4.7 0 8.5-3.2 8.5-7.2s-3.8-7.2-8.5-7.2zM8.2 10.4a.9.9 0 1 1 0-1.8.9.9 0 0 1 0 1.8zm7.6 0a.9.9 0 1 1 0-1.8.9.9 0 0 1 0 1.8z" /></svg>
+          微信登录
+        </button>
+        <button class="social-btn" type="button" id="phoneBtn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4.5h4l1.5 4-2.2 1.5a12 12 0 0 0 5.7 5.7L15.5 14l4 1.5v4a1.5 1.5 0 0 1-1.6 1.5C10.4 20.4 3.6 13.6 3.5 6.1A1.5 1.5 0 0 1 5 4.5z" /></svg>
+          手机号快捷登录
+        </button>
+      </div>
+
+      <p class="auth-toggle">注册即代表同意 <a href="#">服务条款</a> 与 <a href="#">隐私政策</a></p>
+    </div>
+  </main>
+
+  <script src="../js/signup.js"></script>
+</body>
+</html>

@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>缘遇 YUANYU · 找到你的终身伴侣</title>
+  <meta name="description" content="缘遇——温暖、真诚、高品质的婚恋交友平台。实名认证、智能匹配，为 25-45 岁都市人群找到终身伴侣。" />
+  <link rel="icon"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%92%97%3C/text%3E%3C/svg%3E" />
+
+  <!-- 字体：Playfair Display（标题衬线）· Inter（正文）· Pacifico（手写标语） -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@300;400;500;600&family=Pacifico&display=swap"
+    rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/index.css" />
+  <noscript>
+    <style>
+      .reveal {
+        opacity: 1;
+        transform: none
+      }
+    </style>
+  </noscript>
+</head>
+
+<body>
+
+  <!-- ======================= 顶部导航 ======================= -->
+  <header class="navbar" id="navbar">
+    <div class="container nav-inner">
+      <a class="logo" href="#home" aria-label="缘遇首页">
+        <span class="logo-mark">
+          <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 21s-8-5.35-8-11.2A4.4 4.4 0 0 1 12 6.2a4.4 4.4 0 0 1 8 3.6C20 15.65 12 21 12 21z"
+              fill="#fff" />
+          </svg>
+        </span>
+        <span class="logo-text">缘遇<em>YUANYU</em></span>
+      </a>
+
+      <nav class="nav-menu" id="navMenu" aria-label="主导航">
+        <a class="nav-link active" href="#home">首页</a>
+        <a class="nav-link" href="#features">发现</a>
+        <a class="nav-link" href="#stories">成功故事</a>
+        <a class="nav-link" href="#about">关于</a>
+        <div class="menu-actions">
+          <a class="btn btn-ghost" href="#">登录</a>
+          <a class="btn btn-primary" href="#">注册</a>
+        </div>
+      </nav>
+
+      <div class="nav-actions">
+        <a class="btn btn-ghost" href="#">登录</a>
+        <a class="btn btn-primary" href="#">注册</a>
+      </div>
+
+      <button class="nav-toggle" id="navToggle" aria-label="切换菜单" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ======================= 首屏 Hero ======================= -->
+    <section class="hero" id="home">
+      <!-- 手绘油画风场景（内联 SVG，离线可用，随滚动视差移动） -->
+      <div class="hero-scene" id="heroScene" aria-hidden="true">
+        <svg class="hero-svg" viewBox="0 0 1440 820" preserveAspectRatio="xMidYMax slice" focusable="false">
+          <defs>
+            <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#FFF8F0" />
+              <stop offset="55%" stop-color="#FDE7D9" />
+              <stop offset="100%" stop-color="#F7C5A8" />
+            </linearGradient>
+            <linearGradient id="hillBack" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#F5E6D3" />
+              <stop offset="100%" stop-color="#EFD9C0" />
+            </linearGradient>
+            <linearGradient id="hillFront" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#E8A0BF" />
+              <stop offset="100%" stop-color="#DB8AAD" />
+            </linearGradient>
+            <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#FFEFC9" stop-opacity=".95" />
+              <stop offset="100%" stop-color="#FFEFC9" stop-opacity="0" />
+            </radialGradient>
+          </defs>
+
+          <!-- 天空与太阳 -->
+          <rect width="1440" height="820" fill="url(#sky)" />
+          <circle cx="1100" cy="180" r="175" fill="url(#sunGlow)" />
+          <circle cx="1100" cy="180" r="62" fill="#FFE7BE" />
+
+          <!-- 云朵 -->
+          <g fill="#FFFFFF" opacity=".75">
+            <ellipse cx="285" cy="158" rx="92" ry="25" />
+            <ellipse cx="352" cy="138" rx="58" ry="19" />
+            <ellipse cx="232" cy="144" rx="52" ry="17" />
+            <ellipse cx="1080" cy="318" rx="82" ry="21" />
+            <ellipse cx="1146" cy="302" rx="50" ry="15" />
+            <ellipse cx="1012" cy="306" rx="45" ry="14" />
+            <ellipse cx="640" cy="248" rx="64" ry="16" opacity=".55" />
+          </g>
+
+          <!-- 远山 / 近丘 -->
+          <path d="M0,560 Q360,470 720,540 T1440,520 L1440,820 L0,820 Z" fill="url(#hillBack)" />
+          <path d="M0,650 Q430,545 850,630 T1440,610 L1440,820 L0,820 Z" fill="url(#hillFront)" />
+
+          <!-- 情侣剪影（置于左侧底部，避开居中的标题文字） -->
+          <ellipse cx="330" cy="674" rx="160" ry="15" fill="#F2D8BC" opacity=".9" />
+          <g fill="#5B4A5A">
+            <!-- 男生 -->
+            <circle cx="270" cy="512" r="27" />
+            <path
+              d="M244,548 C240,596 247,634 252,668 L288,668 C293,634 300,596 296,548 C288,556 279,560 270,560 C261,560 252,556 244,548 Z" />
+            <!-- 女生 -->
+            <circle cx="352" cy="524" r="24" />
+            <path
+              d="M320,556 C316,604 324,644 328,668 L386,668 C392,636 398,600 392,556 C380,566 366,570 356,570 C344,570 332,566 320,556 Z" />
+          </g>
+
+          <!-- 漂浮的小爱心 -->
+          <g fill="#E8A0BF">
+            <path
+              d="M314,442 C314,442 301,431 301,420 a6.5,6.5 0 0 1 13,0 a6.5,6.5 0 0 1 13,0 C327,431 314,442 314,442 Z">
+              <animateTransform attributeName="transform" type="translate" values="0,0; 0,-16; 0,0" dur="3.6s"
+                repeatCount="indefinite" />
+            </path>
+            <path d="M286,396 C286,396 278,389 278,382 a4.5,4.5 0 0 1 8,0 a4.5,4.5 0 0 1 8,0 C294,389 286,396 286,396 Z"
+              opacity=".7">
+              <animateTransform attributeName="transform" type="translate" values="0,0; 0,-12; 0,0" dur="4.6s"
+                repeatCount="indefinite" />
+            </path>
+          </g>
+        </svg>
+      </div>
+
+      <!-- 漂浮爱心层（JS 生成） -->
+      <div class="hearts" id="hearts" aria-hidden="true"></div>
+
+      <div class="hero-content container" id="heroContent">
+        <p class="hero-slogan">Every encounter, meant to be</p>
+        <h1 class="hero-title">找到你的<span>终身伴侣</span></h1>
+        <p class="hero-sub">
+          缘遇以真诚为底色，用智能匹配与实名认证，<br />
+          为 25-45 岁都市人群打造认真可靠的婚恋空间。
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-primary btn-lg" href="#">
+            开始你的故事
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </a>
+          <a class="btn btn-ghost btn-lg" href="#stories">看看他们的故事</a>
+        </div>
+        <ul class="hero-trust">
+          <li>实名认证</li>
+          <li>人工审核</li>
+          <li>隐私保护</li>
+        </ul>
+      </div>
+
+      <a class="scroll-hint" href="#stats" aria-label="向下滚动">SCROLL
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </a>
+    </section>
+
+    <!-- ======================= 信任背书（数据） ======================= -->
+    <section class="stats" id="stats">
+      <div class="container stats-grid">
+        <div class="stat-item reveal">
+          <div class="stat-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 21s-8-5.35-8-11.2A4.4 4.4 0 0 1 12 6.2a4.4 4.4 0 0 1 8 3.6C20 15.65 12 21 12 21z" />
+            </svg>
+          </div>
+          <p class="stat-num"><span class="count" data-target="128000">0</span><span class="stat-suffix">+</span></p>
+          <p class="stat-label">对成功牵手</p>
+        </div>
+
+        <div class="stat-item reveal" style="--d:1">
+          <div class="stat-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 3l7 3v5c0 4.6-3 8.1-7 10-4-1.9-7-5.4-7-10V6z" />
+              <path d="M9.5 12l1.8 1.8 3.4-3.8" />
+            </svg>
+          </div>
+          <p class="stat-num"><span class="count" data-target="36">0</span><span class="stat-suffix">万+</span></p>
+          <p class="stat-label">实名认证用户</p>
+        </div>
+
+        <div class="stat-item reveal" style="--d:2">
+          <div class="stat-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 4l1.9 4.7L18.6 10l-4.7 1.9L12 16.6l-1.9-4.7L5.4 10l4.7-1.3z" />
+              <path d="M18.5 15.5l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z" />
+            </svg>
+          </div>
+          <p class="stat-num"><span class="count" data-target="92">0</span><span class="stat-suffix">%</span></p>
+          <p class="stat-label">匹配契合度</p>
+        </div>
+
+        <div class="stat-item reveal" style="--d:3">
+          <div class="stat-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 21s-6.5-5.2-6.5-10.2A6.5 6.5 0 0 1 12 4.3a6.5 6.5 0 0 1 6.5 6.5C18.5 15.8 12 21 12 21z" />
+              <circle cx="12" cy="10.8" r="2.4" />
+            </svg>
+          </div>
+          <p class="stat-num"><span class="count" data-target="300">0</span><span class="stat-suffix">+</span></p>
+          <p class="stat-label">覆盖城市</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= 核心功能预览 ======================= -->
+    <section class="features section" id="features">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="section-eyebrow">Why Yuanyu</p>
+          <h2 class="section-title">认真对待每一份心动</h2>
+          <p class="section-desc">从相识到相守，我们用四重保障，让爱情自然发生。</p>
+        </header>
+
+        <div class="features-grid">
+          <article class="feature-card reveal">
+            <div class="feature-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="8.4" />
+                <circle cx="12" cy="12" r="2.2" />
+                <path d="M12 3.6v3M12 17.4v3M3.6 12h3M17.4 12h3" />
+              </svg>
+            </div>
+            <h3>智能匹配</h3>
+            <p>基于价值观、兴趣与生活方式的 AI 算法，从源头过滤不合适的人选，让每一份推荐都认真。</p>
+          </article>
+
+          <article class="feature-card reveal" style="--d:1">
+            <div class="feature-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 3l7 3v5c0 4.6-3 8.1-7 10-4-1.9-7-5.4-7-10V6z" />
+                <path d="M9.5 12l1.8 1.8 3.4-3.8" />
+              </svg>
+            </div>
+            <h3>实名认证</h3>
+            <p>人脸识别与证件信息双重核验，从源头拒绝虚假资料，让真诚成为平台的底色。</p>
+          </article>
+
+          <article class="feature-card reveal" style="--d:2">
+            <div class="feature-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path
+                  d="M12 3.6C7.3 3.6 3.5 6.8 3.5 10.8c0 2.2 1.2 4.2 3 5.5v3.1l3.2-1.7c.7.2 1.5.3 2.3.3 4.7 0 8.5-3.2 8.5-7.2s-3.8-7.2-8.5-7.2z" />
+                <path d="M8.8 10.8h.01M12 10.8h.01M15.2 10.8h.01" stroke-width="2.4" />
+              </svg>
+            </div>
+            <h3>兴趣社交</h3>
+            <p>同城线下活动与话题圈子，从共同爱好开始自然相识，不必尴尬破冰。</p>
+          </article>
+
+          <article class="feature-card reveal" style="--d:3">
+            <div class="feature-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path
+                  d="M12 3a6.2 6.2 0 0 0-3.7 11.2c.8.6 1.3 1.5 1.3 2.5h4.8c0-1 .5-1.9 1.3-2.5A6.2 6.2 0 0 0 12 3z" />
+                <path d="M10 20h4M10.8 22.5h2.4" />
+              </svg>
+            </div>
+            <h3>情感顾问</h3>
+            <p>一对一恋爱指导与约会建议，从第一次问候到告白，陪你走好每一步。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= 成功故事 ======================= -->
+    <section class="stories section" id="stories">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="section-eyebrow">Love Stories</p>
+          <h2 class="section-title">每一段相遇，都值得被记住</h2>
+          <p class="section-desc">这些真实发生的故事，是缘遇存在的意义。</p>
+        </header>
+
+        <div class="stories-grid">
+          <article class="story-card reveal">
+            <p class="story-quote">在缘遇认识的第 47 天，他在地铁口等我下班。那天晚上风很冷，但我的心很热。</p>
+            <div class="story-person">
+              <span class="avatar a1">林&周</span>
+              <div>
+                <p class="story-name">林晚 &amp; 周屿</p>
+                <p class="story-meta">上海 · 在一起 3 年</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="story-card reveal" style="--d:1">
+            <p class="story-quote">我原本不信算法，直到它把我的高中同学推到了我面前。兜兜转转，原来是你。</p>
+            <div class="story-person">
+              <span class="avatar a2">苏&顾</span>
+              <div>
+                <p class="story-name">苏晴 &amp; 顾言</p>
+                <p class="story-meta">杭州 · 结婚 1 年</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="story-card reveal" style="--d:2">
+            <p class="story-quote">两个慢热的人，在这里都不必假装热情。第一次约会，我们就聊到了深夜。</p>
+            <div class="story-person">
+              <span class="avatar a3">叶&许</span>
+              <div>
+                <p class="story-name">叶楠 &amp; 许川</p>
+                <p class="story-meta">成都 · 订婚 6 个月</p>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="stories-more reveal">
+          <a class="btn btn-ghost" href="#">查看全部成功故事</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= 品牌价值 / 转化 CTA ======================= -->
+    <section class="cta-band" id="about">
+      <div class="container reveal">
+        <h2>你的故事，从今天开始</h2>
+        <p>注册即享实名认证资料，以及三次智能推荐机会。</p>
+        <a class="btn btn-light btn-lg" href="#">免费注册</a>
+        <p class="cta-note">已有 360,000+ 位认真寻找爱情的用户，加入他们</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ======================= 页脚 ======================= -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a class="logo" href="#home" aria-label="缘遇首页">
+          <span class="logo-mark">
+            <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 21s-8-5.35-8-11.2A4.4 4.4 0 0 1 12 6.2a4.4 4.4 0 0 1 8 3.6C20 15.65 12 21 12 21z"
+                fill="#fff" />
+            </svg>
+          </span>
+          <span class="logo-text">缘遇<em>YUANYU</em></span>
+        </a>
+        <p>让每一次相遇都恰到好处。缘遇愿做你通往幸福的桥梁，温暖而真诚。</p>
+        <div class="socials">
+          <a href="#" aria-label="微信公众号">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path
+                d="M12 3.6C7.3 3.6 3.5 6.8 3.5 10.8c0 2.2 1.2 4.2 3 5.5v3.1l3.2-1.7c.7.2 1.5.3 2.3.3 4.7 0 8.5-3.2 8.5-7.2s-3.8-7.2-8.5-7.2z" />
+              <path d="M8.8 10.8h.01M12 10.8h.01M15.2 10.8h.01" stroke-width="2.4" />
+            </svg>
+          </a>
+          <a href="#" aria-label="官方微博">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+              stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="8.4" />
+              <path d="M12 3.6v3M12 17.4v3M3.6 12h3M17.4 12h3" />
+            </svg>
+          </a>
+          <a href="#" aria-label="小红书">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 20.5c-4.7 0-8.5-3.8-8.5-8.5S7.3 3.5 12 3.5s8.5 3.8 8.5 8.5-3.8 8.5-8.5 8.5z" />
+              <path d="M12 8.5v7M8.5 12h7" />
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>关于</h4>
+        <a href="#">关于我们</a>
+        <a href="#">企业介绍</a>
+        <a href="#">加入我们</a>
+        <a href="#">媒体报道</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>帮助中心</h4>
+        <a href="#">新手指南</a>
+        <a href="#">常见问题</a>
+        <a href="#">服务条款</a>
+        <a href="#">隐私政策</a>
+        <a href="#">安全中心</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>联系我们</h4>
+        <a href="#">客服热线 400-000-0000</a>
+        <a href="#">service@yuanyu.com</a>
+        <a href="#">周一至周日 9:00-21:00</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom container">
+      <p>© 2026 缘遇 YUANYU · 让每一次相遇都恰到好处</p>
+      <p>京ICP备00000000号-1</p>
+    </div>
+  </footer>
+
+  <script src="js/index.js"></script>
+</body>
+
+</html>
