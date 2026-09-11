@@ -54,6 +54,10 @@ a { text-decoration: none; color: inherit; }
 ul { list-style: none; }
 button { font-family: inherit; }
 
+/* hidden 属性必须优先于任何 display 规则（如 .auth-form 的 flex），
+   否则设置 hidden 的元素仍会被显示出来 */
+[hidden] { display: none !important; }
+
 ::selection { background: var(--primary); color: #fff; }
 :focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; border-radius: 4px; }
 

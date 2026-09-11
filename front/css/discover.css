@@ -10,6 +10,7 @@
 
 /* ---------- 卡组容器 ---------- */
 .deck-wrap {
+  position: relative;   /* 作为空状态层的定位基准，避免铺满整个视口 */
   max-width: 430px;
   margin: 0 auto;
   padding: 18px 16px 0;
