@@ -1,64 +1,93 @@
 #include "connect.h"
-#include "socket.h"
-#include "event_loop.h"
-#include "channel.h"
+
 #include <unistd.h>
+
 #include <iostream>
-Connect::Connect(Socket *socket, EventLoop *loop)
-{
-    socketfd = socket->Accept();
-    channel = new Channel(loop, socketfd);
-    std::function<void()> lambda = [this]()
-    { this->Handle(); };
-    channel->SetCallBack(lambda);
-    channel->Read();
+
+#include "buffer.h"
+#include "channel.h"
+#include "event_loop.h"
+#include "socket.h"
+Connect::Connect(Socket* _socket, EventLoop* loop) {
+  state = Invalid;
+  readBuffer = new Buffer();
+  writeBuffer = new Buffer();
+  socket = new Socket(_socket->Accept());
+  channel = new Channel(loop, socket->GetSocketfd());
+  std::function<void()> lambda = [this]() { this->Read(); };
+  channel->SetCallBack(lambda);
+  channel->Read();
 }
 
-void Connect::SetCallBack(std::function<void()> lambda)
-{
-    callback = lambda;
+void Connect::SetCallBack(std::function<void()> lambda) {
+  callback = lambda;
 }
 
-void Connect::Handle()
-{
-    while (true)
-    {
-        char buf[1024];
-        memset(buf, 0, sizeof(buf));
-        int n = read(socketfd, buf, sizeof(buf));
-        if (n > 0)
-        {
-            std::cout << buf << std::endl;
-            write(socketfd, "收到了，OK", 15);
-        }
-        else if (n == 0)
-        {
-            std::cout << "客户端断开连接" << std::endl;
-            callback();
-            break;
-        }
-        else if (n == -1 && errno == EINTR)
-        {
-            std::cout << "客户端正常中断，继续读取" << std::endl;
-            continue;
-        }
-        else if (n == -1 && (errno == EAGAIN || errno == EWOULDBLOCK))
-        {
-            std::cout << "数据读取完毕" << std::endl;
-            break;
-        }
-        else
-        {
-            std::cout << "未知类型" << std::endl;
-            break;
-        }
+void Connect::Handle() {
+  Buffer* buffer = new Buffer();
+  while (true) {
+    char buf[1024];
+    memset(buf, 0, sizeof(buf));
+    int n = read(socket->GetSocketfd(), buf, sizeof(buf));
+    if (n > 0) {
+      buffer->Read(buf, n);
+    } else if (n == 0) {
+      std::cout << "客户端断开连接" << std::endl;
+      delete buffer;
+      callback();
+      break;
+    } else if (n == -1 && errno == EINTR) {
+      std::cout << "客户端正常中断，继续读取" << std::endl;
+      continue;
+    } else if (n == -1 && (errno == EAGAIN || errno == EWOULDBLOCK)) {
+      std::cout << "数据读取完毕" << std::endl;
+      write(socket->GetSocketfd(), buffer->C_str(), buffer->Size());
+      delete buffer;
+      break;
+    } else {
+      std::cout << "未知类型" << std::endl;
+      delete buffer;
+      break;
     }
+  }
 }
-int Connect::Get()
-{
-    return socketfd;
+Connect::~Connect() {
+  delete channel;
+  delete socket;
+  delete readBuffer;
+  delete writeBuffer;
 }
-Connect::~Connect()
-{
-    delete channel;
+int Connect::Get() {
+  return socket->GetSocketfd();
 }
+void Connect::Close() {
+  close();
+}
+void Connect::SetClose(std::function<void()> _close) {
+  close = _close;
+}
+void Connect::Read() {
+  readBuffer->Clear();
+  while (true) {
+    char buf[1024];
+    memset(buf, 0, sizeof(buf));
+    ssize_t n = read(socket->GetSocketfd(), buf, sizeof(buf));
+    if (n > 0) {
+      readBuffer->Read(buf, sizeof(buf));
+    } else if (n == 0) {
+      std::cout << "连接已断开！" << std::endl;
+      state = Closed;
+      break;
+    } else if (n == -1 && errno == EINTR) {
+      std::cout << "客户端正常中断,继续读取" << std::endl;
+      continue;
+    } else if (n == -1 && (errno == EWOULDBLOCK || errno == EAGAIN)) {
+      std::cout << "数据读取完毕" << std::endl;
+      break;
+    } else {
+      std::cout << "出现了其它问题" << std::endl;
+      break;
+    }
+  }
+}
+void Connect::Write() {}

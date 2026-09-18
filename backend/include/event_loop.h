@@ -1,3 +1,4 @@
+#include <functional>
 class Epoll;
 class Channel;
 #pragma once

@@ -5,6 +5,7 @@ Channel::Channel(EventLoop *e, int a)
 {
     ep = e;
     fd = a;
+    event = 0;
 }
 int Channel::Get()
 {

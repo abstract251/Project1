@@ -1,0 +1,32 @@
+# 基于 Google C++ 风格指南
+BasedOnStyle: Google
+
+# 语言标准，Latest 会根据编译器推导
+Language: Cpp
+Standard: Latest
+
+# 缩进：2个空格，不使用Tab
+IndentWidth: 2
+TabWidth: 2
+UseTab: Never
+
+# 行宽限制：80个字符
+ColumnLimit: 80
+
+# 指针和引用左对齐（紧跟类型），如: int* ptr;
+DerivePointerAlignment: false
+PointerAlignment: Left
+
+# 大括号不换行（K&R风格）
+BreakBeforeBraces: Attach
+
+# 包含头文件排序
+SortIncludes: CaseSensitive
+IncludeBlocks: Regroup
+
+# 其他格式细节
+AlwaysBreakTemplateDeclarations: Yes
+AllowShortFunctionsOnASingleLine: Inline
+AllowShortIfStatementsOnASingleLine: Never
+ReflowComments: true
+MaxEmptyLinesToKeep: 1

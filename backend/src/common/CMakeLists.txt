@@ -19,6 +19,8 @@ add_library(common STATIC
     event_loop.cpp
     acceptor.cpp
     connect.cpp
+    buffer.cpp
+    thread.cpp
 )
 
 # include/ 头文件路径对 common 自身及所有链接它的目标生效（PUBLIC 传播）

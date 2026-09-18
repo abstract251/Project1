@@ -3,20 +3,21 @@
 #include <cstring>
 #include "socket.h"
 #include "error.h"
+#include "thread.h"
 using namespace std;
 
-int main()
+void client(int time = 100, int wait = 0)
 {
     struct Socket s;
     s.CreateSocket();
     s.Connect();
-    while (true)
+    sleep(wait);
+    int a = 0;
+    while (a < time)
     {
         char buf[1024];
         memset(buf, 0, sizeof(buf));
-        cin.getline(buf, sizeof(buf));
-
-        ssize_t len = write(s.GetSocketfd(), buf, sizeof(buf));
+        ssize_t len = write(s.GetSocketfd(), "这是一个客户端发送的数据", sizeof("这是一个客户端发送的数据"));
         if (len > 0)
         {
             cout << "客户端fd" << s.GetSocketfd() << "已向服务器发送数据" << buf << endl;
@@ -47,5 +48,17 @@ int main()
             close(s.GetSocketfd());
             break;
         }
+        a++;
+    }
+}
+
+int main()
+{
+    Thread a(100);
+    function<void()> lambda = []()
+    { client(); };
+    for (int i = 0; i < 100; i++)
+    {
+        a.AddTasks(lambda);
     }
 }

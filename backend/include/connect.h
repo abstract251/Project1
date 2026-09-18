@@ -3,17 +3,26 @@
 class Socket;
 class EventLoop;
 class Channel;
-class Connect
-{
-public:
-    Connect(Socket *socket, EventLoop *loop);
-    ~Connect();
-    void Handle();
-    void SetCallBack(std::function<void()> lambda);
-    int Get();
+class Buffer;
+class Connect {
+ public:
+  enum State { Invalid = 1, Closed, Connected };
+  Connect(Socket* socket, EventLoop* loop);
+  ~Connect();
+  void Handle();
+  void SetCallBack(std::function<void()> lambda);
+  void SetClose(std::function<void()> _close);
+  int Get();
+  void Close();
+  void Read();
+  void Write();
 
-private:
-    Channel *channel;
-    std::function<void()> callback;
-    int socketfd;
+ private:
+  Channel* channel;
+  std::function<void()> callback;
+  Socket* socket;
+  std::function<void()> close;
+  Buffer* readBuffer;
+  Buffer* writeBuffer;
+  State state;
 };

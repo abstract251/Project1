@@ -13,11 +13,11 @@ string response_file(string filename)
         cerr << filename << "文件打开失败！" << endl;
         return "";
     }
-    size_t a;
+    streamsize a;
     if (ifs.tellg() < 0)
         a = 0;
     else
-        a = (size_t)ifs.tellg();
+        a = ifs.tellg();
     ifs.seekg(0, ios::beg);
     string file;
     file.resize(a);

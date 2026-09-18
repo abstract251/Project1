@@ -63,7 +63,7 @@ vector<string> request_line(string a)
 {
     vector<string> vec;
     string line;
-    for (int i = 0; i < a.size(); i++)
+    for (auto i = 0; i < a.size(); i++)
     {
         if (a[i] == ' ' || a[i] == '\r' || a[i] == '\n')
         {

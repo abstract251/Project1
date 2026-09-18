@@ -3,6 +3,7 @@
 #include <sys/epoll.h>
 #pragma once
 class EventLoop;
+class Thread;
 class Channel
 {
 public:

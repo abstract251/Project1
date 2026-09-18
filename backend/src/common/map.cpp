@@ -11,7 +11,7 @@ string map(string type)
 }
 string get_tail(string name)
 {
-    int i = 0;
+    auto i = 0;
     while (i < name.size())
     {
         if (name[i] == '.' && i < name.size() - 1)

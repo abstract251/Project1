@@ -1,8 +1,10 @@
 #include <map>
+#include <vector>
 class Connect;
 class EventLoop;
 class Socket;
 class Acceptor;
+class Thread;
 #pragma once
 class Server
 {
@@ -13,7 +15,9 @@ public:
     void DeleteConnect(int socketfd);
 
 private:
-    EventLoop *e;
+    EventLoop *mainReactor;
+    std::vector<EventLoop *> subReactor;
     Acceptor *acceptor;
     std::map<int, Connect *> connections;
+    Thread *thread;
 };
