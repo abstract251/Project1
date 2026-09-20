@@ -12,7 +12,7 @@ Connect::Connect(Socket* _socket, EventLoop* loop) {
   state = Invalid;
   readBuffer = new Buffer();
   writeBuffer = new Buffer();
-  socket = new Socket(_socket->Accept());
+  socket = _socket;
   channel = new Channel(loop, socket->GetSocketfd());
   std::function<void()> lambda = [this]() { this->Read(); };
   channel->SetCallBack(lambda);
@@ -73,7 +73,7 @@ void Connect::Read() {
     memset(buf, 0, sizeof(buf));
     ssize_t n = read(socket->GetSocketfd(), buf, sizeof(buf));
     if (n > 0) {
-      readBuffer->Read(buf, sizeof(buf));
+      readBuffer->Read(buf, n);
     } else if (n == 0) {
       std::cout << "连接已断开！" << std::endl;
       state = Closed;
@@ -83,9 +83,12 @@ void Connect::Read() {
       continue;
     } else if (n == -1 && (errno == EWOULDBLOCK || errno == EAGAIN)) {
       std::cout << "数据读取完毕" << std::endl;
+      std::string msg = "收到，这是回复！";
+      write(socket->GetSocketfd(), msg.c_str(), msg.size());
       break;
     } else {
-      std::cout << "出现了其它问题" << std::endl;
+      std::cout << "出现了其它问题=" << errno << ":" << strerror(errno)
+                << std::endl;
       break;
     }
   }

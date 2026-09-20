@@ -36,12 +36,18 @@ Server::~Server() {
   delete thread;
 }
 void Server::Connection(Socket* socket) {
-  int random = socket->GetSocketfd() % subReactor.size();
-  Connect* connect = new Connect(socket, subReactor[random]);
-  auto fd = connect->Get();
-  std::function<void()> lambda = [this, fd]() { this->DeleteConnect(fd); };
-  connect->SetClose(lambda);
-  connections[fd] = connect;
+  while (true) {
+    int cln = socket->Accept();
+    if (cln < 0)
+      break;
+    Socket* _socket = new Socket(cln);
+    int random = _socket->GetSocketfd() % subReactor.size();
+    Connect* connect = new Connect(_socket, subReactor[random]);
+    auto fd = connect->Get();
+    std::function<void()> lambda = [this, fd]() { this->DeleteConnect(fd); };
+    connect->SetClose(lambda);
+    connections[fd] = connect;
+  }
 }
 
 void Server::DeleteConnect(int socketfd) {
