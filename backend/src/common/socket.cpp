@@ -19,6 +19,9 @@ Socket::Socket(int fd) {
 int Socket::CreateSocket() {
   socketfd = socket(AF_INET, SOCK_STREAM, 0);
   errif(socketfd < 0, "socket创建失败");
+  int opt = 1;
+  errif(setsockopt(socketfd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)) < 0,
+        "设置端口复用失败");
   memset(&sock, 0, sizeof(sock));
   sock.sin_family = AF_INET;
   sock.sin_addr.s_addr = inet_addr("0.0.0.0");

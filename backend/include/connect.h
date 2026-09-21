@@ -20,6 +20,7 @@ class Connect {
   void Write();
   void nonBlockWrite();
   std::string GetRead();
+  void Send(const std::string& a);
 
  private:
   std::unique_ptr<Socket> socket;

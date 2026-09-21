@@ -14,3 +14,6 @@ const char* Buffer::C_str() {
 std::string Buffer::Get() {
   return buf;
 }
+void Buffer::Read(std::string a) {
+  buf += a;
+}

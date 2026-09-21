@@ -101,3 +101,7 @@ void Connect::nonBlockWrite() {
 std::string Connect::GetRead() {
   return readBuffer->Get();
 }
+void Connect::Send(const std::string& a) {
+  writeBuffer->Read(a);
+  Write();
+}
