@@ -75,7 +75,7 @@ void Connect::nonBlockWrite() {
   ssize_t size = writeBuffer->Size();
   ssize_t count = 0;
   while (writeBuffer->Size() - count > 0) {
-    ssize_t n = write(socket->GetSocketfd(), writeBuffer->C_str(),
+    ssize_t n = write(socket->GetSocketfd(), writeBuffer->C_str() + count,
                       writeBuffer->Size() - count);
     if (n == 0) {
       std::cout << "客户端断开连接" << std::endl;
