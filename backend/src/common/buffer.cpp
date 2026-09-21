@@ -11,3 +11,6 @@ ssize_t Buffer::Size() {
 const char* Buffer::C_str() {
   return buf.c_str();
 }
+std::string Buffer::Get() {
+  return buf;
+}

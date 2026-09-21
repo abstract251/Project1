@@ -11,7 +11,7 @@ Socket::Socket() {
   this->CreateSocket();
 }
 Socket::Socket(int fd) {
-  if (fd <= 0)
+  if (fd < 0)
     cout << "初始化错误，请重新创建socket的值" << endl;
   else
     socketfd = fd;

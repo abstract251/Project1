@@ -11,16 +11,14 @@ add_library(common STATIC
     socket.cpp
     epoll.cpp
     channel.cpp
-    request_get.cpp
-    response_http.cpp
     map.cpp
-    requestype.cpp
     event_loop.cpp
     acceptor.cpp
     connect.cpp
     buffer.cpp
     thread.cpp
     tcp.cpp
+    httprequest.cpp
 )
 
 # include/ 头文件路径对 common 自身及所有链接它的目标生效（PUBLIC 传播）

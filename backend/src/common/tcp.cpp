@@ -35,9 +35,9 @@ void Tcp::Connection(int fd) {
   {
     unique_lock<mutex> lock(mtx);
     connections[fd] = move(con);
-    if (_con) {
-      _con(connections[fd].get());
-    }
+  }
+  if (_con) {
+    _con(connections[fd].get());
   }
 }
 void Tcp::Del(int fd) {

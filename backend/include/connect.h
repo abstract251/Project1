@@ -1,5 +1,7 @@
 #pragma once
 #include <functional>
+#include <memory>
+#include <string>
 class Socket;
 class EventLoop;
 class Channel;
@@ -9,7 +11,6 @@ class Connect {
   enum State { Invalid = 1, Closed, Connected };
   Connect(int fd, EventLoop* loop);
   ~Connect();
-  void Handle();
   void SetCallBack(std::function<void(Connect*)> lambda);
   void SetDel(std::function<void(int)> _close);
   int Get();
@@ -18,13 +19,14 @@ class Connect {
   void nonBlockRead();
   void Write();
   void nonBlockWrite();
+  std::string GetRead();
 
  private:
-  Channel* channel;
+  std::unique_ptr<Socket> socket;
+  std::unique_ptr<Channel> channel;
   std::function<void(Connect*)> callback;
-  Socket* socket;
-  Buffer* readBuffer;
-  Buffer* writeBuffer;
+  std::unique_ptr<Buffer> readBuffer;
+  std::unique_ptr<Buffer> writeBuffer;
   State state;
   std::function<void(int)> del;
 };

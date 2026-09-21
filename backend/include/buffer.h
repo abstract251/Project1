@@ -1,12 +1,12 @@
 #include <string>
-class Buffer
-{
-public:
-    void Read(const char *_buf, int size);
-    void Clear();
-    ssize_t Size();
-    const char *C_str();
+class Buffer {
+ public:
+  void Read(const char* _buf, int size);
+  void Clear();
+  ssize_t Size();
+  const char* C_str();
+  std::string Get();
 
-private:
-    std::string buf;
+ private:
+  std::string buf;
 };
