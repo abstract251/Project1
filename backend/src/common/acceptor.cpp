@@ -21,7 +21,12 @@ Acceptor::~Acceptor() {
   delete socket;
 }
 void Acceptor::Connect() {
-  callback(socket->GetSocketfd());
+  while (true) {
+    int fd = socket->Accept();
+    if (fd < 0)
+      break;
+    callback(fd);
+  }
 }
 void Acceptor::SetCallBack(std::function<void(int)> const& lambda) {
   callback = lambda;

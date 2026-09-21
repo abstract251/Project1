@@ -1,6 +1,7 @@
 #include <functional>
 #include <map>
 #include <memory>
+#include <mutex>
 #include <vector>
 #pragma once
 class EventLoop;
@@ -25,4 +26,5 @@ class Tcp {
   std::unordered_map<int, std::unique_ptr<Connect>> connections;
   std::function<void(Connect*)> _con;
   std::function<void(Connect*)> _revc;
+  std::mutex mtx;
 };

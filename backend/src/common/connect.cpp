@@ -79,7 +79,7 @@ void Connect::nonBlockRead() {
 void Connect::Write() {
   if (state != Connected)
     return;
-  nonBlockRead();
+  nonBlockWrite();
 }
 void Connect::nonBlockWrite() {
   ssize_t size = writeBuffer->Size();

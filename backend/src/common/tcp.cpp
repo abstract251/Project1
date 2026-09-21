@@ -32,12 +32,16 @@ void Tcp::Connection(int fd) {
   function<void(int)> lambda = [this](int fd) { this->Del(fd); };
   con->SetDel(lambda);
   con->SetCallBack(_revc);
-  connections[fd] = move(con);
-  if (_con) {
-    _con(connections[fd].get());
+  {
+    unique_lock<mutex> lock(mtx);
+    connections[fd] = move(con);
+    if (_con) {
+      _con(connections[fd].get());
+    }
   }
 }
 void Tcp::Del(int fd) {
+  unique_lock<mutex> lock(mtx);
   auto it = connections.find(fd);
   if (it != connections.end()) {
     Connect* con = it->second.get();

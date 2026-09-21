@@ -37,4 +37,6 @@ void Channel::Handle() {
 void Channel::SetCallBack(std::function<void()> put) {
   callback = put;
 }
-Channel::~Channel() {}
+Channel::~Channel() {
+  ep->Del(this);
+}
