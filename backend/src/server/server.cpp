@@ -1,12 +1,11 @@
 #include <iostream>
-#include "server.h"
+
 #include "event_loop.h"
+#include "tcp.h"
 using namespace std;
 
-int main()
-{
-    EventLoop *loop = new EventLoop();
-    Server s(loop);
-    loop->loop();
-    return 0;
+int main() {
+  Tcp s;
+  s.Start();
+  return 0;
 }

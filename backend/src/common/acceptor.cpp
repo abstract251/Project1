@@ -21,8 +21,8 @@ Acceptor::~Acceptor() {
   delete socket;
 }
 void Acceptor::Connect() {
-  callback(socket);
+  callback(socket->GetSocketfd());
 }
-void Acceptor::SetCallBack(std::function<void(Socket* socket)> lambda) {
+void Acceptor::SetCallBack(std::function<void(int)> const& lambda) {
   callback = lambda;
 }
