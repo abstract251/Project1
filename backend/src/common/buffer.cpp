@@ -17,3 +17,10 @@ std::string Buffer::Get() {
 void Buffer::Read(std::string a) {
   buf += a;
 }
+void Buffer::ClearFront(int size) {
+  if (size >= buf.size()) {
+    buf.clear();
+    return;
+  }
+  buf.erase(0, size);
+}

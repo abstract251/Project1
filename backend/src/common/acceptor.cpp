@@ -13,7 +13,7 @@ Acceptor::Acceptor(EventLoop* loop) {
   socket->Listen();
   channel = new Channel(loop, socket->GetSocketfd());
   std::function<void()> lambda = [this]() { this->Connect(); };
-  channel->SetCallBack(lambda);
+  channel->SetReadCallBack(lambda);
   channel->Read();
 }
 Acceptor::~Acceptor() {

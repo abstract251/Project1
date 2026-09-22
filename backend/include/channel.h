@@ -18,7 +18,10 @@ class Channel {
   void SetRevent(uint32_t a);
   uint32_t GetRevent();
   void Handle();
-  void SetCallBack(std::function<void()> put);
+  void SetReadCallBack(std::function<void()> put);
+  void SetWriteCallBack(std::function<void()> put);
+  void EnableWrite();
+  void DisableWrite();
 
  private:
   int fd;
@@ -26,5 +29,6 @@ class Channel {
   uint32_t event;
   uint32_t revent;
   bool inEventLoop = false;
-  std::function<void()> callback;
+  std::function<void()> readCallback;
+  std::function<void()> writeCallback;
 };

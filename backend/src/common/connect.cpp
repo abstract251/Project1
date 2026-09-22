@@ -14,8 +14,10 @@ Connect::Connect(int fd, EventLoop* loop) {
   writeBuffer = std::make_unique<Buffer>();
   socket = std::make_unique<Socket>(fd);
   channel = std::make_unique<Channel>(loop, socket->GetSocketfd());
-  std::function<void()> lambda = [this]() { this->Read(); };
-  channel->SetCallBack(lambda);
+  std::function<void()> lambda1 = [this]() { this->Read(); };
+  std::function<void()> lambda2 = [this]() { this->Write(); };
+  channel->SetReadCallBack(lambda1);
+  channel->SetWriteCallBack(lambda2);
   channel->Read();
 }
 
@@ -70,14 +72,18 @@ void Connect::Write() {
   if (state != Connected)
     return;
   nonBlockWrite();
+  if (writeBuffer->Size() > 0)
+    channel->EnableWrite();
+  else
+    channel->DisableWrite();
 }
 void Connect::nonBlockWrite() {
-  ssize_t size = writeBuffer->Size();
-  ssize_t count = 0;
-  while (writeBuffer->Size() - count > 0) {
-    ssize_t n = write(socket->GetSocketfd(), writeBuffer->C_str() + count,
-                      writeBuffer->Size() - count);
-    if (n == 0) {
+  while (writeBuffer->Size() > 0) {
+    ssize_t n =
+        write(socket->GetSocketfd(), writeBuffer->C_str(), writeBuffer->Size());
+    if (n > 0)
+      writeBuffer->ClearFront(n);
+    else if (n == 0) {
       std::cout << "客户端断开连接" << std::endl;
       state = Closed;
       Close();
@@ -95,7 +101,6 @@ void Connect::nonBlockWrite() {
       Close();
       break;
     }
-    count += n;
   }
 }
 std::string Connect::GetRead() {

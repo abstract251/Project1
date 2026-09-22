@@ -7,6 +7,7 @@ class Buffer {
   ssize_t Size();
   const char* C_str();
   std::string Get();
+  void ClearFront(int size);
 
  private:
   std::string buf;

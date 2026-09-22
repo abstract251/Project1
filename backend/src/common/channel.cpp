@@ -32,11 +32,25 @@ uint32_t Channel::GetRevent() {
 }
 
 void Channel::Handle() {
-  callback();
+  if ((revent & EPOLLIN) && readCallback)
+    readCallback();
+  if ((revent & EPOLLOUT) && writeCallback)
+    writeCallback();
 }
-void Channel::SetCallBack(std::function<void()> put) {
-  callback = put;
+void Channel::SetReadCallBack(std::function<void()> put) {
+  readCallback = put;
+}
+void Channel::SetWriteCallBack(std::function<void()> put) {
+  writeCallback = put;
 }
 Channel::~Channel() {
   ep->Del(this);
+}
+void Channel::EnableWrite() {
+  event |= EPOLLOUT;
+  ep->UpdateChannel(this);
+}
+void Channel::DisableWrite() {
+  event &= ~EPOLLOUT;
+  ep->UpdateChannel(this);
 }
