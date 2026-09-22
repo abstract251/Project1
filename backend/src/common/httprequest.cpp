@@ -1,52 +1,65 @@
 #include "httprequest.h"
 
+#include <filesystem>
 #include <fstream>
 #include <iostream>
+#include <sstream>
 
 #include "connect.h"
 #include "map.h"
+#define base "../www"
 using namespace std;
+namespace fs = filesystem;
 HttpRequest::HttpRequest() {}
-vector<string> HttpRequest::request_line(string a) {
+vector<string> HttpRequest::request_head(string a) {
+  stringstream ss(a);
+  vector<string> vec;
   string line;
-  for (auto i = 0; i < a.size(); i++) {
-    if (a[i] == ' ' || a[i] == '\r' || a[i] == '\n') {
-      if (!line.empty()) {
-        vec.push_back(line);
-        line.clear();
-      }
-      continue;
-    } else
-      line.push_back(a[i]);
+  while (getline(ss, line, '\n')) {
+    vec.push_back(line);
   }
   return vec;
 }
+vector<string> HttpRequest::request_line(string a) {
+  string line;
+  vector<string> head;
+  stringstream ss(a);
+  while (ss >> line) {
+    head.push_back(line);
+  }
+  return head;
+}
 string HttpRequest::request_response(string request) {
-  request_line(request);
-  if (vec[0] == "GET") {
+  vector<string> vec = request_head(request);
+  if (vec.size() == 0)
+    return "";
+  vector<string> head = request_line(vec[0]);
+  if (head.size() == 0)
+    return "";
+  if (head[0] == "GET") {
     cout << "当前收到的是GET请求" << endl;
-    string file = response_file(vec[1]);
-    string response = response_head(vec[1], file.size());
+    string file = response_file(head[1]);
+    string response = response_head(head[1], file.size());
     response = response + file;
     return response;
-  } else if (vec[0] == "POST") {
+  } else if (head[0] == "POST") {
     cout << "当前收到的是POST请求" << endl;
-  } else if (vec[0] == "PUT") {
+  } else if (head[0] == "PUT") {
     cout << "当前收到的是PUT请求" << endl;
-  } else if (vec[0] == "DELETE") {
+  } else if (head[0] == "DELETE") {
     cout << "当前收到的是DELETE请求" << endl;
-  } else if (vec[0] == "HEAD") {
+  } else if (head[0] == "HEAD") {
     cout << "当前收到的是HEAD请求" << endl;
     string file = response_file(vec[1]);
     string response = response_head(vec[1], file.size());
     return response;
-  } else if (vec[0] == "OPTIONS") {
+  } else if (head[0] == "OPTIONS") {
     cout << "当前收到的是OPTIONS请求" << endl;
-  } else if (vec[0] == "PATCH") {
+  } else if (head[0] == "PATCH") {
     cout << "当前收到的是PATCH请求" << endl;
-  } else if (vec[0] == "CONNECT") {
+  } else if (head[0] == "CONNECT") {
     cout << "当前收到的是CONNECT请求" << endl;
-  } else if (vec[0] == "TRACE") {
+  } else if (head[0] == "TRACE") {
     cout << "当前收到的是TRACE请求" << endl;
   } else {
     cout << "当前收到的是未知类型请求" << endl;
@@ -54,7 +67,12 @@ string HttpRequest::request_response(string request) {
   return "";
 }
 string HttpRequest::response_file(string filename) {
-  filename = "../www" + filename;
+  filename = base + filename;
+  if (!fs::exists(filename)) {
+    cout << filename << "文件不存在！" << endl;
+    filename = "/404.html";
+    filename = base + filename;
+  }
   ifstream ifs(filename, ios::binary | ios::ate);
   if (!ifs) {
     cerr << filename << "文件打开失败！" << endl;
