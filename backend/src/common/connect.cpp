@@ -29,6 +29,9 @@ int Connect::Get() {
   return socket->GetSocketfd();
 }
 void Connect::Close() {
+  if (state == Closed)
+    return;
+  state = Closed;
   del(socket->GetSocketfd(), this);
 }
 void Connect::SetDel(std::function<void(int, Connect*)> _close) {
@@ -38,6 +41,8 @@ void Connect::Read() {
   if (state != Connected)
     return;
   nonBlockRead();
+  if (state == Closed)
+    return;
   if (state == Connected && callback && readBuffer->Size() > 0)
     callback(this);
 }
@@ -50,7 +55,6 @@ void Connect::nonBlockRead() {
       readBuffer->Read(buf, n);
     } else if (n == 0) {
       std::cout << "连接已断开！" << std::endl;
-      state = Closed;
       Close();
       break;
     } else if (n == -1 && errno == EINTR) {
@@ -62,7 +66,6 @@ void Connect::nonBlockRead() {
     } else {
       std::cout << "出现了其它问题，errno为" << errno << ":" << strerror(errno)
                 << std::endl;
-      state = Closed;
       Close();
       break;
     }
@@ -72,12 +75,12 @@ void Connect::Write() {
   if (state != Connected)
     return;
   nonBlockWrite();
-  if (state != Connected)
+  if (state == Closed)
     return;
   if (writeBuffer->Size() > 0)
     channel->EnableWrite();
   else
-    channel->DisableWrite();
+    shutDown();
 }
 void Connect::nonBlockWrite() {
   while (writeBuffer->Size() > 0) {
@@ -87,7 +90,6 @@ void Connect::nonBlockWrite() {
       writeBuffer->ClearFront(n);
     else if (n == 0) {
       std::cout << "客户端断开连接" << std::endl;
-      state = Closed;
       Close();
       break;
     } else if (n == -1 && (errno == EAGAIN || errno == EWOULDBLOCK)) {
@@ -99,7 +101,6 @@ void Connect::nonBlockWrite() {
     } else {
       std::cout << "发生其它错误，errno为" << errno << ":" << strerror(errno)
                 << std::endl;
-      state = Closed;
       Close();
       break;
     }
@@ -109,6 +110,20 @@ std::string Connect::GetRead() {
   return readBuffer->Get();
 }
 void Connect::Send(const std::string& a) {
+  if (state != Connected)
+    return;
   writeBuffer->Read(a);
   Write();
+}
+void Connect::shutDown() {
+  if (state != Connected)
+    return;
+  if (writeBuffer->Size() > 0)
+    return;
+  int fd = socket->GetSocketfd();
+  char buf[1024];
+  while (read(fd, buf, sizeof(buf)) > 0) {
+  }
+  shutdown(fd, SHUT_WR);
+  Close();
 }

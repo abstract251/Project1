@@ -30,8 +30,5 @@ void EventLoop::Del(Channel* channel) {
   ep->DelChannel(channel);
 }
 void EventLoop::SetTasks(std::function<void()> lambda) {
-  if (inloop)
-    delTasks.push_back(lambda);
-  else
-    lambda();
+  delTasks.push_back(lambda);
 }

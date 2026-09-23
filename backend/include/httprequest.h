@@ -9,5 +9,7 @@ class HttpRequest {
   std::vector<std::string> request_line(std::string a);
   std::string request_response(std::string request);
   std::string response_file(std::string filename);
-  std::string response_head(std::string name, int size);
+  std::string response_head(std::string name, int size, int code = 200);
+  std::string buildError(int code);
+  std::string statusCode(int code);
 };

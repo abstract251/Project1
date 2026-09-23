@@ -10,7 +10,8 @@ using namespace std;
 Tcp::Tcp() {
   mainReactor = make_unique<EventLoop>();
   acceptor = make_unique<Acceptor>(mainReactor.get());
-  unsigned int size = thread::hardware_concurrency();
+  unsigned int size =
+      thread::hardware_concurrency() > 0 ? thread::hardware_concurrency() : 10;
   function<void(int)> lambda = [this](int fd) { this->Connection(fd); };
   acceptor->SetCallBack(lambda);
   _thread = make_unique<Thread>(size);

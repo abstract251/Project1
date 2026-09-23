@@ -8,7 +8,7 @@ class Channel;
 class Buffer;
 class Connect {
  public:
-  enum State { Invalid = 1, Closed, Connected };
+  enum State { Invalid = 1, Closed, Connected, Closing };
   Connect(int fd, EventLoop* loop);
   ~Connect();
   void SetCallBack(std::function<void(Connect*)> lambda);
@@ -21,6 +21,7 @@ class Connect {
   void nonBlockWrite();
   std::string GetRead();
   void Send(const std::string& a);
+  void shutDown();
 
  private:
   std::unique_ptr<Socket> socket;
