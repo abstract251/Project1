@@ -29,9 +29,9 @@ int Connect::Get() {
   return socket->GetSocketfd();
 }
 void Connect::Close() {
-  del(socket->GetSocketfd());
+  del(socket->GetSocketfd(), this);
 }
-void Connect::SetDel(std::function<void(int)> _close) {
+void Connect::SetDel(std::function<void(int, Connect*)> _close) {
   del = _close;
 }
 void Connect::Read() {
@@ -72,6 +72,8 @@ void Connect::Write() {
   if (state != Connected)
     return;
   nonBlockWrite();
+  if (state != Connected)
+    return;
   if (writeBuffer->Size() > 0)
     channel->EnableWrite();
   else
@@ -88,7 +90,7 @@ void Connect::nonBlockWrite() {
       state = Closed;
       Close();
       break;
-    } else if (n == -1 && errno == EAGAIN) {
+    } else if (n == -1 && (errno == EAGAIN || errno == EWOULDBLOCK)) {
       std::cout << "数据全部发送完毕" << std::endl;
       break;
     } else if (n == -1 && errno == EINTR) {

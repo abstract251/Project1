@@ -6,20 +6,17 @@
 #include "event_loop.h"
 #include "socket.h"
 Acceptor::Acceptor(EventLoop* loop) {
-  socket = new Socket();
+  socket = std::make_unique<Socket>();
   int flags = fcntl(socket->GetSocketfd(), F_GETFL, 0);
   fcntl(socket->GetSocketfd(), F_SETFL, flags | O_NONBLOCK);
   socket->BindSocket();
   socket->Listen();
-  channel = new Channel(loop, socket->GetSocketfd());
+  channel = std::make_unique<Channel>(loop, socket->GetSocketfd());
   std::function<void()> lambda = [this]() { this->Connect(); };
   channel->SetReadCallBack(lambda);
   channel->Read();
 }
-Acceptor::~Acceptor() {
-  delete channel;
-  delete socket;
-}
+Acceptor::~Acceptor() {}
 void Acceptor::Connect() {
   while (true) {
     int fd = socket->Accept();

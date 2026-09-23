@@ -40,10 +40,10 @@ int Socket::CreateSocket(const int a, string b) {
   return socketfd;
 }
 void Socket::BindSocket() {
-  errif(bind(socketfd, (sockaddr*)&sock, sizeof(sock)), "socket绑定失败！");
+  errif(bind(socketfd, (sockaddr*)&sock, sizeof(sock)) < 0, "socket绑定失败！");
 }
 void Socket::Listen() {
-  errif(listen(socketfd, SOMAXCONN), "socket监听失败！");
+  errif(listen(socketfd, SOMAXCONN) < 0, "socket监听失败！");
 }
 int Socket::Accept() {
   memset(&sock1, 0, sizeof(sock1));
@@ -53,7 +53,7 @@ int Socket::Accept() {
     if (errno == EAGAIN || errno == EWOULDBLOCK)
       return -1;
     else
-      errif(true, "错了");
+      return -1;
   }
   return get_socketfd;
 }

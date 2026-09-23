@@ -15,23 +15,31 @@ int Epoll::Get() {
 }
 int Epoll::Wait() {
   int a = epoll_wait(epollfd, evarr, MAX_COUNT, -1);
-  errif(a < 0, "监听事件失败");
+  if (a < 0) {
+    cout << "监听事件失败" << endl;
+  }
   return a;
 }
 void Epoll::ADD(int a) {
   struct epoll_event tmp;
   tmp.events = EPOLLIN | EPOLLET;
   tmp.data.fd = a;
-  errif((epoll_ctl(epollfd, EPOLL_CTL_ADD, a, &tmp)), "添加epoll事件失败");
+  if ((epoll_ctl(epollfd, EPOLL_CTL_ADD, a, &tmp))) {
+    cout << "添加epoll事件失败" << endl;
+  }
 }
 void Epoll::MOD(int a) {
   struct epoll_event tmp;
   tmp.events = EPOLLIN | EPOLLET;
   tmp.data.fd = a;
-  errif((epoll_ctl(epollfd, EPOLL_CTL_MOD, a, &tmp)), "修改epoll事件失败");
+  if ((epoll_ctl(epollfd, EPOLL_CTL_MOD, a, &tmp))) {
+    cout << "修改epoll事件失败" << endl;
+  }
 }
 void Epoll::DEL(int a) {
-  errif((epoll_ctl(epollfd, EPOLL_CTL_DEL, a, NULL)), "删除epoll事件失败");
+  if ((epoll_ctl(epollfd, EPOLL_CTL_DEL, a, NULL))) {
+    cout << "删除epoll事件失败" << endl;
+  }
 }
 int Epoll::Getfd(int a) {
   return evarr[a].data.fd;
@@ -45,10 +53,14 @@ void Epoll::UpdateChannel(Channel* a) {
   ev2.data.ptr = a;
   ev2.events = a->Getevent();
   if (!a->GetIn()) {
-    errif(epoll_ctl(epollfd, EPOLL_CTL_ADD, fd, &ev2) < 0, "EPOLL添加失败");
+    if (epoll_ctl(epollfd, EPOLL_CTL_ADD, fd, &ev2) < 0) {
+      cout << "EPOLL添加失败" << endl;
+    }
     a->ModIn(true);
   } else {
-    errif(epoll_ctl(epollfd, EPOLL_CTL_MOD, fd, &ev2) < 0, "EPOLL修改失败");
+    if (epoll_ctl(epollfd, EPOLL_CTL_MOD, fd, &ev2) < 0) {
+      cout << "EPOLL修改失败" << endl;
+    }
   }
 }
 vector<Channel*> Epoll::Poll(int timeout) {

@@ -12,7 +12,7 @@ class Connect {
   Connect(int fd, EventLoop* loop);
   ~Connect();
   void SetCallBack(std::function<void(Connect*)> lambda);
-  void SetDel(std::function<void(int)> _close);
+  void SetDel(std::function<void(int, Connect*)> _close);
   int Get();
   void Close();
   void Read();
@@ -29,5 +29,5 @@ class Connect {
   std::unique_ptr<Buffer> readBuffer;
   std::unique_ptr<Buffer> writeBuffer;
   State state;
-  std::function<void(int)> del;
+  std::function<void(int, Connect*)> del;
 };

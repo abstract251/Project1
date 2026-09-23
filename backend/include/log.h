@@ -1,0 +1,4 @@
+class log {
+ public:
+ private:
+};

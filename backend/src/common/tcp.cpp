@@ -29,7 +29,9 @@ Tcp::~Tcp() {}
 void Tcp::Connection(int fd) {
   int random = fd % subReactors.size();
   unique_ptr<Connect> con = make_unique<Connect>(fd, subReactors[random].get());
-  function<void(int)> lambda = [this](int fd) { this->Del(fd); };
+  function<void(int, Connect*)> lambda = [this](int fd, Connect* con) {
+    this->SetDel(fd, con);
+  };
   con->SetDel(lambda);
   con->SetCallBack(_revc);
   {
@@ -40,19 +42,23 @@ void Tcp::Connection(int fd) {
     _con(connections[fd].get());
   }
 }
-void Tcp::Del(int fd) {
-  unique_lock<mutex> lock(mtx);
-  auto it = connections.find(fd);
-  if (it != connections.end()) {
-    Connect* con = it->second.get();
-    connections.erase(it);
-  } else {
-    cerr << "删除失败，fd值为" << fd << "的connect不存在" << endl;
-  }
-}
 void Tcp::SetCon(function<void(Connect*)> lambda) {
   _con = move(lambda);
 }
 void Tcp::SetRevc(std::function<void(Connect*)> lambda) {
   _revc = move(lambda);
+}
+void Tcp::Del(int fd, Connect* con) {
+  unique_lock<mutex> lock(mtx);
+  auto it = connections.find(fd);
+  if (it == connections.end())
+    return;
+  else if (it->second.get() != con)
+    return;
+  else
+    connections.erase(it);
+}
+void Tcp::SetDel(int fd, Connect* con) {
+  std::function<void()> lambda = [this, fd, con]() { this->Del(fd, con); };
+  subReactors[fd % subReactors.size()].get()->SetTasks(lambda);
 }

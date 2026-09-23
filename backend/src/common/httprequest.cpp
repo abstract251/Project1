@@ -98,6 +98,13 @@ string HttpRequest::response_file(string filename) {
   return file;
 }
 string HttpRequest::response_head(string name, int size) {
+  string url = base + name;
+  if (!fs::exists(url)) {
+    string head = "HTTP/1.1 404 Not Found\r\nContent-Type: ";
+    head += map(get_tail(name));
+    head += "\r\n\r\n";
+    return head;
+  }
   string head = "HTTP/1.1 200 OK\r\nContent-Type: ";
   head += map(get_tail(name));
   head += "\r\nContent-Length: ";

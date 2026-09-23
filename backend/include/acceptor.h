@@ -1,4 +1,5 @@
 #include <functional>
+#include <memory>
 #pragma once
 class Channel;
 class EventLoop;
@@ -11,7 +12,7 @@ class Acceptor {
   void SetCallBack(std::function<void(int)> const& lambda);
 
  private:
-  Channel* channel;
+  std::unique_ptr<Socket> socket;
+  std::unique_ptr<Channel> channel;
   std::function<void(int)> callback;
-  Socket* socket;
 };

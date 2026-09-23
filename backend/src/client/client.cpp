@@ -18,8 +18,8 @@ void client(int time = 100, int wait = 0) {
   while (a < time) {
     char buf[1024];
     memset(buf, 0, sizeof(buf));
-    ssize_t len = write(s.GetSocketfd(), "这是一个客户端发送的数据",
-                        sizeof("这是一个客户端发送的数据"));
+    string msg = "GET /a.html HTTP/1.1\r\n";
+    ssize_t len = write(s.GetSocketfd(), msg.c_str(), msg.size());
     if (len > 0) {
       cout << "客户端fd" << s.GetSocketfd() << "已向服务器发送数据" << buf
            << endl;

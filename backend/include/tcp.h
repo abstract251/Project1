@@ -16,15 +16,16 @@ class Tcp {
   void Connection(int socketfd);
   void SetCon(std::function<void(Connect*)> lambda);
   void SetRevc(std::function<void(Connect*)> lambda);
-  void Del(int fd);
+  void Del(int fd, Connect* con);
+  void SetDel(int fd, Connect* con);
 
  private:
   std::unique_ptr<EventLoop> mainReactor;
   std::vector<std::unique_ptr<EventLoop>> subReactors;
-  std::unique_ptr<Acceptor> acceptor;
-  std::unique_ptr<Thread> _thread;
   std::unordered_map<int, std::unique_ptr<Connect>> connections;
+  std::unique_ptr<Acceptor> acceptor;
   std::function<void(Connect*)> _con;
   std::function<void(Connect*)> _revc;
   std::mutex mtx;
+  std::unique_ptr<Thread> _thread;
 };
