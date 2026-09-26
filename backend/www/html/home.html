@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>心理测评系统</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/home.css">
+</head>
+<body>
+  <div class="page-shell">
+    <div class="page-inner">
+      <!-- 对应小程序 pages/home/index -->
+      <div class="home-page">
+        <div class="home-header">
+          <span class="home-title">心理测评系统</span>
+          <span class="home-subtitle">专业心理量表 · 科学评估 · 隐私安全</span>
+        </div>
+
+        <div class="home-banner">
+          <div class="banner-icon">❤</div>
+          <div class="banner-text">
+            <span class="banner-title">关注心理健康</span>
+            <span class="banner-desc">本系统提供专业的心理测评量表，帮助您了解自身的心理健康状况。测评结果仅供参考，不能替代专业医疗诊断。</span>
+          </div>
+        </div>
+
+        <span class="section-title">选择测评量表</span>
+
+        <!-- 综合测评卡片：手机端为渐变头+白体纵向（小程序样式）；
+             桌面端为左侧渐变卡 + 右侧白卡（参考 test/html/home.html） -->
+        <div class="scale-card">
+          <div class="card-left">
+            <div class="card-left-text">
+              <span class="card-left-title">综合心理测评</span>
+              <span class="card-left-sub">共5个量表 · 约30-45分钟</span>
+            </div>
+            <span class="card-left-icon">♡</span>
+          </div>
+
+          <div class="card-right">
+            <ul class="list-items">
+              <li>包含 Sleep-50、PSQI、PHQ-9、GAD-7、SCL-90 五个量表</li>
+              <li>全面评估睡眠质量、情绪状态及心理健康状况</li>
+            </ul>
+            <button class="start-btn" id="goToSleep">开始测评</button>
+          </div>
+        </div>
+
+        <!-- ===== 网站备案与联系信息（ICP备案号需链接工信部） ===== -->
+        <div class="site-footer">
+          <a href="https://beian.miit.gov.cn" target="_blank" rel="noopener noreferrer">鄂ICP备2026035916号</a>
+          <span class="site-footer-sep">|</span>
+          <span>运营主体：唐帅</span>
+          <span class="site-footer-sep">|</span>
+          <span>联系电话：19807189010</span>
+          <span class="site-footer-sep">|</span>
+          <a href="mailto:2966255045@qq.com">2966255045@qq.com</a>
+          <span class="site-footer-sep">|</span>
+          <a href="https://beian.mps.gov.cn/#/query/webSearch?code=42282602000160" target="_blank" rel="noopener noreferrer">鄂公网安备42282602000160号</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/common.js"></script>
+  <script src="../js/pages/home.js"></script>
+</body>
+</html>

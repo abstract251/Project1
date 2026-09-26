@@ -1,12 +1,12 @@
 #include "httprequest.h"
 
+#include "connect.h"
+#include "error.h"
+#include "map.h"
 #include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <sstream>
-
-#include "connect.h"
-#include "map.h"
 #define base "../www"
 using namespace std;
 namespace fs = filesystem;
@@ -42,7 +42,7 @@ string HttpRequest::request_response(string request) {
     cout << "当前收到的是GET请求" << endl;
     string file = response_file(head[1]);
     if (file.size() == 0)
-      buildError(404);
+      return buildError(404);
     string response = response_head(head[1], file.size());
     response = response + file;
     return response;
@@ -96,7 +96,7 @@ string HttpRequest::response_file(string filename) {
       return "";
     }
     return file;
-  } catch (const exception& e) {
+  } catch (const exception &e) {
     cerr << "文件读取异常:" << e.what() << endl;
     return "";
   } catch (...) {
@@ -116,30 +116,5 @@ string HttpRequest::response_head(string name, int size, int code) {
   } catch (...) {
     return "HTTP/1.1 500 Internal Server Error\r\nContent-Length: "
            "0\r\nConnection: close\r\n\r\n";
-  }
-}
-string HttpRequest::buildError(int code) {
-  string body = statusCode(code);
-  string resp = "HTTP/1.1 " + body + "\r\n";
-  resp += "Content-Type: text/plain\r\n";
-  resp += "Content-Length: " + to_string(body.size()) + "\r\n";
-  resp += "Connection: close\r\n\r\n";
-  resp += body;
-  return resp;
-}
-string HttpRequest::statusCode(int code) {
-  switch (code) {
-    case 200:
-      return "200 OK";
-    case 400:
-      return "400 Bad Request";
-    case 404:
-      return "404 Not Found";
-    case 405:
-      return "405 Method Not Allowed";
-    case 414:
-      return "414 URI Too Long";
-    default:
-      return "500 Internal Server Error";
   }
 }

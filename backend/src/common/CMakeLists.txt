@@ -21,5 +21,5 @@ add_library(common STATIC
     httprequest.cpp
 )
 
-# include/ 头文件路径对 common 自身及所有链接它的目标生效（PUBLIC 传播）
+
 target_include_directories(common PUBLIC ${CMAKE_SOURCE_DIR}/include)

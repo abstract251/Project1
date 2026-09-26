@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>心理测评系统</title>
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/entry.css">
+</head>
+<body>
+  <div class="page-shell">
+    <div class="page-inner">
+      <!-- 对应小程序 pages/entry/index -->
+      <div class="entry-page">
+
+        <!-- 左侧内容区（桌面端 58% 左栏；手机端纵向排列保持小程序样式） -->
+        <div class="entry-left">
+
+          <div class="entry-header">
+            <div class="entry-icon">🧠</div>
+            <span class="entry-title">心理测评系统</span>
+            <span class="entry-subtitle">专业心理量表 · 科学评估 · 隐私安全</span>
+          </div>
+
+          <div class="entry-content">
+            <div class="entry-card" id="goToHome">
+              <div class="card-icon">📄</div>
+              <div class="card-info">
+                <span class="card-title">填写问卷</span>
+                <span class="card-desc">我是普通用户，想进行心理测评</span>
+              </div>
+              <div class="card-arrow">›</div>
+            </div>
+
+            <div class="entry-card admin-card" id="goToLogin">
+              <div class="card-icon">🔐</div>
+              <div class="card-info">
+                <span class="card-title">管理员登录</span>
+                <span class="card-desc">我是管理员，需要进入管理后台</span>
+              </div>
+              <div class="card-arrow">›</div>
+            </div>
+          </div>
+
+          <!-- 特性区（仅桌面端显示） -->
+          <div class="entry-features">
+            <div class="feature">
+              <span>👤</span>
+              <h3>心理档案</h3>
+              <p>记录测评历史</p>
+            </div>
+            <div class="feature">
+              <span>📊</span>
+              <h3>智能分析</h3>
+              <p>多维心理分析</p>
+            </div>
+            <div class="feature">
+              <span>🔒</span>
+              <h3>数据安全</h3>
+              <p>隐私保护</p>
+            </div>
+          </div>
+
+          <div class="entry-footer">
+            <span class="footer-text">本系统测评结果仅供参考，不能替代专业医疗诊断</span>
+            <!-- ===== 网站备案与联系信息（ICP备案号需链接工信部） ===== -->
+            <div class="site-footer">
+              <a href="https://beian.miit.gov.cn" target="_blank" rel="noopener noreferrer">鄂ICP备2026035916号</a>
+              <span class="site-footer-sep">|</span>
+              <span>运营主体：唐帅</span>
+              <span class="site-footer-sep">|</span>
+              <span>联系电话：19807189010</span>
+              <span class="site-footer-sep">|</span>
+              <a href="mailto:2966255045@qq.com">2966255045@qq.com</a>
+              <span class="site-footer-sep">|</span>
+              <a href="https://beian.mps.gov.cn/#/query/webSearch?code=42282602000160" target="_blank" rel="noopener noreferrer">鄂公网安备42282602000160号</a>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 右侧插画区（仅桌面端显示） -->
+        <div class="entry-right">
+          <div class="entry-right-bg"></div>
+          <div class="float-card float-card-1"></div>
+          <div class="float-card float-card-2"></div>
+          <div class="float-card float-card-3"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/pages/entry.js"></script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>既往病史</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/disease-history.css">
+  <!-- 登录检测：未登录直接跳转登录页 -->
+  <script src="../js/auth.js"></script>
+</head>
+<body>
+  <div class="page-shell">
+    <div class="page-inner side-layout">
+      <!-- 桌面端左侧固定导航栏（js/sidebar.js 渲染，手机端不显示） -->
+      <aside class="side-nav" id="sidebar"></aside>
+      <div class="side-main">
+      <!-- 对应小程序 pages/disease-history/index -->
+      <div class="history-page">
+        <div class="nav-header">
+          <button class="nav-back" id="navBack">‹ 返回</button>
+          <div class="nav-title">既往病史</div>
+          <div class="nav-right"></div>
+        </div>
+
+        <div class="page-content">
+          <div class="info-card">
+            <div class="info-header">
+              <span class="info-title">用户信息</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">姓名</span>
+              <span class="info-value" id="userName">-</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">性别</span>
+              <span class="info-value" id="userGender">-</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">年龄</span>
+              <span class="info-value" id="userAge">-</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">岗位</span>
+              <span class="info-value" id="userOccupation">-</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">工作年限</span>
+              <span class="info-value" id="userWorkYears">-</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">文化程度</span>
+              <span class="info-value" id="userEducation">-</span>
+            </div>
+          </div>
+
+          <div class="loading-section" id="loadingSection">
+            <span class="loading-text">加载中...</span>
+          </div>
+
+          <div id="contentArea" style="display:none;">
+            <!-- 既往病史 -->
+            <div class="section-card">
+              <span class="section-title">既往病史</span>
+              <div class="empty-state" id="emptyState" style="display:none;">
+                <span class="empty-text">无既往病史或未填写</span>
+              </div>
+              <div class="disease-list" id="diseaseList"></div>
+            </div>
+
+            <!-- 月经史（仅女性） -->
+            <div class="section-card" id="menstrualCard" style="display:none;">
+              <span class="section-title">月经史</span>
+              <div class="menstrual-grid" id="menstrualGrid"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== 网站备案与联系信息（ICP备案号需链接工信部） ===== -->
+        <div class="site-footer">
+          <a href="https://beian.miit.gov.cn" target="_blank" rel="noopener noreferrer">鄂ICP备2026035916号</a>
+          <span class="site-footer-sep">|</span>
+          <span>运营主体：唐帅</span>
+          <span class="site-footer-sep">|</span>
+          <span>联系电话：19807189010</span>
+          <span class="site-footer-sep">|</span>
+          <a href="mailto:2966255045@qq.com">2966255045@qq.com</a>
+          <span class="site-footer-sep">|</span>
+          <a href="https://beian.mps.gov.cn/#/query/webSearch?code=42282602000160" target="_blank" rel="noopener noreferrer">鄂公网安备42282602000160号</a>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/common.js"></script>
+  <script src="../js/sidebar.js"></script>
+  <script src="../js/pages/disease-history.js"></script>
+</body>
+</html>

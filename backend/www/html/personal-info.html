@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>健康信息采集表</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/personal-info.css">
+</head>
+<body>
+  <div class="page-shell">
+    <div class="page-inner">
+      <!-- 对应小程序 pages/personal-info/index -->
+      <div class="pi-page">
+        <div class="nav-header">
+          <button class="nav-back" id="navBack">‹ 返回</button>
+          <div class="nav-title">健康信息采集表</div>
+          <div class="nav-right"></div>
+        </div>
+
+        <div class="pi-container">
+
+          <!-- 个人基本信息 -->
+          <div class="pi-card pi-grid">
+            <div class="pi-title">个人基本信息</div>
+
+            <div class="pi-field">
+              <label class="pi-label">姓名</label>
+              <input class="pi-input" id="name" placeholder="请输入姓名" autocomplete="off">
+            </div>
+
+            <div class="pi-field">
+              <label class="pi-label">性别</label>
+              <select class="pi-select" id="gender">
+                <option value="">请选择</option>
+                <option value="男">男</option>
+                <option value="女">女</option>
+              </select>
+            </div>
+
+            <div class="pi-field">
+              <label class="pi-label">年龄</label>
+              <input class="pi-input" id="age" placeholder="请输入年龄" type="text" inputmode="numeric" autocomplete="off">
+            </div>
+
+            <div class="pi-field">
+              <label class="pi-label">出生日期</label>
+              <input class="pi-date" id="birthDate" type="date">
+            </div>
+
+            <div class="pi-field">
+              <label class="pi-label">职业</label>
+              <input class="pi-input" id="occupation" placeholder="请输入职业" autocomplete="off">
+            </div>
+
+            <div class="pi-field">
+              <label class="pi-label">工作单位</label>
+              <input class="pi-input" id="workUnit" placeholder="请输入工作单位" autocomplete="off">
+            </div>
+
+            <div class="pi-field">
+              <label class="pi-label">受教育程度</label>
+              <select class="pi-select" id="education">
+                <option value="">请选择</option>
+                <option value="小学">小学</option>
+                <option value="中学">中学</option>
+                <option value="本科">本科</option>
+                <option value="硕士">硕士</option>
+                <option value="博士">博士</option>
+                <option value="其他">其他</option>
+              </select>
+            </div>
+
+            <div class="pi-field">
+              <label class="pi-label">工作年限</label>
+              <input class="pi-input" id="workYears" placeholder="请输入工作年限（年）" type="text" inputmode="numeric" autocomplete="off">
+            </div>
+
+            <div class="pi-field">
+              <label class="pi-label">锻炼频率</label>
+              <select class="pi-select" id="exercise">
+                <option value="">请选择</option>
+                <option value="每天">每天</option>
+                <option value="每周">每周</option>
+                <option value="偶尔">偶尔</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- 月经史（女性填写） -->
+          <div class="pi-card menstrual pi-grid" id="menstrualCard" style="display:none;">
+            <div class="pi-title">月经史（女性填写）</div>
+
+            <div class="pi-field">
+              <label class="pi-label">初潮年龄</label>
+              <input class="pi-input" id="menarcheAge" placeholder="请输入初潮年龄（岁）" type="text" inputmode="numeric" autocomplete="off">
+            </div>
+
+            <div class="pi-field">
+              <label class="pi-label">经期（天）</label>
+              <input class="pi-input" id="periodDays" placeholder="请输入经期天数" type="text" inputmode="numeric" autocomplete="off">
+            </div>
+
+            <div class="pi-field">
+              <label class="pi-label">末次月经</label>
+              <input class="pi-date" id="lastPeriod" type="date">
+            </div>
+
+            <div class="pi-field">
+              <label class="pi-label">周期（天）</label>
+              <input class="pi-input" id="cycleDays" placeholder="请输入周期天数" type="text" inputmode="numeric" autocomplete="off">
+            </div>
+
+            <div class="pi-field">
+              <label class="pi-label">经量</label>
+              <select class="pi-select" id="menstrualVolume">
+                <option value="">请选择</option>
+                <option value="少">少</option>
+                <option value="正常">正常</option>
+                <option value="多">多</option>
+              </select>
+            </div>
+
+            <div class="pi-field">
+              <label class="pi-label">痛经</label>
+              <select class="pi-select" id="dysmenorrhea">
+                <option value="">请选择</option>
+                <option value="无">无</option>
+                <option value="有">有</option>
+              </select>
+            </div>
+
+            <div class="pi-field">
+              <label class="pi-label">经期是否规律</label>
+              <div class="pi-inline-radio">
+                <label class="pi-radio-item"><input type="radio" name="isRegular" value="是">是</label>
+                <label class="pi-radio-item"><input type="radio" name="isRegular" value="否">否</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- 既往病史 -->
+          <div class="pi-card">
+            <div class="pi-title">既往病史</div>
+
+            <div class="pi-history-box">
+              <div class="pi-disease">
+                <div class="pi-disease-title">高血压</div>
+                <div class="pi-inline-radio" data-disease="hypertension">
+                  <label class="pi-radio-item"><input type="radio" name="hypertension" value="不详">不详</label>
+                  <label class="pi-radio-item"><input type="radio" name="hypertension" value="否">否</label>
+                  <label class="pi-radio-item"><input type="radio" name="hypertension" value="是">是</label>
+                </div>
+                <input class="pi-drug-input" id="hypertensionDrug" placeholder="请输入药物名称" style="display:none;" autocomplete="off">
+              </div>
+
+              <div class="pi-disease">
+                <div class="pi-disease-title">糖尿病</div>
+                <div class="pi-inline-radio" data-disease="diabetes">
+                  <label class="pi-radio-item"><input type="radio" name="diabetes" value="不详">不详</label>
+                  <label class="pi-radio-item"><input type="radio" name="diabetes" value="否">否</label>
+                  <label class="pi-radio-item"><input type="radio" name="diabetes" value="是">是</label>
+                </div>
+                <input class="pi-drug-input" id="diabetesDrug" placeholder="请输入药物名称" style="display:none;" autocomplete="off">
+              </div>
+
+              <div class="pi-disease">
+                <div class="pi-disease-title">高脂血症</div>
+                <div class="pi-inline-radio" data-disease="hyperlipidemia">
+                  <label class="pi-radio-item"><input type="radio" name="hyperlipidemia" value="不详">不详</label>
+                  <label class="pi-radio-item"><input type="radio" name="hyperlipidemia" value="否">否</label>
+                  <label class="pi-radio-item"><input type="radio" name="hyperlipidemia" value="是">是</label>
+                </div>
+                <input class="pi-drug-input" id="hyperlipidemiaDrug" placeholder="请输入药物名称" style="display:none;" autocomplete="off">
+              </div>
+
+              <div class="pi-disease">
+                <div class="pi-disease-title">呼吸系统疾病</div>
+                <div class="pi-inline-radio" data-disease="respiratory">
+                  <label class="pi-radio-item"><input type="radio" name="respiratory" value="不详">不详</label>
+                  <label class="pi-radio-item"><input type="radio" name="respiratory" value="否">否</label>
+                  <label class="pi-radio-item"><input type="radio" name="respiratory" value="是">是</label>
+                </div>
+                <input class="pi-drug-input" id="respiratoryDrug" placeholder="请输入药物名称" style="display:none;" autocomplete="off">
+              </div>
+            </div>
+          </div>
+
+          <!-- 吸烟饮酒 -->
+          <div class="pi-card">
+            <div class="pi-option-group green">
+              <div class="pi-option-title">吸烟史</div>
+              <label class="pi-option-item"><input type="radio" name="smoking" value="不详">不详</label>
+              <label class="pi-option-item"><input type="radio" name="smoking" value="从未吸烟（包括偶尔吸）">从未吸烟（包括偶尔吸）</label>
+              <label class="pi-option-item"><input type="radio" name="smoking" value="以前吸烟（＞1年）">以前吸烟（＞1年）</label>
+              <label class="pi-option-item"><input type="radio" name="smoking" value="现在吸烟（至少1支/天并持续1年；或累计多于18包/年）">现在吸烟（至少1支/天并持续1年；或累计多于18包/年）</label>
+            </div>
+
+            <div class="pi-option-group blue">
+              <div class="pi-option-title">饮酒史</div>
+              <label class="pi-option-item"><input type="radio" name="drinking" value="不详">不详</label>
+              <label class="pi-option-item"><input type="radio" name="drinking" value="从不饮酒（包括偶尔饮）">从不饮酒（包括偶尔饮）</label>
+              <label class="pi-option-item"><input type="radio" name="drinking" value="以前饮酒（＞1年）">以前饮酒（＞1年）</label>
+              <label class="pi-option-item"><input type="radio" name="drinking" value="现在饮酒（平均至少两次/周并持续1年以上）">现在饮酒（平均至少两次/周并持续1年以上）</label>
+            </div>
+          </div>
+
+          <div class="pi-submit-wrap">
+            <button class="pi-submit-btn" id="submitBtn">确认，进入测评</button>
+          </div>
+
+        </div>
+
+        <!-- ===== 网站备案与联系信息（ICP备案号需链接工信部） ===== -->
+        <div class="site-footer">
+          <a href="https://beian.miit.gov.cn" target="_blank" rel="noopener noreferrer">鄂ICP备2026035916号</a>
+          <span class="site-footer-sep">|</span>
+          <span>运营主体：唐帅</span>
+          <span class="site-footer-sep">|</span>
+          <span>联系电话：19807189010</span>
+          <span class="site-footer-sep">|</span>
+          <a href="mailto:2966255045@qq.com">2966255045@qq.com</a>
+          <span class="site-footer-sep">|</span>
+          <a href="https://beian.mps.gov.cn/#/query/webSearch?code=42282602000160" target="_blank" rel="noopener noreferrer">鄂公网安备42282602000160号</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/common.js"></script>
+  <script src="../js/pages/personal-info.js"></script>
+</body>
+</html>

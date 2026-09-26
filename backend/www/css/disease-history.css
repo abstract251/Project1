@@ -1,0 +1,284 @@
+/* =====================================================
+   disease-history.css — 既往病史（对应 pages/disease-history/index.wxss）
+   尺寸按 750rpx 设计稿换算（1rpx = 0.5px @375px）
+   ===================================================== */
+
+.history-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f0f7ff, #e8f4fd);
+  padding-bottom: 24px;       /* 48rpx */
+}
+
+.page-content {
+  padding: 12px;             /* 24rpx */
+}
+
+.info-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 8px;        /* 16rpx */
+  padding: 14px;             /* 28rpx */
+  margin-bottom: 10px;       /* 20rpx */
+  box-shadow: 0 4px 20px rgba(26, 111, 196, 0.08);
+}
+
+.info-header {
+  margin-bottom: 10px;       /* 20rpx */
+  padding-bottom: 8px;       /* 16rpx */
+  border-bottom: 1.5px solid #e0ecf7;
+}
+
+.info-title {
+  color: #1a6fc4;
+  font-size: 15px;           /* 30rpx */
+  font-weight: 600;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;            /* 16rpx 0 */
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.info-row:last-child { border-bottom: none; }
+
+.info-label {
+  color: #666;
+  font-size: 14px;           /* 28rpx */
+}
+
+.info-value {
+  color: #1a1a1a;
+  font-size: 14px;           /* 28rpx */
+  font-weight: 500;
+}
+
+.loading-section {
+  text-align: center;
+  padding: 40px 0;           /* 80rpx 0 */
+}
+
+.loading-text {
+  color: #999;
+  font-size: 14px;           /* 28rpx */
+}
+
+.section-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 8px;        /* 16rpx */
+  padding: 14px;             /* 28rpx */
+  margin-bottom: 10px;       /* 20rpx */
+  box-shadow: 0 4px 20px rgba(26, 111, 196, 0.08);
+}
+
+.section-title {
+  color: #1a6fc4;
+  font-size: 15px;           /* 30rpx */
+  font-weight: 600;
+  margin-bottom: 10px;       /* 20rpx */
+  display: block;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 20px 0;           /* 40rpx 0 */
+}
+
+.empty-text {
+  color: #999;
+  font-size: 13px;           /* 26rpx */
+}
+
+.disease-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;                  /* 16rpx */
+}
+
+.disease-item {
+  background: #f8fafc;
+  border-radius: 6px;        /* 12rpx */
+  padding: 10px 12px;        /* 20rpx 24rpx */
+}
+
+.disease-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;        /* 8rpx */
+}
+
+.disease-name {
+  color: #1a1a1a;
+  font-size: 14px;           /* 28rpx */
+  font-weight: 600;
+}
+
+.disease-status {
+  font-size: 13px;           /* 26rpx */
+  padding: 2px 8px;          /* 4rpx 16rpx */
+  border-radius: 10px;       /* 20rpx */
+}
+
+.status-yes {
+  color: #d31616;
+  background: #fff0f0;
+}
+
+.status-no {
+  color: #119643;
+  background: #f0fff4;
+}
+
+.status-unknown {
+  color: #999;
+  background: #f5f5f5;
+}
+
+.disease-drug {
+  display: flex;
+  align-items: center;
+  margin-top: 4px;           /* 8rpx */
+  padding-top: 4px;          /* 8rpx */
+  border-top: 1px solid #e8ecf0;
+}
+
+.drug-label {
+  color: #888;
+  font-size: 12px;           /* 24rpx */
+}
+
+.drug-value {
+  color: #1a1a1a;
+  font-size: 12px;           /* 24rpx */
+  font-weight: 500;
+}
+
+.menstrual-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;                  /* 12rpx */
+}
+
+.menstrual-row {
+  display: flex;
+  padding: 8px 0;            /* 16rpx 0 */
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.menstrual-row:last-child { border-bottom: none; }
+
+.m-label {
+  color: #888;
+  font-size: 13px;           /* 26rpx */
+  flex: 0 0 70px;            /* 140rpx */
+}
+
+.m-value {
+  color: #1a1a1a;
+  font-size: 13px;           /* 26rpx */
+  font-weight: 500;
+  flex: 1;
+}
+
+/* ===== 桌面端：白底细边框卡片布局（配合左侧固定导航栏） ===== */
+@media (min-width: 481px) {
+  .history-page {
+    min-height: 100vh;
+    background: transparent;
+  }
+  .page-content {
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px 30px 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+  /* 左列：用户信息（含加载提示）；右列：既往病史 + 月经史 */
+  .info-card {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .loading-section {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  #contentArea {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+  .info-card,
+  .section-card {
+    margin-bottom: 0;
+    border-radius: 8px;
+    padding: 0;
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid #eaeaea;
+    box-shadow: none;
+  }
+  .section-card {
+    margin-bottom: 14px;
+  }
+  /* 卡片标题：蓝色左条 */
+  .info-card .info-header,
+  .section-card .section-title {
+    border-left: 4px solid #2475e0;
+    margin: 10px 20px 0 20px;
+    padding: 8px 0 8px 10px;
+    font-size: 16px;
+    color: #333;
+    border-bottom: none;
+  }
+  /* 用户信息表格行 */
+  .info-row {
+    line-height: 45px;
+    padding: 0;
+    border-bottom: 1px solid #f0f0f0;
+    margin: 0 20px;
+  }
+  .info-label {
+    width: 30%;
+    flex: 0 0 30%;
+    background: #fafafa;
+    padding-left: 15px;
+    color: #666;
+    font-size: 14px;
+  }
+  .info-value {
+    width: 70%;
+    text-align: right;
+    padding-right: 15px;
+    color: #333;
+    font-size: 14px;
+    flex: 1;
+  }
+  .disease-list {
+    padding: 15px 20px 20px;
+  }
+  .section-card .empty-state {
+    padding: 15px 20px 20px;
+  }
+  .menstrual-grid {
+    padding: 10px 20px 20px;
+  }
+}
+
+/* =====================================================
+   中屏适配（平板竖屏 481~1023px）：
+   两栏改为单栏纵向，避免每栏过窄
+   ===================================================== */
+@media (min-width: 481px) and (max-width: 1023px) {
+  .page-content {
+    grid-template-columns: 1fr;
+  }
+  .info-card,
+  .loading-section,
+  #contentArea {
+    grid-column: auto;
+    grid-row: auto;
+  }
+}

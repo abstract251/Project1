@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>管理后台</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/admin.css">
+  <!-- 登录检测：未登录直接跳转登录页 -->
+  <script src="../js/auth.js"></script>
+</head>
+<body>
+  <div class="page-shell">
+    <div class="page-inner side-layout">
+      <!-- 桌面端左侧固定导航栏（js/sidebar.js 渲染，手机端不显示） -->
+      <aside class="side-nav" id="sidebar"></aside>
+      <div class="side-main">
+      <!-- 对应小程序 pages/admin/index -->
+      <div class="admin-page">
+        <div class="admin-header">
+          <div class="header-left">
+            <span class="header-title">后台管理</span>
+          </div>
+          <div class="header-right">
+            <button class="user-avatar" id="userAvatar" title="管理员">
+              <span class="avatar-icon">👤</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- ===== 首页视图 ===== -->
+        <div class="admin-content">
+          <span class="section-title">测评管理</span>
+
+          <div class="card-section">
+            <div class="main-card" id="mainCard">
+              <div class="card-top">
+                <div class="card-icon-wrap">
+                  <span class="card-icon">😴</span>
+                </div>
+                <div class="card-info">
+                  <span class="card-info-title">综合心理测评</span>
+                </div>
+                <div class="card-arrow">›</div>
+              </div>
+              <div class="card-stats">
+                <div class="stat-row">
+                  <span class="stat-label">今日填写</span>
+                  <span class="stat-value" id="statToday">0人</span>
+                </div>
+                <div class="stat-row">
+                  <span class="stat-label">累计填写</span>
+                  <span class="stat-value" id="statTotal">0人</span>
+                </div>
+                <div class="stat-row">
+                  <span class="stat-label">今日新增用户</span>
+                  <span class="stat-value" id="statUsers">0人</span>
+                </div>
+              </div>
+              <div class="card-action">
+                <span class="action-text">进入管理</span>
+                <span class="action-arrow">→</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="quick-section">
+            <span class="section-title">快捷功能</span>
+            <div class="quick-grid">
+              <button class="quick-item" data-item="records">
+                <span class="quick-icon icon-purple">📝</span>
+                <span class="quick-label">测评记录</span>
+                <span class="quick-desc">查看历史测评数据</span>
+              </button>
+              <button class="quick-item" data-item="users">
+                <span class="quick-icon icon-blue">👤</span>
+                <span class="quick-label">用户管理</span>
+                <span class="quick-desc">管理系统用户信息</span>
+              </button>
+              <button class="quick-item" data-item="export">
+                <span class="quick-icon icon-pink">📤</span>
+                <span class="quick-label">导出数据</span>
+                <span class="quick-desc">导出测评统计数据</span>
+              </button>
+              <button class="quick-item" data-item="settings">
+                <span class="quick-icon icon-gray">⚙️</span>
+                <span class="quick-label">系统设置</span>
+                <span class="quick-desc">系统参数与配置</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== 网站备案与联系信息（ICP备案号需链接工信部） ===== -->
+        <div class="site-footer">
+          <a href="https://beian.miit.gov.cn" target="_blank" rel="noopener noreferrer">鄂ICP备2026035916号</a>
+          <span class="site-footer-sep">|</span>
+          <span>运营主体：唐帅</span>
+          <span class="site-footer-sep">|</span>
+          <span>联系电话：19807189010</span>
+          <span class="site-footer-sep">|</span>
+          <a href="mailto:2966255045@qq.com">2966255045@qq.com</a>
+          <span class="site-footer-sep">|</span>
+          <a href="https://beian.mps.gov.cn/#/query/webSearch?code=42282602000160" target="_blank" rel="noopener noreferrer">鄂公网安备42282602000160号</a>
+        </div>
+
+        <!-- Tab栏（手机端显示；桌面端隐藏，改用左侧导航栏） -->
+        <div class="tab-bar">
+          <button class="tab-item active" data-tab="home">
+            <span class="tab-icon">🏠</span>
+            <span class="tab-text">首页</span>
+          </button>
+          <button class="tab-item" data-tab="profile">
+            <span class="tab-icon">👤</span>
+            <span class="tab-text">我的</span>
+          </button>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/common.js"></script>
+  <script src="../js/sidebar.js"></script>
+  <script src="../js/pages/admin.js"></script>
+</body>
+</html>

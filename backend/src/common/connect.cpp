@@ -8,8 +8,8 @@
 #include "channel.h"
 #include "event_loop.h"
 #include "socket.h"
-Connect::Connect(int fd, EventLoop* loop) {
-  state = Connected;
+Connect::Connect(int fd, EventLoop *loop) {
+  state = State::Connected;
   readBuffer = std::make_unique<Buffer>();
   writeBuffer = std::make_unique<Buffer>();
   socket = std::make_unique<Socket>(fd);
@@ -21,30 +21,36 @@ Connect::Connect(int fd, EventLoop* loop) {
   channel->Read();
 }
 
-void Connect::SetCallBack(std::function<void(Connect*)> lambda) {
+void Connect::SetCallBack(std::function<void(Connect *)> lambda) {
   callback = lambda;
 }
 Connect::~Connect() {}
-int Connect::Get() {
-  return socket->GetSocketfd();
-}
+int Connect::Get() { return socket->GetSocketfd(); }
 void Connect::Close() {
-  if (state == Closed)
+  if (state == State::Closed)
     return;
-  state = Closed;
+  state = State::Closed;
   del(socket->GetSocketfd(), this);
 }
-void Connect::SetDel(std::function<void(int, Connect*)> _close) {
+void Connect::SetDel(std::function<void(int, Connect *)> _close) {
   del = _close;
 }
 void Connect::Read() {
-  if (state != Connected)
+  if (state != State::Connected)
     return;
   nonBlockRead();
-  if (state == Closed)
+  if (state == State::Closed)
     return;
-  if (state == Connected && callback && readBuffer->Size() > 0)
+  while (state == State::Connected && callback) {
+    RC r = extractRequest();
+    if (r == RC::Wait)
+      return;
+    if (r == RC::Bad) {
+      callback(this);
+      return;
+    }
     callback(this);
+  }
 }
 void Connect::nonBlockRead() {
   while (true) {
@@ -72,10 +78,10 @@ void Connect::nonBlockRead() {
   }
 }
 void Connect::Write() {
-  if (state != Connected)
+  if (state != State::Connected)
     return;
   nonBlockWrite();
-  if (state == Closed)
+  if (state == State::Closed)
     return;
   if (writeBuffer->Size() > 0)
     channel->EnableWrite();
@@ -106,17 +112,16 @@ void Connect::nonBlockWrite() {
     }
   }
 }
-std::string Connect::GetRead() {
-  return readBuffer->Get();
-}
-void Connect::Send(const std::string& a) {
-  if (state != Connected)
+std::string Connect::GetRead() { return readBuffer->Get(); }
+std::string Connect::GetRequest() { return currentRequest; }
+void Connect::Send(const std::string &a) {
+  if (state != State::Connected)
     return;
   writeBuffer->Read(a);
   Write();
 }
 void Connect::shutDown() {
-  if (state != Connected)
+  if (state != State::Connected)
     return;
   if (writeBuffer->Size() > 0)
     return;
@@ -126,4 +131,37 @@ void Connect::shutDown() {
   }
   shutdown(fd, SHUT_WR);
   Close();
+}
+Connect::RC Connect::extractRequest() {
+  currentRequest.clear();
+  if (readBuffer->Size() <= 0) {
+    return RC::Wait;
+  }
+  std::string data = readBuffer->Get();
+  size_t start = 0;
+  while (start + 1 < data.size() && data[start] == '\r' &&
+         data[start + 1] == '\n')
+    start += 2;
+  if (start > 0) {
+    readBuffer->ClearFront(static_cast<int>(start));
+    if (readBuffer->Size() <= 0) {
+      return RC::Bad;
+    }
+    data = readBuffer->Get();
+  }
+  size_t n = data.find("\r\n\r\n");
+  if (n == std::string::npos) {
+    return RC::Wait;
+  }
+  n += 4;
+  std::string a;
+  a.assign(data, 0, n);
+  currentRequest.append(a);
+  size_t y = currentRequest.find(' ');
+  if (y == 0 || y == std::string::npos || y == n) {
+    readBuffer->ClearFront(static_cast<int>(n));
+    return RC::Bad;
+  }
+  readBuffer->ClearFront(static_cast<int>(n));
+  return RC::Ok;
 }

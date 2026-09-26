@@ -1,0 +1,479 @@
+/* =====================================================
+   admin.css — 管理后台（对应小程序 pages/admin/index.wxss）
+   尺寸按 750rpx 设计稿换算（1rpx = 0.5px @375px）
+   ===================================================== */
+
+.admin-page {
+  min-height: 100vh;
+  background: #f5f7fa;
+  padding-bottom: 60px;      /* 120rpx（给底部 Tab 栏留空间） */
+}
+
+.admin-header {
+  background: linear-gradient(135deg, #1a6fc4, #4a9fd4);
+  padding: 16px;             /* 32rpx */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-left {
+  flex: 1;
+  text-align: center;
+}
+
+.header-title {
+  color: #fff;
+  font-size: 18px;           /* 36rpx */
+  font-weight: 600;
+}
+
+.header-right {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.user-avatar {
+  width: 36px;               /* 72rpx */
+  height: 36px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+}
+
+.user-avatar:hover { background: rgba(255, 255, 255, 0.3); }
+
+.avatar-icon {
+  font-size: 16px;           /* 32rpx */
+}
+
+.admin-content {
+  padding: 16px;             /* 32rpx */
+}
+
+.section-title {
+  color: #1a1a1a;
+  font-size: 16px;           /* 32rpx */
+  font-weight: 600;
+  margin-bottom: 12px;       /* 24rpx */
+  display: block;
+}
+
+.card-section {
+  margin-bottom: 16px;       /* 32rpx */
+}
+
+.main-card {
+  background: #fff;
+  border-radius: 10px;       /* 20rpx */
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: all 0.2s;
+  border-top: 3px solid #4ab795;  /* 6rpx */
+}
+
+.main-card:hover { transform: scale(0.99); opacity: 0.97; }
+.main-card:active { transform: scale(0.98); opacity: 0.95; }
+
+.card-top {
+  padding: 16px;             /* 32rpx */
+  display: flex;
+  align-items: center;
+}
+
+.card-icon-wrap {
+  width: 48px;               /* 96rpx */
+  height: 48px;
+  border-radius: 10px;       /* 20rpx */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;        /* 24rpx */
+  background: #e8f8f3;
+}
+
+.card-icon {
+  font-size: 24px;           /* 48rpx */
+}
+
+.card-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-info-title {
+  color: #1a1a1a;
+  font-size: 18px;           /* 36rpx */
+  font-weight: 600;
+}
+
+.card-arrow {
+  color: #ccc;
+  font-size: 20px;           /* 40rpx */
+}
+
+.card-stats {
+  padding: 0 16px 12px;      /* 0 32rpx 24rpx */
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;            /* 16rpx 0 */
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.stat-row:last-child { border-bottom: none; }
+
+.stat-label {
+  color: #888;
+  font-size: 14px;           /* 28rpx */
+}
+
+.stat-value {
+  color: #1a6fc4;
+  font-size: 16px;           /* 32rpx */
+  font-weight: 600;
+}
+
+.card-action {
+  padding: 12px 16px;        /* 24rpx 32rpx */
+  background: #f8fafc;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.action-text {
+  color: #1a6fc4;
+  font-size: 14px;           /* 28rpx */
+  font-weight: 500;
+}
+
+.action-arrow {
+  color: #1a6fc4;
+  font-size: 14px;
+}
+
+.quick-section {
+  margin-top: 8px;           /* 16rpx */
+}
+
+.quick-grid {
+  display: flex;
+  flex-wrap: wrap;
+  background: #fff;
+  border-radius: 8px;        /* 16rpx */
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.quick-item {
+  width: 50%;
+  padding: 20px 0;           /* 40rpx 0 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-bottom: 1px solid #f0f0f0;
+  cursor: pointer;
+  background: none;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+}
+
+.quick-item:nth-child(2n) { border-left: 1px solid #f0f0f0; }
+.quick-item:nth-last-child(-n+2) { border-bottom: none; }
+
+.quick-item:hover { background: #f8f8f8; }
+
+.quick-icon {
+  font-size: 24px;           /* 48rpx */
+  margin-bottom: 6px;        /* 12rpx */
+}
+
+.quick-label {
+  color: #555;
+  font-size: 13px;           /* 26rpx */
+}
+
+/* 快捷功能描述：仅桌面端显示 */
+.quick-desc {
+  display: none;
+}
+
+/* =====================================================
+   底部 Tab 栏
+   （fixed 定位，手机端全宽；桌面端见下方媒体查询）
+   ===================================================== */
+.tab-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border-top: 1px solid #e5e5e5;
+  display: flex;
+  padding: 8px 0;            /* 16rpx 0 32rpx */
+  box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.05);
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.tab-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 0;
+}
+
+.tab-icon {
+  font-size: 18px;           /* 36rpx */
+  margin-bottom: 4px;        /* 8rpx */
+}
+
+.tab-text {
+  color: #999;
+  font-size: 12px;           /* 24rpx */
+}
+
+.tab-item.active .tab-text {
+  color: #1a6fc4;
+  font-weight: 500;
+}
+
+.tab-item:active { opacity: 0.7; }
+
+/* =====================================================
+   桌面端（>480px）：参考 test/html/admin.html
+   —— 白色侧边栏（common.css）+ 蓝色顶栏 + 浅灰内容区：
+   统计大卡片（黄色图标块 + 大数字统计 + 浅蓝进入条）
+   + 快捷功能四列彩色图标卡
+   ===================================================== */
+@media (min-width: 481px) {
+  .admin-page {
+    padding-bottom: 0;
+    background: transparent;
+  }
+  /* 蓝色顶栏 */
+  .admin-header {
+    background: #1a73e8;
+    height: 60px;
+    padding: 0 30px;
+    position: static;
+  }
+  .header-left {
+    flex: 1;
+    text-align: left;
+  }
+  .header-title {
+    font-size: 18px;
+    font-weight: 500;
+  }
+  .header-right {
+    flex: none;
+  }
+  .user-avatar {
+    width: 35px;
+    height: 35px;
+    background: #fff;
+    color: #1a73e8;
+    font-weight: bold;
+  }
+  .user-avatar:hover {
+    background: #f0f0f0;
+  }
+  .avatar-icon {
+    font-size: 15px;
+  }
+
+  .admin-content {
+    max-width: 100%;
+    padding: 30px;
+  }
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  .card-section {
+    margin-bottom: 0;
+  }
+
+  /* 综合测评统计卡 */
+  .main-card {
+    background: #fff;
+    border: 1px solid #f0f0f0;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+    margin-bottom: 30px;
+    border-top: none;
+  }
+  .main-card:hover {
+    transform: none;
+    opacity: 1;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  }
+  .card-top {
+    padding: 0 0 20px;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  .card-icon-wrap {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    margin-right: 0;
+    background: #fffbe6;
+  }
+  .card-icon {
+    font-size: 25px;
+  }
+  .card-info-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+  }
+  .card-arrow {
+    margin-left: auto;
+    font-size: 20px;
+    color: #999;
+  }
+
+  /* 统计：三列大数字 */
+  .card-stats {
+    display: flex;
+    padding: 20px 0;
+  }
+  .stat-row {
+    flex: 1;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 0 0 0 20px;
+    border-right: 1px solid #f0f0f0;
+    border-bottom: none;
+  }
+  .stat-row:first-child {
+    padding-left: 0;
+  }
+  .stat-row:last-child {
+    border-right: none;
+  }
+  .stat-label {
+    font-size: 14px;
+    color: #888;
+  }
+  .stat-value {
+    font-size: 28px;
+    color: #1a73e8;
+    font-weight: bold;
+  }
+
+  /* 进入管理浅蓝条 */
+  .card-action {
+    background: #f0f7ff;
+    color: #1a73e8;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  .card-action:hover {
+    background: #e0efff;
+  }
+  .action-text {
+    color: #1a73e8;
+    font-size: 15px;
+  }
+  .action-arrow {
+    color: #1a73e8;
+    font-size: 15px;
+  }
+
+  /* 快捷功能：四列彩色图标卡 */
+  .quick-section {
+    margin-top: 0;
+  }
+  .quick-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    background: transparent;
+    box-shadow: none;
+  }
+  .quick-item {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+    width: 100%;
+    border: 1px solid #f0f0f0;
+    transition: transform 0.2s;
+  }
+  .quick-item:hover {
+    background: #fff;
+    transform: translateY(-5px);
+  }
+  .quick-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    margin: 0 auto 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+  }
+  .icon-purple { background: #f3e8ff; color: #7e22ce; }
+  .icon-blue   { background: #dbeafe; color: #2563eb; }
+  .icon-pink   { background: #fce7f3; color: #db2777; }
+  .icon-gray   { background: #f3f4f6; color: #4b5563; }
+  .quick-label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    display: block;
+    margin-bottom: 8px;
+  }
+  .quick-desc {
+    display: block;
+    font-size: 13px;
+    color: #999;
+  }
+
+  /* 底部 Tab 栏：桌面端隐藏（改用左侧导航栏） */
+  .tab-bar {
+    display: none;
+  }
+}
+
+/* =====================================================
+   中屏适配（平板竖屏 481~1023px）：
+   快捷功能由四列改为两列，避免每卡过窄
+   ===================================================== */
+@media (min-width: 481px) and (max-width: 1023px) {
+  .quick-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

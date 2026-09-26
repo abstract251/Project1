@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>睡眠综合测评</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/assessment.css">
+</head>
+<body>
+  <!-- 对应小程序 pages/assessment/index -->
+  <div class="assessment-page">
+    <div class="assessment-container">
+
+      <!-- 渐变头部（仅桌面端显示，参考 example.html 的 .header） -->
+      <div class="assessment-header">
+        <h1>睡眠-50问卷 &amp; 睡眠质量综合测评</h1>
+        <p>包含 Sleep-50、PSQI、PHQ-9、GAD-7、SCL-90 五个量表</p>
+      </div>
+
+      <!-- ===== 量表切换标签（由 JS 渲染）===== -->
+      <div class="scale-tabs" id="scaleTabs"></div>
+
+      <!-- ===== 未提交时的答题模式 ===== -->
+      <div id="quizMode">
+        <!-- 量表说明 -->
+        <div class="instructions" id="instructions"></div>
+
+        <!-- 进度条 -->
+        <div class="progress-wrap">
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill" style="width:2%"></div>
+          </div>
+          <div class="progress-text" id="progressText">1 / 54</div>
+        </div>
+
+        <!-- 题目区域 -->
+        <div class="quiz-area">
+          <div class="question-title">
+            <div class="question-icon" id="questionIcon">1</div>
+            <div class="question-text" id="questionText"></div>
+          </div>
+
+          <!-- 填空题（PSQI 1-4题 / Sleep-50 51-54题） -->
+          <div id="fillBlankArea" style="display:none;">
+            <!-- 时间选择（对应小程序 picker mode=time） -->
+            <div id="timePickerWrap" style="display:none;">
+              <input type="time" class="time-picker" id="timePicker" value="22:00">
+            </div>
+            <!-- 文本/数字输入 -->
+            <div id="fillInputWrap" style="display:none;">
+              <input class="fill-input" id="fillInput" placeholder="" value="">
+            </div>
+            <div class="fill-hint" id="fillHint"></div>
+          </div>
+
+          <!-- 选择题 -->
+          <div class="options" id="optionsArea"></div>
+
+          <!-- PSQI 第14题：选择非"无"时附加原因说明 -->
+          <div class="psqi-other" id="psqiOther" style="display:none;">
+            <label class="psqi-other-label">如选有此项，请具体说明原因：</label>
+            <input class="fill-input" id="psqiOtherInput" placeholder="请输入具体原因" type="text">
+          </div>
+        </div>
+
+        <!-- 导航按钮 -->
+        <div class="nav-bar">
+          <button class="nav-btn nav-btn-prev" id="prevBtn">上一题</button>
+          <div class="page-indicator" id="pageIndicator">1 / 54</div>
+          <button class="nav-btn nav-btn-submit" id="submitBtn" style="display:none;">提交本量表</button>
+          <button class="nav-btn nav-btn-next" id="nextBtn">下一题</button>
+        </div>
+      </div>
+
+      <!-- ===== 结果页面：测评结果分析报告（由 JS 渲染）===== -->
+      <div id="reportArea" style="display:none;"></div>
+
+      <!-- ===== 网站备案与联系信息（ICP备案号需链接工信部） ===== -->
+      <div class="site-footer">
+        <a href="https://beian.miit.gov.cn" target="_blank" rel="noopener noreferrer">鄂ICP备2026035916号</a>
+        <span class="site-footer-sep">|</span>
+        <span>运营主体：唐帅</span>
+        <span class="site-footer-sep">|</span>
+        <span>联系电话：19807189010</span>
+        <span class="site-footer-sep">|</span>
+        <a href="mailto:2966255045@qq.com">2966255045@qq.com</a>
+        <span class="site-footer-sep">|</span>
+        <a href="https://beian.mps.gov.cn/#/query/webSearch?code=42282602000160" target="_blank" rel="noopener noreferrer">鄂公网安备42282602000160号</a>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/common.js"></script>
+  <script src="../js/questions.js"></script>
+  <script src="../js/scoring.js"></script>
+  <script src="../js/pages/assessment.js"></script>
+</body>
+</html>

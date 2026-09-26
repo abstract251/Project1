@@ -1,0 +1,211 @@
+/* =====================================================
+   login.css — 管理员登录（对应小程序 pages/login/index.wxss）
+   尺寸按 750rpx 设计稿换算（1rpx = 0.5px @375px）
+   ===================================================== */
+
+.login-page {
+  min-height: 100vh;
+  background: #f5f7fa;
+  padding: 16px;             /* 32rpx */
+}
+
+.login-header {
+  text-align: center;
+  padding: 32px 0 24px;      /* 64rpx 0 48rpx */
+}
+
+.login-icon {
+  font-size: 40px;           /* 80rpx */
+  margin-bottom: 12px;       /* 24rpx */
+}
+
+.login-title {
+  color: #1a1a1a;
+  font-size: 20px;           /* 40rpx */
+  font-weight: 700;
+  display: block;
+}
+
+.login-subtitle {
+  color: #888;
+  font-size: 14px;           /* 28rpx */
+  margin-top: 8px;           /* 16rpx */
+  display: block;
+}
+
+.login-form {
+  background: #fff;
+  border-radius: 8px;        /* 16rpx */
+  padding: 24px;             /* 48rpx */
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.form-item {
+  margin-bottom: 16px;       /* 32rpx */
+}
+
+.form-label {
+  color: #555;
+  font-size: 14px;           /* 28rpx */
+  margin-bottom: 6px;        /* 12rpx */
+  display: block;
+}
+
+.form-input {
+  width: 100%;
+  border: 1.5px solid #e5e5e5;
+  border-radius: 4px;        /* 8rpx */
+  padding: 12px;             /* 24rpx */
+  font-size: 14px;           /* 28rpx */
+  color: #1a1a1a;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.form-input:focus {
+  border-color: #1a6fc4;
+}
+
+.login-btn {
+  background: linear-gradient(135deg, #1a6fc4, #4a9fd4);
+  border: none;
+  border-radius: 24px;       /* 48rpx */
+  color: #fff;
+  font-size: 16px;           /* 32rpx */
+  font-weight: 600;
+  height: 44px;              /* 88rpx */
+  margin-top: 8px;           /* 16rpx */
+  width: 100%;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.login-btn:hover { opacity: 0.9; }
+.login-btn:active { transform: scale(0.98); }
+
+.back-btn {
+  background: transparent;
+  border: none;
+  color: #1a6fc4;
+  font-size: 14px;           /* 28rpx */
+  margin-top: 12px;          /* 24rpx */
+  padding: 0;
+  width: 100%;
+  cursor: pointer;
+}
+
+.back-btn:hover { opacity: 0.7; }
+
+/* ===== 桌面端：居中白色容器 + 左右分栏（品牌区 + 表单） ===== */
+@media (min-width: 481px) {
+  html, body {
+    background: #f0f2f5;
+  }
+  .page-shell {
+    min-height: 100vh;
+    background: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  /* 白色容器（覆盖通用 .page-inner） */
+  .page-shell .page-inner {
+    width: calc(100% - 48px);
+    max-width: 960px;
+    min-height: 0;
+    margin: 24px 0;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    padding: 0;
+    overflow: hidden;
+  }
+  .login-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 48px;
+    min-height: 560px;
+    padding: 40px 24px;
+    background: transparent;
+  }
+  /* 左侧品牌区 */
+  .login-header {
+    flex: 1;
+    max-width: 420px;
+    padding: 0;
+    text-align: center;
+  }
+  .login-icon {
+    font-size: 56px;
+  }
+  .login-title {
+    font-size: 26px;
+  }
+  .login-subtitle {
+    font-size: 15px;
+  }
+  /* 右侧表单 */
+  .login-form {
+    flex: 0 0 400px;
+    margin: 0;
+    padding: 32px;
+    border-radius: 12px;
+    border: 1px solid #eaeaea;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  }
+  .form-input {
+    border-radius: 6px;
+    border: 1px solid #d9dee3;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  .form-input:focus {
+    border-color: #2475e0;
+    box-shadow: 0 0 0 3px rgba(36, 117, 224, 0.12);
+  }
+  .login-btn {
+    height: 46px;
+    background: #2475e0;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+  .login-btn:hover {
+    background: #1d63c0;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(36, 117, 224, 0.3);
+  }
+}
+
+/* =====================================================
+   中屏适配（平板竖屏 / 窄窗口 481~899px）：
+   品牌区与表单改为纵向堆叠居中，避免横向空间不足被挤压
+   ===================================================== */
+@media (min-width: 481px) and (max-width: 899px) {
+  .page-shell .page-inner {
+    min-height: 0;
+    overflow: visible;
+  }
+  .login-page {
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 36px;
+    min-height: 0;
+    padding: 48px 24px;
+  }
+  .login-header {
+    flex: none;
+    max-width: 100%;
+  }
+  .login-icon {
+    font-size: 48px;
+  }
+  .login-title {
+    font-size: 24px;
+  }
+  .login-form {
+    flex: none;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+}

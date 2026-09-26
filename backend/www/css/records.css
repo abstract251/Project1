@@ -1,0 +1,351 @@
+/* =====================================================
+   records.css — 测评记录列表（对应 pages/assessment-records/index.wxss）
+   尺寸按 750rpx 设计稿换算（1rpx = 0.5px @375px）
+   ===================================================== */
+
+.records-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f0f7ff, #e8f4fd);
+}
+
+.search-bar {
+  padding: 12px;             /* 24rpx */
+  display: flex;
+  gap: 8px;                  /* 16rpx */
+  position: sticky;
+  top: 44px;                 /* 吸顶在小程序导航栏之下 */
+  z-index: 10;
+  background: linear-gradient(135deg, #f0f7ff, #e8f4fd);
+}
+
+.search-input {
+  flex: 1;
+  background: #fff;
+  border-radius: 20px;       /* 40rpx */
+  padding: 10px 14px;        /* 20rpx 28rpx */
+  font-size: 14px;           /* 28rpx */
+  border: 1.5px solid #d0e8f7;
+  outline: none;
+  color: #333;
+}
+
+.search-input:focus {
+  border-color: #1a6fc4;
+  box-shadow: 0 0 0 3px rgba(26, 111, 196, 0.1);
+}
+
+.search-action {
+  background: #1a6fc4;
+  color: #fff;
+  border: none;
+  border-radius: 20px;       /* 40rpx */
+  padding: 0 16px;           /* 0 32rpx */
+  font-size: 14px;           /* 28rpx */
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.search-action:hover { background: #155a9e; }
+
+.page-content {
+  padding: 0 12px;           /* 0 24rpx */
+}
+
+.list-header {
+  margin-bottom: 10px;       /* 20rpx */
+}
+
+.list-title {
+  color: #666;
+  font-size: 13px;           /* 26rpx */
+}
+
+.record-list {
+  overflow-y: auto;
+}
+
+.record-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 8px;        /* 16rpx */
+  padding: 14px;             /* 28rpx */
+  margin-bottom: 10px;       /* 20rpx */
+  display: flex;
+  align-items: center;
+  box-shadow: 0 4px 20px rgba(26, 111, 196, 0.08);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.record-card:hover { background: #fff; box-shadow: 0 2px 10px rgba(26, 111, 196, 0.05); }
+.record-card:active { transform: scale(0.98); }
+
+.card-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-row {
+  display: flex;
+  align-items: center;
+}
+
+.row-top {
+  justify-content: space-between;
+  margin-bottom: 10px;       /* 20rpx */
+}
+
+.user-name {
+  color: #1a1a1a;
+  font-size: 16px;           /* 32rpx */
+  font-weight: 700;
+}
+
+.user-gender {
+  color: #666;
+  font-size: 13px;           /* 26rpx */
+  margin-left: auto;
+  margin-right: 8px;
+}
+
+.user-info {
+  color: #666;
+  font-size: 13px;           /* 26rpx */
+  margin-left: 8px;
+}
+
+.forms-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;                  /* 16rpx */
+  margin-bottom: 10px;       /* 20rpx */
+}
+
+.form-item {
+  background: linear-gradient(135deg, #f0f7ff, #e8f4fd);
+  border: 1.5px solid #d0e8f7;
+  border-radius: 6px;        /* 12rpx */
+  padding: 8px 10px;         /* 16rpx 20rpx */
+  flex: 1;
+  min-width: calc(50% - 4px); /* 50% - 8rpx */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.form-name {
+  color: #1a6fc4;
+  font-size: 13px;           /* 26rpx */
+  font-weight: 600;
+}
+
+.form-score {
+  color: #4a9fd4;
+  font-size: 15px;           /* 30rpx */
+  font-weight: 700;
+}
+
+.row-bottom {
+  justify-content: space-between;
+}
+
+.total-score {
+  color: #1a6fc4;
+  font-size: 16px;           /* 32rpx */
+  font-weight: 700;
+}
+
+.submit-time {
+  color: #999;
+  font-size: 12px;           /* 24rpx */
+}
+
+.card-arrow {
+  color: #ccc;
+  font-size: 18px;           /* 36rpx */
+  margin-left: 8px;          /* 16rpx */
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 0;           /* 120rpx 0 */
+}
+
+.empty-icon {
+  font-size: 40px;           /* 80rpx */
+  margin-bottom: 12px;       /* 24rpx */
+}
+
+.empty-text {
+  color: #999;
+  font-size: 14px;           /* 28rpx */
+}
+
+.loading-more {
+  text-align: center;
+  padding: 16px 0;           /* 32rpx 0 */
+}
+
+.loading-text {
+  color: #999;
+  font-size: 13px;           /* 26rpx */
+}
+
+.load-more-tip {
+  text-align: center;
+  padding: 12px 0;           /* 24rpx 0 */
+}
+
+.tip-text {
+  color: #bbb;
+  font-size: 12px;           /* 24rpx */
+}
+
+/* ===== 桌面端宽屏数据表格 ===== */
+.table-wrap {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(26, 111, 196, 0.08);
+  overflow-x: auto;   /* 窄容器（平板等）下列表可横向滚动，不截断 */
+  margin-bottom: 12px;
+}
+
+.records-table {
+  width: 100%;
+  min-width: 860px;   /* 表格最小宽度，窄容器内横向滚动查看 */
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.records-table thead th {
+  background: #f0f7ff;
+  color: #1a6fc4;
+  font-weight: 600;
+  text-align: center;
+  padding: 11px 10px;
+  white-space: nowrap;
+}
+
+.records-table tbody td {
+  text-align: center;
+  padding: 10px 10px;
+  border-bottom: 1px solid #f0f2f5;
+  color: #3c4a5c;
+}
+
+.records-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.records-table tbody tr {
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.records-table tbody tr:hover {
+  background: #f0f7ff;
+}
+
+.records-table .td-user-name {
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.records-table .td-score {
+  font-weight: 600;
+  color: #4a9fd4;
+}
+
+.records-table .td-total {
+  font-weight: 700;
+  color: #1a6fc4;
+}
+
+.records-table .td-time {
+  color: #999;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+/* 桌面端"加载更多"按钮 */
+.load-more-btn-wrap {
+  text-align: center;
+  padding: 8px 0 16px;
+}
+
+.load-more-btn {
+  background: #fff;
+  border: 1.5px solid #1a6fc4;
+  border-radius: 20px;
+  color: #1a6fc4;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 32px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.load-more-btn:hover {
+  background: #1a6fc4;
+  color: #fff;
+}
+
+.load-more-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ===== 桌面端：普通网页布局（配合左侧固定导航栏） ===== */
+@media (min-width: 481px) {
+  .records-page {
+    min-height: 100vh;
+    background: transparent;
+  }
+  .search-bar {
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 14px 24px;
+    background: transparent;
+    top: 60px;   /* 桌面端顶栏高度 60px */
+  }
+  .page-content {
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 24px 24px;
+  }
+  .search-input {
+    max-width: 480px;
+    border: 2px solid #d0e0f0;
+    border-radius: 20px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  .search-input:focus {
+    border-color: #1a6fc4;
+    box-shadow: 0 0 0 3px rgba(26, 111, 196, 0.1);
+  }
+  .search-action {
+    padding: 0 24px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+  }
+  .search-action:hover {
+    background: #155a9e;
+    transform: scale(1.03);
+  }
+  /* 桌面端使用表格展示（见 .records-table），不再使用卡片网格 */
+  .record-list {
+    display: block;
+  }
+  .record-card {
+    display: none;
+  }
+  .list-title {
+    font-size: 14px;
+  }
+}

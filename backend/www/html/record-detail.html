@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>测评详情</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/record-detail.css">
+  <!-- 登录检测：未登录直接跳转登录页 -->
+  <script src="../js/auth.js"></script>
+</head>
+<body>
+  <div class="page-shell">
+    <div class="page-inner side-layout">
+      <!-- 桌面端左侧固定导航栏（js/sidebar.js 渲染，手机端不显示） -->
+      <aside class="side-nav" id="sidebar"></aside>
+      <div class="side-main">
+      <!-- 对应小程序 pages/record-detail/index -->
+      <div class="detail-page">
+        <div class="nav-header">
+          <button class="nav-back" id="navBack">‹ 返回</button>
+          <div class="nav-title">测评详情</div>
+          <div class="nav-right"></div>
+        </div>
+
+        <div class="loading-section" id="loadingSection">
+          <span class="loading-text">加载中...</span>
+        </div>
+
+        <div class="page-content" id="pageContent" style="display:none;"></div>
+
+        <!-- ===== 网站备案与联系信息（ICP备案号需链接工信部） ===== -->
+        <div class="site-footer">
+          <a href="https://beian.miit.gov.cn" target="_blank" rel="noopener noreferrer">鄂ICP备2026035916号</a>
+          <span class="site-footer-sep">|</span>
+          <span>运营主体：唐帅</span>
+          <span class="site-footer-sep">|</span>
+          <span>联系电话：19807189010</span>
+          <span class="site-footer-sep">|</span>
+          <a href="mailto:2966255045@qq.com">2966255045@qq.com</a>
+          <span class="site-footer-sep">|</span>
+          <a href="https://beian.mps.gov.cn/#/query/webSearch?code=42282602000160" target="_blank" rel="noopener noreferrer">鄂公网安备42282602000160号</a>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/common.js"></script>
+  <script src="../js/sidebar.js"></script>
+  <script src="../js/pages/record-detail.js"></script>
+</body>
+</html>

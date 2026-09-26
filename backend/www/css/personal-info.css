@@ -1,0 +1,371 @@
+/* =====================================================
+   personal-info.css — 个人信息采集（对应 pages/personal-info）
+   ===================================================== */
+
+.pi-page {
+  background: #f5f7fa;
+  color: #333;
+  font-size: 15px;
+  min-height: 100vh;
+}
+
+.pi-container {
+  padding: 16px 12px 40px;
+}
+
+.pi-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px 16px;
+  margin-bottom: 16px;
+}
+
+.pi-title {
+  font-size: 19px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  padding-left: 12px;
+  position: relative;
+  color: #222;
+}
+
+.pi-title:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 3px;
+  width: 4px;
+  height: 18px;
+  background: #2684ff;
+  border-radius: 3px;
+}
+
+.pi-card.menstrual {
+  background: #fff1f5;
+  border: 1px solid #ffd0dc;
+}
+
+.pi-card.menstrual .pi-title {
+  color: #d81b60;
+}
+
+.pi-card.menstrual .pi-title:before {
+  background: #ff2d6f;
+}
+
+.pi-field {
+  margin-bottom: 16px;
+}
+
+.pi-field:last-child {
+  margin-bottom: 0;
+}
+
+.pi-label {
+  font-size: 15px;
+  color: #666;
+  margin-bottom: 6px;
+  padding-left: 2px;
+  display: block;
+}
+
+.pi-input {
+  width: 100%;
+  height: 44px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 0 14px;
+  font-size: 15px;
+  background: #fff;
+  color: #333;
+  outline: none;
+}
+
+.pi-input:focus {
+  border-color: #2684ff;
+}
+
+/* 下拉选择（对应小程序 picker） */
+.pi-select {
+  width: 100%;
+  height: 44px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 0 10px;
+  font-size: 15px;
+  background: #fff;
+  color: #333;
+  outline: none;
+  appearance: auto;
+  cursor: pointer;
+}
+
+.pi-select:focus {
+  border-color: #2684ff;
+}
+
+.pi-select.placeholder {
+  color: #aaa;
+}
+
+/* 日期选择（对应小程序 picker mode=date） */
+.pi-date {
+  width: 100%;
+  height: 44px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 0 12px;
+  font-size: 15px;
+  background: #fff;
+  color: #333;
+  outline: none;
+  cursor: pointer;
+}
+
+.pi-date:focus {
+  border-color: #2684ff;
+}
+
+.pi-inline-radio {
+  display: flex;
+  gap: 30px;
+  padding-top: 4px;
+  flex-wrap: wrap;
+}
+
+.pi-radio-item {
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  color: #333;
+  cursor: pointer;
+  gap: 4px;
+}
+
+.pi-radio-item input[type="radio"] {
+  accent-color: #2684ff;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.pi-history-box {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.pi-disease {
+  border-radius: 10px;
+  padding: 16px;
+  background: #fafafa;
+  border-left: 4px solid #ff5252;
+}
+
+.pi-disease:nth-child(2) { border-left-color: #ff9800; }
+.pi-disease:nth-child(3) { border-left-color: #ffc107; }
+.pi-disease:nth-child(4) { border-left-color: #9c27b0; }
+
+.pi-disease-title {
+  margin: 0 0 12px;
+  color: #e65100;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.pi-drug-input {
+  width: 100%;
+  height: 44px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 0 14px;
+  margin-top: 12px;
+  font-size: 14px;
+  background: #fff;
+  color: #333;
+  outline: none;
+}
+
+.pi-drug-input:focus {
+  border-color: #2684ff;
+}
+
+.pi-option-group {
+  background: #fff;
+  border-radius: 10px;
+  padding: 18px 16px;
+  margin-bottom: 14px;
+}
+
+.pi-option-group:last-child {
+  margin-bottom: 0;
+}
+
+.pi-option-group.green {
+  border-left: 4px solid #22c55e;
+}
+
+.pi-option-group.blue {
+  border-left: 4px solid #2196f3;
+}
+
+.pi-option-title {
+  font-size: 17px;
+  font-weight: bold;
+  margin-bottom: 12px;
+  color: #222;
+}
+
+.pi-option-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  font-size: 15px;
+  color: #555;
+  border-bottom: 1px solid #f0f0f0;
+  cursor: pointer;
+  gap: 10px;
+}
+
+.pi-option-item:last-child {
+  border-bottom: none;
+}
+
+.pi-option-item input[type="radio"] {
+  accent-color: #2684ff;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* 键鼠交互反馈（桌面端 hover） */
+.pi-radio-item:hover,
+.pi-option-item:hover {
+  color: #2684ff;
+}
+
+.pi-radio-item:hover input[type="radio"],
+.pi-option-item:hover input[type="radio"] {
+  transform: scale(1.1);
+}
+
+.pi-radio-item input[type="radio"],
+.pi-option-item input[type="radio"] {
+  transition: transform 0.15s;
+}
+
+.pi-submit-wrap {
+  padding: 8px 0 20px;
+}
+
+.pi-submit-btn {
+  width: 100%;
+  height: 48px;
+  line-height: 48px;
+  background: #2684ff;
+  color: #fff;
+  font-size: 17px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.pi-submit-btn:hover { background: #1f74e0; }
+.pi-submit-btn:active { transform: scale(0.99); }
+
+/* ===== 桌面端：居中白色容器 + 白底细边框卡片 ===== */
+@media (min-width: 481px) {
+  .page-shell {
+    min-height: 100vh;
+    background: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  /* 白色容器（覆盖通用 .page-inner） */
+  .page-shell .page-inner {
+    width: calc(100% - 48px);
+    max-width: 1000px;
+    min-height: 0;
+    margin: 24px 0;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  }
+  /* 白卡容器内顶栏圆角 */
+  .page-inner .nav-header {
+    border-radius: 12px 12px 0 0;
+  }
+  .pi-page {
+    max-width: none;
+    margin: 0 auto;
+    background: transparent;
+  }
+  .pi-container {
+    max-width: 940px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+  .pi-card {
+    border-radius: 12px;
+    padding: 24px;
+    border: 1px solid #eaeaea;
+    background: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  }
+  /* 基本信息 / 月经史卡片：表单两列排布 */
+  .pi-card.pi-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 28px;
+  }
+  .pi-card.pi-grid .pi-title {
+    grid-column: 1 / -1;
+  }
+  .pi-card.pi-grid .pi-field {
+    margin-bottom: 6px;
+  }
+  /* 输入控件：圆角 + focus 光晕 */
+  .pi-input,
+  .pi-select,
+  .pi-date,
+  .pi-drug-input {
+    border-radius: 6px;
+    border: 1px solid #d9dee3;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  .pi-input:focus,
+  .pi-select:focus,
+  .pi-date:focus,
+  .pi-drug-input:focus {
+    border-color: #2475e0;
+    box-shadow: 0 0 0 3px rgba(36, 117, 224, 0.12);
+  }
+  .pi-submit-wrap {
+    max-width: 480px;
+    margin: 0 auto;
+  }
+  .pi-submit-btn {
+    background: #2475e0;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+  .pi-submit-btn:hover {
+    background: #1d63c0;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(36, 117, 224, 0.3);
+  }
+}
+
+/* =====================================================
+   窄中屏适配（481~639px，如小平板/大屏手机横屏）：
+   两列表单改为单列，避免每列过窄
+   ===================================================== */
+@media (min-width: 481px) and (max-width: 639px) {
+  .pi-card.pi-grid {
+    grid-template-columns: 1fr;
+  }
+  .pi-page .nav-header {
+    border-radius: 12px 12px 0 0;
+  }
+}
