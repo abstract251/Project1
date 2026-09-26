@@ -1,446 +1,536 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>睡眠-50问卷 & 睡眠质量综合测评</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:"Microsoft YaHei","PingFang SC","Helvetica Neue",Arial,sans-serif;background:linear-gradient(135deg,#1a6fc4 0%,#4a9fd4 50%,#7bc8e8 100%);min-height:100vh;display:flex;justify-content:center;align-items:flex-start;padding:20px}
-.container{width:100%;max-width:850px;background:rgba(255,255,255,0.97);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,0.15);overflow:hidden;margin:20px 0}
-.header{background:linear-gradient(135deg,#1a6fc4 0%,#4a9fd4 100%);padding:30px;text-align:center}
-.header h1{color:#fff;font-size:26px;font-weight:700;letter-spacing:2px}
-.header p{color:rgba(255,255,255,0.85);margin-top:8px;font-size:14px}
-.personal-info{padding:25px 40px;background:#f8fbff;border-bottom:1px solid #e0ecf7}
-.personal-info h3{color:#1a6fc4;margin-bottom:15px;font-size:16px}
-.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:15px}
-.info-field{display:flex;align-items:center;gap:8px}
-.info-field label{color:#555;font-size:14px;white-space:nowrap}
-.info-field input{flex:1;padding:8px 12px;border:1px solid #d0e0f0;border-radius:6px;font-size:14px;outline:none;transition:border-color 0.3s}
-.info-field input:focus{border-color:#1a6fc4}
-.scale-tabs{display:flex;background:#f0f7ff;border-bottom:2px solid #d0e8f7;overflow-x:auto}
-.scale-tab{padding:14px 24px;cursor:pointer;font-size:15px;font-weight:600;color:#666;border-bottom:3px solid transparent;transition:all 0.3s;white-space:nowrap;position:relative}
-.scale-tab:hover{color:#1a6fc4;background:#e0f0ff}
-.scale-tab.active{color:#1a6fc4;border-bottom-color:#1a6fc4;background:#fff}
-.scale-tab .badge{position:absolute;top:8px;right:4px;background:#e74c3c;color:white;font-size:10px;padding:1px 5px;border-radius:8px;display:none}
-.scale-tab .badge.show{display:block}
-.instructions{background:#f0f7ff;padding:18px 40px;border-left:4px solid #1a6fc4;color:#444;font-size:14px;line-height:1.8}
-.instructions strong{color:#1a6fc4}
-.progress-bar{height:6px;background:#e0e0e0;position:relative}
-.progress-fill{height:100%;background:linear-gradient(90deg,#1a6fc4,#4a9fd4);transition:width 0.4s ease;border-radius:0 3px 3px 0}
-.quiz-area{padding:35px 45px;min-height:480px}
-.scale-section{display:none}
-.scale-section.active{display:block;animation:fadeIn 0.4s ease}
-@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.question-card{display:none;animation:fadeIn 0.4s ease}
-.question-card.active{display:block}
-.question-title{display:flex;align-items:center;margin-bottom:30px}
-.question-icon{width:40px;height:40px;background:linear-gradient(135deg,#1a6fc4,#4a9fd4);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-right:15px;flex-shrink:0}
-.question-icon svg{width:20px;height:20px;fill:white}
-.question-text{font-size:22px;font-weight:700;color:#1a1a1a;line-height:1.4}
-.options{display:flex;flex-direction:column;gap:14px}
-.option{display:flex;align-items:flex-start;padding:16px 20px;border:2px solid #e0e0e0;border-radius:12px;cursor:pointer;transition:all 0.3s ease;background:#fafafa}
-.option:hover{border-color:#4a9fd4;background:#f0f7ff;transform:translateX(5px)}
-.option.selected{border-color:#1a6fc4;background:linear-gradient(135deg,#e8f4fd,#d0e8f7);box-shadow:0 4px 15px rgba(26,111,196,0.15)}
-.radio-circle{width:22px;height:22px;border:2px solid #bbb;border-radius:50%;margin-right:16px;margin-top:2px;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all 0.3s ease}
-.option.selected .radio-circle{border-color:#1a6fc4;background:#1a6fc4}
-.radio-circle::after{content:"";width:10px;height:10px;background:white;border-radius:50%;transform:scale(0);transition:transform 0.2s ease}
-.option.selected .radio-circle::after{transform:scale(1)}
-.option-content{flex:1}
-.option-level{font-size:17px;font-weight:700;color:#333;margin-bottom:3px}
-.option.selected .option-level{color:#1a6fc4}
-.option-desc{font-size:14px;color:#666;line-height:1.5}
-.option.selected .option-desc{color:#444}
-.fill-blank-card{display:none;animation:fadeIn 0.4s ease}
-.fill-blank-card.active{display:block}
-.fill-input-group{margin-top:20px}
-.fill-input-group input{width:100%;max-width:300px;padding:14px 18px;border:2px solid #d0e0f0;border-radius:10px;font-size:16px;outline:none;transition:all 0.3s}
-.fill-input-group input:focus{border-color:#1a6fc4;box-shadow:0 0 0 3px rgba(26,111,196,0.1)}
-.fill-input-group .hint{margin-top:8px;font-size:13px;color:#888}
-.nav-bar{display:flex;justify-content:space-between;align-items:center;padding:18px 45px 28px;border-top:1px solid #eee}
-.nav-btn{padding:12px 26px;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;transition:all 0.3s ease;display:flex;align-items:center;gap:8px}
-.nav-btn-prev{background:#1a6fc4;color:white}
-.nav-btn-prev:hover{background:#155a9e;transform:translateX(-3px)}
-.nav-btn-prev:disabled{background:#ccc;cursor:not-allowed;transform:none}
-.nav-btn-next{background:#1a6fc4;color:white}
-.nav-btn-next:hover{background:#155a9e;transform:translateX(3px)}
-.nav-btn-submit{background:linear-gradient(135deg,#28a745,#34ce57);color:white}
-.nav-btn-submit:hover{background:linear-gradient(135deg,#218838,#28a745);transform:translateX(3px)}
-.page-indicator{font-size:15px;color:#666;font-weight:500}
-.page-indicator span{color:#1a6fc4;font-weight:700;font-size:18px}
-.result-page{display:none;padding:35px 45px;animation:fadeIn 0.5s ease}
-.result-page.active{display:block}
-.result-title{text-align:center;font-size:24px;color:#1a6fc4;margin-bottom:25px}
-.result-section{background:#f8fbff;border-radius:12px;padding:20px;margin-bottom:20px;border:1px solid #e0ecf7}
-.result-section h3{color:#1a6fc4;margin-bottom:12px;font-size:17px;display:flex;align-items:center;gap:8px}
-.score-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:15px}
-.score-card{background:linear-gradient(135deg,#f0f7ff,#e8f4fd);border-radius:10px;padding:16px;text-align:center;border:2px solid #d0e8f7}
-.score-card.highlight{background:linear-gradient(135deg,#fff3e0,#ffe0b2);border-color:#ffb74d}
-.score-card.alert{background:linear-gradient(135deg,#ffebee,#ffcdd2);border-color:#ef5350}
-.score-card-name{font-size:13px;color:#666;margin-bottom:6px}
-.score-card-value{font-size:24px;font-weight:700;color:#1a6fc4}
-.score-card.highlight .score-card-value{color:#e65100}
-.score-card.alert .score-card-value{color:#c62828}
-.result-text{color:#555;line-height:1.8;font-size:14px}
-.warning{background:#fff3e0;border-left:4px solid #ff9800;padding:14px 18px;margin:15px 0;border-radius:0 8px 8px 0;color:#e65100;font-size:13px}
-.restart-btn{display:block;width:200px;margin:25px auto 0;padding:14px;background:linear-gradient(135deg,#1a6fc4,#4a9fd4);color:white;border:none;border-radius:10px;font-size:16px;font-weight:600;cursor:pointer;transition:all 0.3s ease}
-.restart-btn:hover{transform:scale(1.05);box-shadow:0 8px 25px rgba(26,111,196,0.3)}
-.factor-table{width:100%;border-collapse:collapse;margin-top:10px;font-size:13px}
-.factor-table th,.factor-table td{padding:10px 12px;text-align:left;border-bottom:1px solid #e0e0e0}
-.factor-table th{background:#f0f7ff;color:#1a6fc4;font-weight:600}
-.factor-table tr:hover{background:#fafafa}
-.skip-hint{background:#fff8e1;border:1px dashed #ffc107;border-radius:8px;padding:10px 15px;margin:15px 0;font-size:13px;color:#856404}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="这是一个超长的HTML页面示例，用于展示大量代码。">
+    <meta name="keywords" content="HTML, 超长, 示例, 代码">
+    <meta name="author" content="AI">
+    <title>超长HTML页面示例</title>
+    <style>
+        /* ===== 基础样式 ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f0f0;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: #2c3e50;
+            color: #fff;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.8;
+        }
+
+        .nav {
+            background: #34495e;
+            padding: 10px 0;
+        }
+
+        .nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .nav li {
+            margin: 5px 15px;
+        }
+
+        .nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .nav a:hover {
+            color: #f1c40f;
+        }
+
+        .section {
+            background: #fff;
+            margin: 20px 0;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .section h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .section p {
+            margin-bottom: 15px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: #ecf0f1;
+            padding: 20px;
+            border-radius: 6px;
+            border-left: 4px solid #3498db;
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+            color: #2980b9;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #3498db;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background: #2980b9;
+        }
+
+        .footer {
+            background: #2c3e50;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        .list {
+            list-style: square;
+            padding-left: 20px;
+        }
+
+        .list li {
+            margin-bottom: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th,
+        td {
+            border: 1px solid #bdc3c7;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background: #3498db;
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        /* 大量重复的样式类 */
+        .box-1 {
+            padding: 10px;
+            margin: 5px;
+            background: #e74c3c;
+            color: #fff;
+        }
+
+        .box-2 {
+            padding: 10px;
+            margin: 5px;
+            background: #e67e22;
+            color: #fff;
+        }
+
+        .box-3 {
+            padding: 10px;
+            margin: 5px;
+            background: #f1c40f;
+            color: #333;
+        }
+
+        .box-4 {
+            padding: 10px;
+            margin: 5px;
+            background: #2ecc71;
+            color: #fff;
+        }
+
+        .box-5 {
+            padding: 10px;
+            margin: 5px;
+            background: #1abc9c;
+            color: #fff;
+        }
+
+        .box-6 {
+            padding: 10px;
+            margin: 5px;
+            background: #3498db;
+            color: #fff;
+        }
+
+        .box-7 {
+            padding: 10px;
+            margin: 5px;
+            background: #9b59b6;
+            color: #fff;
+        }
+
+        .box-8 {
+            padding: 10px;
+            margin: 5px;
+            background: #34495e;
+            color: #fff;
+        }
+
+        .box-9 {
+            padding: 10px;
+            margin: 5px;
+            background: #95a5a6;
+            color: #fff;
+        }
+
+        .box-10 {
+            padding: 10px;
+            margin: 5px;
+            background: #7f8c8d;
+            color: #fff;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-20 {
+            margin-top: 20px;
+        }
+
+        .mb-20 {
+            margin-bottom: 20px;
+        }
+
+        .p-20 {
+            padding: 20px;
+        }
+
+        .bg-light {
+            background: #ecf0f1;
+        }
+
+        .bg-dark {
+            background: #2c3e50;
+            color: #fff;
+        }
+
+        .rounded {
+            border-radius: 8px;
+        }
+
+        .shadow {
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+    </style>
 </head>
+
 <body>
-<div class="container">
-<div class="header">
-<h1>睡眠-50问卷 & 睡眠质量综合测评</h1>
-<p>包含 Sleep-50、PSQI、PHQ-9、GAD-7 四个量表</p>
-</div>
+    <!-- ========== 头部 ========== -->
+    <header class="header">
+        <h1>超长HTML页面示例</h1>
+        <p>这是一个包含大量代码的HTML页面，用于展示如何编写超长源文件。</p>
+    </header>
 
-<div class="personal-info">
-<h3>📋 基本信息</h3>
-<div class="info-grid">
-<div class="info-field"><label>姓名：</label><input type="text" id="userName" placeholder="请输入姓名"></div>
-<div class="info-field"><label>性别：</label><input type="text" id="userGender" placeholder="男/女"></div>
-<div class="info-field"><label>年龄：</label><input type="number" id="userAge" placeholder="请输入年龄"></div>
-<div class="info-field"><label>职业：</label><input type="text" id="userJob" placeholder="请输入职业"></div>
-</div>
-</div>
+    <!-- ========== 导航 ========== -->
+    <nav class="nav">
+        <ul>
+            <li><a href="#section1">区块 1</a></li>
+            <li><a href="#section2">区块 2</a></li>
+            <li><a href="#section3">区块 3</a></li>
+            <li><a href="#section4">区块 4</a></li>
+            <li><a href="#section5">区块 5</a></li>
+            <li><a href="#section6">区块 6</a></li>
+            <li><a href="#section7">区块 7</a></li>
+            <li><a href="#section8">区块 8</a></li>
+            <li><a href="#section9">区块 9</a></li>
+            <li><a href="#section10">区块 10</a></li>
+        </ul>
+    </nav>
 
-<div class="scale-tabs">
-<div class="scale-tab active" data-scale="sleep50" onclick="switchScale('sleep50')">Sleep-50 问卷<span class="badge" id="badge-sleep50">!</span></div>
-<div class="scale-tab" data-scale="psqi" onclick="switchScale('psqi')">PSQI 睡眠质量<span class="badge" id="badge-psqi">!</span></div>
-<div class="scale-tab" data-scale="phq9" onclick="switchScale('phq9')">PHQ-9 抑郁筛查<span class="badge" id="badge-phq9">!</span></div>
-<div class="scale-tab" data-scale="gad7" onclick="switchScale('gad7')">GAD-7 焦虑筛查<span class="badge" id="badge-gad7">!</span></div>
-</div>
+    <div class="container">
+        <!-- ========== 区块 1 ========== -->
+        <section id="section1" class="section">
+            <h2>区块 1：介绍</h2>
+            <p>这是第一个区块。这里包含了一些示例文本，用于填充页面内容。HTML 是构建网页的标准语言，通过标签来描述文档结构。</p>
+            <div class="grid">
+                <div class="card">
+                    <h3>卡片 1</h3>
+                    <p>卡片内容示例。</p><a href="#" class="btn">了解更多</a>
+                </div>
+                <div class="card">
+                    <h3>卡片 2</h3>
+                    <p>卡片内容示例。</p><a href="#" class="btn">了解更多</a>
+                </div>
+                <div class="card">
+                    <h3>卡片 3</h3>
+                    <p>卡片内容示例。</p><a href="#" class="btn">了解更多</a>
+                </div>
+                <div class="card">
+                    <h3>卡片 4</h3>
+                    <p>卡片内容示例。</p><a href="#" class="btn">了解更多</a>
+                </div>
+            </div>
+        </section>
 
-<div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+        <!-- ========== 区块 2 ========== -->
+        <section id="section2" class="section">
+            <h2>区块 2：列表与表格</h2>
+            <ul class="list">
+                <li>列表项 1：HTML 基础</li>
+                <li>列表项 2：CSS 样式</li>
+                <li>列表项 3：JavaScript 交互</li>
+                <li>列表项 4：响应式设计</li>
+                <li>列表项 5：语义化标签</li>
+            </ul>
+            <table>
+                <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>名称</th>
+                        <th>描述</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>HTML</td>
+                        <td>超文本标记语言</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>CSS</td>
+                        <td>层叠样式表</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>JS</td>
+                        <td>JavaScript</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>SVG</td>
+                        <td>可缩放矢量图形</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Canvas</td>
+                        <td>画布</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
 
-<div class="quiz-area" id="quizArea">
-<div class="scale-section active" id="scale-sleep50">
-<div class="instructions"><strong>说明：</strong>请阅读以下每个描述，选出<strong>最近四周</strong>最符合您情况的选项。评分方法：受试者根据最近一个月的体验，对量表的每一个条目从 1分（"根本没有"）到 4分（"非常多"）进行相应的评分。</div>
-<div class="question-card" id="sleep50-q1" data-scale="sleep50" data-q="1"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">1. 打鼾</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',1,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',1,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',1,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',1,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q2" data-scale="sleep50" data-q="2"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">2. 出汗</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',2,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',2,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',2,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',2,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q3" data-scale="sleep50" data-q="3"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">3. 睡眠憋气</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',3,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',3,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',3,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',3,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q4" data-scale="sleep50" data-q="4"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">4. 睡醒后喘息</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',4,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',4,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',4,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',4,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q5" data-scale="sleep50" data-q="5"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">5. 睡醒后口干</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',5,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',5,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',5,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',5,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q6" data-scale="sleep50" data-q="6"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">6. 因咳嗽/憋气而醒</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',6,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',6,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',6,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',6,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q7" data-scale="sleep50" data-q="7"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">7. 睡醒后觉得口酸</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',7,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',7,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',7,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',7,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q8" data-scale="sleep50" data-q="8"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">8. 睡醒后头疼</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',8,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',8,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',8,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',8,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q9" data-scale="sleep50" data-q="9"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">9. 入睡困难</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',9,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',9,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',9,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',9,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q10" data-scale="sleep50" data-q="10"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">10. 因思虑失眠</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',10,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',10,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',10,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',10,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q11" data-scale="sleep50" data-q="11"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">11. 难以放松</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',11,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',11,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',11,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',11,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q12" data-scale="sleep50" data-q="12"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">12. 半夜醒来</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',12,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',12,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',12,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',12,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q13" data-scale="sleep50" data-q="13"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">13. 半夜醒后难以入睡</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',13,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',13,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',13,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',13,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q14" data-scale="sleep50" data-q="14"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">14. 早醒，且难以入睡</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',14,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',14,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',14,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',14,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q15" data-scale="sleep50" data-q="15"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">15. 睡眠浅</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',15,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',15,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',15,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',15,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q16" data-scale="sleep50" data-q="16"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">16. 睡眠时间少</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',16,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',16,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',16,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',16,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q17" data-scale="sleep50" data-q="17"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">17. 刚入睡或醒来后如大梦一场</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',17,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',17,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',17,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',17,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q18" data-scale="sleep50" data-q="18"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">18. 有时在公众场合睡着</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',18,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',18,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',18,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',18,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q19" data-scale="sleep50" data-q="19"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">19. 白天瞌睡</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',19,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',19,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',19,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',19,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q20" data-scale="sleep50" data-q="20"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">20. 白天情绪激动时，突然肌无力</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',20,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',20,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',20,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',20,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q21" data-scale="sleep50" data-q="21"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">21. 刚入睡和刚醒来时不能活动</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',21,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',21,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',21,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',21,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q22" data-scale="sleep50" data-q="22"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">22. 睡觉时踢腿</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',22,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',22,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',22,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',22,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q23" data-scale="sleep50" data-q="23"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">23. 夜间腿部肌肉痉挛或疼痛</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',23,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',23,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',23,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',23,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q24" data-scale="sleep50" data-q="24"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">24. 夜间腿部抖动</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',24,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',24,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',24,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',24,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q25" data-scale="sleep50" data-q="25"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">25. 入睡时出现"不安腿"</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',25,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',25,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',25,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',25,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q26" data-scale="sleep50" data-q="26"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">26. 在不同的时间入睡</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',26,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',26,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',26,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',26,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q27" data-scale="sleep50" data-q="27"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">27. 每次上床睡觉时间不同（>2h）</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',27,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',27,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',27,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',27,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q28" data-scale="sleep50" data-q="28"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">28. 日夜颠倒地工作</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',28,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',28,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',28,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',28,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q29" data-scale="sleep50" data-q="29"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">29. 睡眠中站立</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',29,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',29,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',29,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',29,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q30" data-scale="sleep50" data-q="30"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">30. 发现醒后的环境与入睡时不同</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',30,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',30,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',30,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',30,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q31" data-scale="sleep50" data-q="31"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">31. 发现睡眠时有活动的痕迹，但想不起来</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',31,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',31,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',31,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',31,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q32" data-scale="sleep50" data-q="32"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">32. 做恐怖的梦（若无，转 37 题）</div></div><div class="skip-hint">💡 提示：若选择"根本没有"，可跳过 33-36 题</div><div class="options"><label class="option" onclick="selectOption('sleep50',32,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',32,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',32,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',32,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q33" data-scale="sleep50" data-q="33"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">33. 从恐怖的梦醒来</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',33,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',33,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',33,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',33,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q34" data-scale="sleep50" data-q="34"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">34. 记得这些梦的内容</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',34,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',34,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',34,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',34,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q35" data-scale="sleep50" data-q="35"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">35. 可以在做梦后快速定向</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',35,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',35,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',35,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',35,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q36" data-scale="sleep50" data-q="36"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">36. 在恐怖的梦中或梦后出现躯体症状（如：出汗、心悸、气短等）</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',36,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',36,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',36,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',36,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q37" data-scale="sleep50" data-q="37"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">37. 晚上卧室光线太强</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',37,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',37,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',37,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',37,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q38" data-scale="sleep50" data-q="38"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">38. 晚上卧室太吵</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',38,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',38,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',38,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',38,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q39" data-scale="sleep50" data-q="39"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">39. 晚上喝含有酒精的饮料</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',39,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',39,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',39,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',39,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q40" data-scale="sleep50" data-q="40"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">40. 感到悲伤和抑郁</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',40,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',40,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',40,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',40,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q41" data-scale="sleep50" data-q="41"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">41. 服用药物（安眠药或其他药物）</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',41,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',41,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',41,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',41,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q42" data-scale="sleep50" data-q="42"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">42. 常感到悲伤和抑郁</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',42,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',42,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',42,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',42,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q43" data-scale="sleep50" data-q="43"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">43. 对日常工作毫无兴趣</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',43,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',43,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',43,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',43,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q44" data-scale="sleep50" data-q="44"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">44. 起床时感到疲乏</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',44,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',44,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',44,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',44,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q45" data-scale="sleep50" data-q="45"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">45. 白天嗜睡并努力保持清醒</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',45,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',45,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',45,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',45,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q46" data-scale="sleep50" data-q="46"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">46. 我希望白天更有精力</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',46,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',46,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',46,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',46,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q47" data-scale="sleep50" data-q="47"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">47. 容易激惹</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',47,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',47,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',47,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',47,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q48" data-scale="sleep50" data-q="48"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">48. 在工作或学习上难以集中注意力</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',48,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',48,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',48,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',48,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q49" data-scale="sleep50" data-q="49"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">49. 担心睡眠不足</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',49,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',49,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',49,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',49,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div><div class="question-card" id="sleep50-q50" data-scale="sleep50" data-q="50"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">50. 总的来说，睡眠不好</div></div><div class="options"><label class="option" onclick="selectOption('sleep50',50,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 根本没有</div><div class="option-desc">完全没有出现过该症状</div></div></label><label class="option" onclick="selectOption('sleep50',50,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一点</div><div class="option-desc">偶尔出现，程度轻微</div></div></label><label class="option" onclick="selectOption('sleep50',50,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 相当多</div><div class="option-desc">经常出现，有一定影响</div></div></label><label class="option" onclick="selectOption('sleep50',50,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 非常多</div><div class="option-desc">频繁出现，严重影响生活</div></div></label></div></div></div><div class="scale-section" id="scale-psqi">
-<div class="instructions"><strong>说明：</strong>请根据<strong>近1个月</strong>的睡眠情况如实填写。以下问题涉及您最近1个月的睡眠习惯。</div>
-<div class="fill-blank-card" id="psqi-q0" data-scale="psqi" data-q="0"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">近1个月，晚上上床睡觉通常是几点？</div></div><div class="fill-input-group"><input type="time" id="psqi-input-0" onchange="saveFillBlank('psqi',0,this.value)"><p class="hint">请选择具体时间（时:分）</p></div></div><div class="fill-blank-card" id="psqi-q1" data-scale="psqi" data-q="1"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">近1个月，上床到入睡通常需要多少分钟？</div></div><div class="fill-input-group"><input type="number" id="psqi-input-1" placeholder="请输入数字" min="0" step="0.5" onchange="saveFillBlank('psqi',1,this.value)"><p class="hint">请输入具体分钟数（分钟）</p></div></div><div class="fill-blank-card" id="psqi-q2" data-scale="psqi" data-q="2"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">近1个月，通常早上几点起床？</div></div><div class="fill-input-group"><input type="time" id="psqi-input-2" onchange="saveFillBlank('psqi',2,this.value)"><p class="hint">请选择具体时间（时:分）</p></div></div><div class="fill-blank-card" id="psqi-q3" data-scale="psqi" data-q="3"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">近1个月，每夜通常实际睡眠多少小时？</div></div><div class="fill-input-group"><input type="number" id="psqi-input-3" placeholder="请输入数字" min="0" step="0.5" onchange="saveFillBlank('psqi',3,this.value)"><p class="hint">请输入具体小时数（小时）</p></div></div><div class="question-card" id="psqi-q4" data-scale="psqi" data-q="4"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">5-a. 入睡困难（30分钟内不能入睡）</div></div><div class="options"><label class="option" onclick="selectOption('psqi',4,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 无</div></div></label><label class="option" onclick="selectOption('psqi',4,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. <1次/周</div></div></label><label class="option" onclick="selectOption('psqi',4,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 1-2次/周</div></div></label><label class="option" onclick="selectOption('psqi',4,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. ≥3次/周</div></div></label></div></div><div class="question-card" id="psqi-q5" data-scale="psqi" data-q="5"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">5-b. 夜间易醒或早醒</div></div><div class="options"><label class="option" onclick="selectOption('psqi',5,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 无</div></div></label><label class="option" onclick="selectOption('psqi',5,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. <1次/周</div></div></label><label class="option" onclick="selectOption('psqi',5,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 1-2次/周</div></div></label><label class="option" onclick="selectOption('psqi',5,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. ≥3次/周</div></div></label></div></div><div class="question-card" id="psqi-q6" data-scale="psqi" data-q="6"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">5-c. 夜间去厕所</div></div><div class="options"><label class="option" onclick="selectOption('psqi',6,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 无</div></div></label><label class="option" onclick="selectOption('psqi',6,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. <1次/周</div></div></label><label class="option" onclick="selectOption('psqi',6,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 1-2次/周</div></div></label><label class="option" onclick="selectOption('psqi',6,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. ≥3次/周</div></div></label></div></div><div class="question-card" id="psqi-q7" data-scale="psqi" data-q="7"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">5-d. 呼吸不畅</div></div><div class="options"><label class="option" onclick="selectOption('psqi',7,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 无</div></div></label><label class="option" onclick="selectOption('psqi',7,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. <1次/周</div></div></label><label class="option" onclick="selectOption('psqi',7,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 1-2次/周</div></div></label><label class="option" onclick="selectOption('psqi',7,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. ≥3次/周</div></div></label></div></div><div class="question-card" id="psqi-q8" data-scale="psqi" data-q="8"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">5-e. 咳嗽或鼾声高</div></div><div class="options"><label class="option" onclick="selectOption('psqi',8,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 无</div></div></label><label class="option" onclick="selectOption('psqi',8,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. <1次/周</div></div></label><label class="option" onclick="selectOption('psqi',8,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 1-2次/周</div></div></label><label class="option" onclick="selectOption('psqi',8,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. ≥3次/周</div></div></label></div></div><div class="question-card" id="psqi-q9" data-scale="psqi" data-q="9"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">5-f. 感觉冷</div></div><div class="options"><label class="option" onclick="selectOption('psqi',9,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 无</div></div></label><label class="option" onclick="selectOption('psqi',9,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. <1次/周</div></div></label><label class="option" onclick="selectOption('psqi',9,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 1-2次/周</div></div></label><label class="option" onclick="selectOption('psqi',9,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. ≥3次/周</div></div></label></div></div><div class="question-card" id="psqi-q10" data-scale="psqi" data-q="10"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">5-g. 感觉热</div></div><div class="options"><label class="option" onclick="selectOption('psqi',10,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 无</div></div></label><label class="option" onclick="selectOption('psqi',10,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. <1次/周</div></div></label><label class="option" onclick="selectOption('psqi',10,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 1-2次/周</div></div></label><label class="option" onclick="selectOption('psqi',10,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. ≥3次/周</div></div></label></div></div><div class="question-card" id="psqi-q11" data-scale="psqi" data-q="11"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">5-h. 做恶梦</div></div><div class="options"><label class="option" onclick="selectOption('psqi',11,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 无</div></div></label><label class="option" onclick="selectOption('psqi',11,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. <1次/周</div></div></label><label class="option" onclick="selectOption('psqi',11,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 1-2次/周</div></div></label><label class="option" onclick="selectOption('psqi',11,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. ≥3次/周</div></div></label></div></div><div class="question-card" id="psqi-q12" data-scale="psqi" data-q="12"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">5-i. 疼痛不适</div></div><div class="options"><label class="option" onclick="selectOption('psqi',12,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 无</div></div></label><label class="option" onclick="selectOption('psqi',12,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. <1次/周</div></div></label><label class="option" onclick="selectOption('psqi',12,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 1-2次/周</div></div></label><label class="option" onclick="selectOption('psqi',12,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. ≥3次/周</div></div></label></div></div><div class="question-card" id="psqi-q13" data-scale="psqi" data-q="13"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">5-j. 其它影响睡眠的事情</div></div><div class="options"><label class="option" onclick="selectOption('psqi',13,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 无</div></div></label><label class="option" onclick="selectOption('psqi',13,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. <1次/周</div></div></label><label class="option" onclick="selectOption('psqi',13,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 1-2次/周</div></div></label><label class="option" onclick="selectOption('psqi',13,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. ≥3次/周</div></div></label></div></div><div class="question-card" id="psqi-q14" data-scale="psqi" data-q="14"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">6. 近1个月，总体您认为自己的睡眠质量</div></div><div class="options"><label class="option" onclick="selectOption('psqi',14,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 很好</div></div></label><label class="option" onclick="selectOption('psqi',14,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 较好</div></div></label><label class="option" onclick="selectOption('psqi',14,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 较差</div></div></label><label class="option" onclick="selectOption('psqi',14,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 很差</div></div></label></div></div><div class="question-card" id="psqi-q15" data-scale="psqi" data-q="15"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">7. 近1个月，您用药物催眠的情况</div></div><div class="options"><label class="option" onclick="selectOption('psqi',15,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 无</div></div></label><label class="option" onclick="selectOption('psqi',15,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. <1次/周</div></div></label><label class="option" onclick="selectOption('psqi',15,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 1-2次/周</div></div></label><label class="option" onclick="selectOption('psqi',15,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. ≥3次/周</div></div></label></div></div><div class="question-card" id="psqi-q16" data-scale="psqi" data-q="16"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">8. 近1个月，您常感到困倦吗</div></div><div class="options"><label class="option" onclick="selectOption('psqi',16,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 无</div></div></label><label class="option" onclick="selectOption('psqi',16,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. <1次/周</div></div></label><label class="option" onclick="selectOption('psqi',16,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 1-2次/周</div></div></label><label class="option" onclick="selectOption('psqi',16,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. ≥3次/周</div></div></label></div></div><div class="question-card" id="psqi-q17" data-scale="psqi" data-q="17"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">9. 近1个月，您做事情的精力不足吗</div></div><div class="options"><label class="option" onclick="selectOption('psqi',17,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 没有</div></div></label><label class="option" onclick="selectOption('psqi',17,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 偶尔有</div></div></label><label class="option" onclick="selectOption('psqi',17,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 有时有</div></div></label><label class="option" onclick="selectOption('psqi',17,4)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">4. 经常有</div></div></label></div></div></div><div class="scale-section" id="scale-phq9">
-<div class="instructions"><strong>说明：</strong>在过去的<strong>两周内</strong>，以下情况烦扰您有多频繁？</div>
-<div class="question-card" id="phq9-q1" data-scale="phq9" data-q="1"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">1. 做事时提不起劲或没有兴趣</div></div><div class="options"><label class="option" onclick="selectOption('phq9',1,0)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">0. 完全不会</div><div class="option-desc">过去两周完全没有出现这种情况</div></div></label><label class="option" onclick="selectOption('phq9',1,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 几天</div><div class="option-desc">过去两周中有几天出现</div></div></label><label class="option" onclick="selectOption('phq9',1,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一半以上的天数</div><div class="option-desc">过去两周中超过一半的天数出现</div></div></label><label class="option" onclick="selectOption('phq9',1,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 几乎每天</div><div class="option-desc">过去两周中几乎每天都出现</div></div></label></div></div><div class="question-card" id="phq9-q2" data-scale="phq9" data-q="2"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">2. 感到心情低落，沮丧或绝望</div></div><div class="options"><label class="option" onclick="selectOption('phq9',2,0)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">0. 完全不会</div><div class="option-desc">过去两周完全没有出现这种情况</div></div></label><label class="option" onclick="selectOption('phq9',2,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 几天</div><div class="option-desc">过去两周中有几天出现</div></div></label><label class="option" onclick="selectOption('phq9',2,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一半以上的天数</div><div class="option-desc">过去两周中超过一半的天数出现</div></div></label><label class="option" onclick="selectOption('phq9',2,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 几乎每天</div><div class="option-desc">过去两周中几乎每天都出现</div></div></label></div></div><div class="question-card" id="phq9-q3" data-scale="phq9" data-q="3"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">3. 入睡困难，睡不安稳或睡眠过多</div></div><div class="options"><label class="option" onclick="selectOption('phq9',3,0)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">0. 完全不会</div><div class="option-desc">过去两周完全没有出现这种情况</div></div></label><label class="option" onclick="selectOption('phq9',3,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 几天</div><div class="option-desc">过去两周中有几天出现</div></div></label><label class="option" onclick="selectOption('phq9',3,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一半以上的天数</div><div class="option-desc">过去两周中超过一半的天数出现</div></div></label><label class="option" onclick="selectOption('phq9',3,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 几乎每天</div><div class="option-desc">过去两周中几乎每天都出现</div></div></label></div></div><div class="question-card" id="phq9-q4" data-scale="phq9" data-q="4"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">4. 感觉疲倦或没有活力</div></div><div class="options"><label class="option" onclick="selectOption('phq9',4,0)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">0. 完全不会</div><div class="option-desc">过去两周完全没有出现这种情况</div></div></label><label class="option" onclick="selectOption('phq9',4,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 几天</div><div class="option-desc">过去两周中有几天出现</div></div></label><label class="option" onclick="selectOption('phq9',4,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一半以上的天数</div><div class="option-desc">过去两周中超过一半的天数出现</div></div></label><label class="option" onclick="selectOption('phq9',4,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 几乎每天</div><div class="option-desc">过去两周中几乎每天都出现</div></div></label></div></div><div class="question-card" id="phq9-q5" data-scale="phq9" data-q="5"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">5. 食欲不振或吃太多</div></div><div class="options"><label class="option" onclick="selectOption('phq9',5,0)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">0. 完全不会</div><div class="option-desc">过去两周完全没有出现这种情况</div></div></label><label class="option" onclick="selectOption('phq9',5,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 几天</div><div class="option-desc">过去两周中有几天出现</div></div></label><label class="option" onclick="selectOption('phq9',5,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一半以上的天数</div><div class="option-desc">过去两周中超过一半的天数出现</div></div></label><label class="option" onclick="selectOption('phq9',5,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 几乎每天</div><div class="option-desc">过去两周中几乎每天都出现</div></div></label></div></div><div class="question-card" id="phq9-q6" data-scale="phq9" data-q="6"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">6. 觉得自己很糟或觉得自己很失败，或让自己或家人失望</div></div><div class="options"><label class="option" onclick="selectOption('phq9',6,0)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">0. 完全不会</div><div class="option-desc">过去两周完全没有出现这种情况</div></div></label><label class="option" onclick="selectOption('phq9',6,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 几天</div><div class="option-desc">过去两周中有几天出现</div></div></label><label class="option" onclick="selectOption('phq9',6,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一半以上的天数</div><div class="option-desc">过去两周中超过一半的天数出现</div></div></label><label class="option" onclick="selectOption('phq9',6,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 几乎每天</div><div class="option-desc">过去两周中几乎每天都出现</div></div></label></div></div><div class="question-card" id="phq9-q7" data-scale="phq9" data-q="7"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">7. 对事物专注有困难，例如阅读报纸或看电视时</div></div><div class="options"><label class="option" onclick="selectOption('phq9',7,0)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">0. 完全不会</div><div class="option-desc">过去两周完全没有出现这种情况</div></div></label><label class="option" onclick="selectOption('phq9',7,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 几天</div><div class="option-desc">过去两周中有几天出现</div></div></label><label class="option" onclick="selectOption('phq9',7,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一半以上的天数</div><div class="option-desc">过去两周中超过一半的天数出现</div></div></label><label class="option" onclick="selectOption('phq9',7,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 几乎每天</div><div class="option-desc">过去两周中几乎每天都出现</div></div></label></div></div><div class="question-card" id="phq9-q8" data-scale="phq9" data-q="8"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">8. 动作或说话速度缓慢到别人已经察觉？或正好相反——烦躁或坐立不安、动来动去的情况更胜于平常</div></div><div class="options"><label class="option" onclick="selectOption('phq9',8,0)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">0. 完全不会</div><div class="option-desc">过去两周完全没有出现这种情况</div></div></label><label class="option" onclick="selectOption('phq9',8,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 几天</div><div class="option-desc">过去两周中有几天出现</div></div></label><label class="option" onclick="selectOption('phq9',8,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一半以上的天数</div><div class="option-desc">过去两周中超过一半的天数出现</div></div></label><label class="option" onclick="selectOption('phq9',8,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 几乎每天</div><div class="option-desc">过去两周中几乎每天都出现</div></div></label></div></div><div class="question-card" id="phq9-q9" data-scale="phq9" data-q="9"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">9. 有不如死掉或用某种方式伤害自己的念头</div></div><div class="options"><label class="option" onclick="selectOption('phq9',9,0)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">0. 完全不会</div><div class="option-desc">过去两周完全没有出现这种情况</div></div></label><label class="option" onclick="selectOption('phq9',9,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 几天</div><div class="option-desc">过去两周中有几天出现</div></div></label><label class="option" onclick="selectOption('phq9',9,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一半以上的天数</div><div class="option-desc">过去两周中超过一半的天数出现</div></div></label><label class="option" onclick="selectOption('phq9',9,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 几乎每天</div><div class="option-desc">过去两周中几乎每天都出现</div></div></label></div></div></div><div class="scale-section" id="scale-gad7">
-<div class="instructions"><strong>说明：</strong>在过去的<strong>两周内</strong>，有多少时候您受到以下任何问题困扰？</div>
-<div class="question-card" id="gad7-q1" data-scale="gad7" data-q="1"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">1. 感觉紧张，焦虑或急切</div></div><div class="options"><label class="option" onclick="selectOption('gad7',1,0)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">0. 完全不会</div><div class="option-desc">过去两周完全没有出现这种情况</div></div></label><label class="option" onclick="selectOption('gad7',1,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 几天</div><div class="option-desc">过去两周中有几天出现</div></div></label><label class="option" onclick="selectOption('gad7',1,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一半以上的日子</div><div class="option-desc">过去两周中超过一半的日子出现</div></div></label><label class="option" onclick="selectOption('gad7',1,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 几乎每天</div><div class="option-desc">过去两周中几乎每天都出现</div></div></label></div></div><div class="question-card" id="gad7-q2" data-scale="gad7" data-q="2"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">2. 不能够停止或控制担忧</div></div><div class="options"><label class="option" onclick="selectOption('gad7',2,0)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">0. 完全不会</div><div class="option-desc">过去两周完全没有出现这种情况</div></div></label><label class="option" onclick="selectOption('gad7',2,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 几天</div><div class="option-desc">过去两周中有几天出现</div></div></label><label class="option" onclick="selectOption('gad7',2,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一半以上的日子</div><div class="option-desc">过去两周中超过一半的日子出现</div></div></label><label class="option" onclick="selectOption('gad7',2,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 几乎每天</div><div class="option-desc">过去两周中几乎每天都出现</div></div></label></div></div><div class="question-card" id="gad7-q3" data-scale="gad7" data-q="3"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">3. 对各种各样的事情担忧过多</div></div><div class="options"><label class="option" onclick="selectOption('gad7',3,0)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">0. 完全不会</div><div class="option-desc">过去两周完全没有出现这种情况</div></div></label><label class="option" onclick="selectOption('gad7',3,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 几天</div><div class="option-desc">过去两周中有几天出现</div></div></label><label class="option" onclick="selectOption('gad7',3,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一半以上的日子</div><div class="option-desc">过去两周中超过一半的日子出现</div></div></label><label class="option" onclick="selectOption('gad7',3,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 几乎每天</div><div class="option-desc">过去两周中几乎每天都出现</div></div></label></div></div><div class="question-card" id="gad7-q4" data-scale="gad7" data-q="4"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">4. 很难放松下来</div></div><div class="options"><label class="option" onclick="selectOption('gad7',4,0)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">0. 完全不会</div><div class="option-desc">过去两周完全没有出现这种情况</div></div></label><label class="option" onclick="selectOption('gad7',4,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 几天</div><div class="option-desc">过去两周中有几天出现</div></div></label><label class="option" onclick="selectOption('gad7',4,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一半以上的日子</div><div class="option-desc">过去两周中超过一半的日子出现</div></div></label><label class="option" onclick="selectOption('gad7',4,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 几乎每天</div><div class="option-desc">过去两周中几乎每天都出现</div></div></label></div></div><div class="question-card" id="gad7-q5" data-scale="gad7" data-q="5"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">5. 由于不安而无法静坐</div></div><div class="options"><label class="option" onclick="selectOption('gad7',5,0)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">0. 完全不会</div><div class="option-desc">过去两周完全没有出现这种情况</div></div></label><label class="option" onclick="selectOption('gad7',5,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 几天</div><div class="option-desc">过去两周中有几天出现</div></div></label><label class="option" onclick="selectOption('gad7',5,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一半以上的日子</div><div class="option-desc">过去两周中超过一半的日子出现</div></div></label><label class="option" onclick="selectOption('gad7',5,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 几乎每天</div><div class="option-desc">过去两周中几乎每天都出现</div></div></label></div></div><div class="question-card" id="gad7-q6" data-scale="gad7" data-q="6"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">6. 变得容易烦恼或急躁</div></div><div class="options"><label class="option" onclick="selectOption('gad7',6,0)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">0. 完全不会</div><div class="option-desc">过去两周完全没有出现这种情况</div></div></label><label class="option" onclick="selectOption('gad7',6,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 几天</div><div class="option-desc">过去两周中有几天出现</div></div></label><label class="option" onclick="selectOption('gad7',6,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一半以上的日子</div><div class="option-desc">过去两周中超过一半的日子出现</div></div></label><label class="option" onclick="selectOption('gad7',6,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 几乎每天</div><div class="option-desc">过去两周中几乎每天都出现</div></div></label></div></div><div class="question-card" id="gad7-q7" data-scale="gad7" data-q="7"><div class="question-title"><div class="question-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div class="question-text">7. 感到似乎将有可怕的事情发生而害怕</div></div><div class="options"><label class="option" onclick="selectOption('gad7',7,0)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">0. 完全不会</div><div class="option-desc">过去两周完全没有出现这种情况</div></div></label><label class="option" onclick="selectOption('gad7',7,1)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">1. 几天</div><div class="option-desc">过去两周中有几天出现</div></div></label><label class="option" onclick="selectOption('gad7',7,2)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">2. 一半以上的日子</div><div class="option-desc">过去两周中超过一半的日子出现</div></div></label><label class="option" onclick="selectOption('gad7',7,3)"><div class="radio-circle"></div><div class="option-content"><div class="option-level">3. 几乎每天</div><div class="option-desc">过去两周中几乎每天都出现</div></div></label></div></div></div></div>
-<div class="result-page" id="resultPage">
-<div class="result-title">📊 综合测评结果</div>
+        <!-- ========== 区块 3 ========== -->
+        <section id="section3" class="section">
+            <h2>区块 3：大量重复的盒子</h2>
+            <div class="box-1">盒子 1</div>
+            <div class="box-2">盒子 2</div>
+            <div class="box-3">盒子 3</div>
+            <div class="box-4">盒子 4</div>
+            <div class="box-5">盒子 5</div>
+            <div class="box-6">盒子 6</div>
+            <div class="box-7">盒子 7</div>
+            <div class="box-8">盒子 8</div>
+            <div class="box-9">盒子 9</div>
+            <div class="box-10">盒子 10</div>
+            <div class="box-1">盒子 11</div>
+            <div class="box-2">盒子 12</div>
+            <div class="box-3">盒子 13</div>
+            <div class="box-4">盒子 14</div>
+            <div class="box-5">盒子 15</div>
+            <div class="box-6">盒子 16</div>
+            <div class="box-7">盒子 17</div>
+            <div class="box-8">盒子 18</div>
+            <div class="box-9">盒子 19</div>
+            <div class="box-10">盒子 20</div>
+        </section>
 
-<div class="result-section">
-<h3>📝 Sleep-50 问卷结果</h3>
-<div class="score-cards">
-<div class="score-card"><div class="score-card-name">总分</div><div class="score-card-value" id="sleep50-total">-</div></div>
-<div class="score-card"><div class="score-card-name">均分</div><div class="score-card-value" id="sleep50-avg">-</div></div>
-</div>
-<div class="result-text" id="sleep50-interpret"></div>
-</div>
+        <!-- ========== 区块 4 ========== -->
+        <section id="section4" class="section">
+            <h2>区块 4：内联 SVG</h2>
+            <svg width="200" height="200" viewBox="0 0 200 200">
+                <circle cx="100" cy="100" r="80" fill="#3498db" />
+                <rect x="60" y="60" width="80" height="80" fill="#e74c3c" />
+                <polygon points="100,20 180,180 20,180" fill="#f1c40f" />
+            </svg>
+        </section>
 
-<div class="result-section">
-<h3>🌙 PSQI 匹兹堡睡眠质量指数</h3>
-<div class="score-cards">
-<div class="score-card"><div class="score-card-name">PSQI 总分</div><div class="score-card-value" id="psqi-total">-</div></div>
-<div class="score-card"><div class="score-card-name">睡眠质量</div><div class="score-card-value" id="psqi-quality">-</div></div>
-</div>
-<div class="result-text" id="psqi-interpret"></div>
-</div>
+        <!-- ========== 区块 5 ========== -->
+        <section id="section5" class="section">
+            <h2>区块 5：更多文本</h2>
+            <p>这段文字用于填充页面。HTML 文档由元素组成，元素可以嵌套。浏览器解析 HTML 后渲染出页面。</p>
+            <p>继续添加文本内容，使页面看起来更加充实。可以重复使用相同的段落，以增加代码长度。</p>
+            <p>重复段落 1：这是一个超长 HTML 页面的示例，用于展示大量代码。</p>
+            <p>重复段落 2：这是一个超长 HTML 页面的示例，用于展示大量代码。</p>
+            <p>重复段落 3：这是一个超长 HTML 页面的示例，用于展示大量代码。</p>
+            <p>重复段落 4：这是一个超长 HTML 页面的示例，用于展示大量代码。</p>
+            <p>重复段落 5：这是一个超长 HTML 页面的示例，用于展示大量代码。</p>
+        </section>
 
-<div class="result-section">
-<h3>😔 PHQ-9 抑郁筛查</h3>
-<div class="score-cards">
-<div class="score-card" id="phq9-card"><div class="score-card-name">总分</div><div class="score-card-value" id="phq9-total">-</div></div>
-<div class="score-card"><div class="score-card-name">严重程度</div><div class="score-card-value" id="phq9-level">-</div></div>
-</div>
-<div class="result-text" id="phq9-interpret"></div>
-</div>
+        <!-- ========== 区块 6 ========== -->
+        <section id="section6" class="section">
+            <h2>区块 6：嵌套结构</h2>
+            <div class="p-20 bg-light rounded shadow">
+                <div class="p-20 bg-dark rounded">
+                    <div class="p-20 bg-light rounded">
+                        <div class="p-20 bg-dark rounded">
+                            <p>深层嵌套的内容。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-<div class="result-section">
-<h3>😰 GAD-7 焦虑筛查</h3>
-<div class="score-cards">
-<div class="score-card" id="gad7-card"><div class="score-card-name">总分</div><div class="score-card-value" id="gad7-total">-</div></div>
-<div class="score-card"><div class="score-card-name">严重程度</div><div class="score-card-value" id="gad7-level">-</div></div>
-</div>
-<div class="result-text" id="gad7-interpret"></div>
-</div>
+        <!-- ========== 区块 7 ========== -->
+        <section id="section7" class="section">
+            <h2>区块 7：表单</h2>
+            <form action="#" method="post">
+                <label for="name">姓名：</label>
+                <input type="text" id="name" name="name" placeholder="请输入姓名"><br><br>
+                <label for="email">邮箱：</label>
+                <input type="email" id="email" name="email" placeholder="请输入邮箱"><br><br>
+                <label for="msg">留言：</label><br>
+                <textarea id="msg" name="msg" rows="4" cols="50"></textarea><br><br>
+                <input type="submit" value="提交" class="btn">
+            </form>
+        </section>
 
-<div class="warning">⚠️ 本测评结果仅供参考，不能替代专业医疗诊断。如您感到困扰，建议寻求专业心理咨询师、睡眠专科医生或精神科医生的帮助。</div>
+        <!-- ========== 区块 8 ========== -->
+        <section id="section8" class="section">
+            <h2>区块 8：多媒体</h2>
+            <audio controls>
+                <source src="audio.mp3" type="audio/mpeg">
+                您的浏览器不支持音频元素。
+            </audio>
+            <br><br>
+            <video width="320" height="240" controls>
+                <source src="video.mp4" type="video/mp4">
+                您的浏览器不支持视频标签。
+            </video>
+        </section>
 
-<button class="restart-btn" onclick="restartQuiz()">重新测评</button>
-</div>
+        <!-- ========== 区块 9 ========== -->
+        <section id="section9" class="section">
+            <h2>区块 9：长列表</h2>
+            <ol>
+                <li>第一项</li>
+                <li>第二项</li>
+                <li>第三项</li>
+                <li>第四项</li>
+                <li>第五项</li>
+                <li>第六项</li>
+                <li>第七项</li>
+                <li>第八项</li>
+                <li>第九项</li>
+                <li>第十项</li>
+                <li>第十一项</li>
+                <li>第十二项</li>
+                <li>第十三项</li>
+                <li>第十四项</li>
+                <li>第十五项</li>
+                <li>第十六项</li>
+                <li>第十七项</li>
+                <li>第十八项</li>
+                <li>第十九项</li>
+                <li>第二十项</li>
+            </ol>
+        </section>
 
-<div class="nav-bar" id="navBar">
-<button class="nav-btn nav-btn-prev" id="prevBtn" onclick="prevQuestion()" disabled><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>上一题</button>
-<div class="page-indicator"><span id="currentPage">1</span> / <span id="totalPage">50</span></div>
-<button class="nav-btn nav-btn-next" id="nextBtn" onclick="nextQuestion()">下一题<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/></svg></button>
-</div>
-</div>
+        <!-- ========== 区块 10 ========== -->
+        <section id="section10" class="section">
+            <h2>区块 10：脚本生成的内容</h2>
+            <div id="dynamic-content"></div>
+            <button onclick="generateContent()" class="btn">生成更多内容</button>
+        </section>
+    </div>
 
-<script>
-const scaleConfig={
-sleep50:{name:"Sleep-50",totalQ:50,options:4,skipLogic:{32:{skipIf:1,skipRange:[33,36]}}},
-psqi:{name:"PSQI",totalQ:18,fillBlankIndices:[0,1,2,3],choiceIndices:[4,5,6,7,8,9,10,11,12,13,14,15,16,17]},
-phq9:{name:"PHQ-9",totalQ:9,options:4,scores:[0,1,2,3]},
-gad7:{name:"GAD-7",totalQ:7,options:4,scores:[0,1,2,3]}
-};
+    <!-- ========== 页脚 ========== -->
+    <footer class="footer">
+        <p>&copy; 2026 超长HTML页面示例。保留所有权利。</p>
+    </footer>
 
-let currentScale='sleep50',currentQ=1;
-let answers={sleep50:{},psqi:{},psqi_fill:{},phq9:{},gad7:{}};
-let scaleCompletion={sleep50:false,psqi:false,phq9:false,gad7:false};
+    <!-- ========== 大量脚本 ========== -->
+    <script>
+        // 生成动态内容的函数
+        function generateContent() {
+            var container = document.getElementById('dynamic-content');
+            var html = '';
+            for (var i = 0; i < 100; i++) {
+                html += '<div class="card" style="margin:10px 0;">';
+                html += '<h3>动态卡片 ' + (i + 1) + '</h3>';
+                html += '<p>这是通过 JavaScript 动态生成的卡片内容。序号：' + (i + 1) + '</p>';
+                html += '<a href="#" class="btn">查看详情</a>';
+                html += '</div>';
+            }
+            container.innerHTML = html;
+        }
 
-function getVisibleQuestions(scale){
-if(scale==='sleep50'){
-let visible=[];
-for(let i=1;i<=50;i++){
-if(answers.sleep50[32]===1&&i>=33&&i<=36)continue;
-visible.push(i);
-}
-return visible;
-}else if(scale==='psqi'){
-return Array.from({length:18},(_,i)=>i);
-}else if(scale==='phq9'){
-return Array.from({length:9},(_,i)=>i+1);
-}else if(scale==='gad7'){
-return Array.from({length:7},(_,i)=>i+1);
-}
-return[];
-}
+        // 页面加载时自动生成一些内容
+        window.onload = function () {
+            generateContent();
+            console.log('页面已加载，动态内容已生成。');
+        };
 
-function switchScale(scale){
-document.querySelectorAll('.scale-tab').forEach(t=>t.classList.remove('active'));
-document.querySelector('.scale-tab[data-scale="'+scale+'"]').classList.add('active');
-document.querySelectorAll('.scale-section').forEach(s=>s.classList.remove('active'));
-document.getElementById('scale-'+scale).classList.add('active');
-currentScale=scale;
-currentQ=getVisibleQuestions(scale)[0];
-document.getElementById('totalPage').textContent=getVisibleQuestions(scale).length;
-showQuestion(currentQ);
-}
-
-function showQuestion(q){
-const section=document.getElementById('scale-'+currentScale);
-section.querySelectorAll('.question-card, .fill-blank-card').forEach(c=>c.classList.remove('active'));
-let elId=currentScale==='psqi'?'psqi-q'+q:currentScale+'-q'+q;
-const el=document.getElementById(elId);
-if(el)el.classList.add('active');
-const visible=getVisibleQuestions(currentScale);
-const idx=visible.indexOf(q);
-document.getElementById('currentPage').textContent=idx+1;
-document.getElementById('prevBtn').disabled=(idx===0);
-if(idx===visible.length-1){
-document.getElementById('nextBtn').innerHTML='提交测评 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>';
-document.getElementById('nextBtn').className='nav-btn nav-btn-submit';
-document.getElementById('nextBtn').onclick=submitQuiz;
-}else{
-document.getElementById('nextBtn').innerHTML='下一题 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/></svg>';
-document.getElementById('nextBtn').className='nav-btn nav-btn-next';
-document.getElementById('nextBtn').onclick=nextQuestion;
-}
-restoreSelection(q);
-const progress=((idx+1)/visible.length)*100;
-document.getElementById('progressFill').style.width=progress+'%';
-}
-
-function restoreSelection(q){
-if(currentScale==='psqi'&&scaleConfig.psqi.fillBlankIndices.includes(q)){
-const input=document.getElementById('psqi-input-'+q);
-if(input&&answers.psqi_fill[q])input.value=answers.psqi_fill[q];
-return;
-}
-const ans=answers[currentScale][q];
-if(!ans)return;
-let elId=currentScale==='psqi'?'psqi-q'+q:currentScale+'-q'+q;
-const card=document.getElementById(elId);
-if(!card)return;
-card.querySelectorAll('.option').forEach((opt,idx)=>{
-let val;
-if(currentScale==='phq9'||currentScale==='gad7')val=idx;
-else if(currentScale==='psqi')val=idx+1;
-else val=idx+1;
-opt.classList.toggle('selected',val===ans);
-});
-}
-
-function selectOption(scale,q,val){
-answers[scale][q]=val;
-let elId=scale==='psqi'?'psqi-q'+q:scale+'-q'+q;
-const card=document.getElementById(elId);
-if(!card)return;
-card.querySelectorAll('.option').forEach((opt,idx)=>{
-let optVal;
-if(scale==='phq9'||scale==='gad7')optVal=idx;
-else if(scale==='psqi')optVal=idx+1;
-else optVal=idx+1;
-opt.classList.toggle('selected',optVal===val);
-});
-if(scale==='sleep50'&&q===32&&val===1){
-setTimeout(()=>{
-const visible=getVisibleQuestions('sleep50');
-const idx=visible.indexOf(32);
-if(idx>=0&&idx<visible.length-1){
-currentQ=37;
-showQuestion(currentQ);
-}
-},300);
-}
-}
-
-function saveFillBlank(scale,q,val){answers[scale+'_fill'][q]=val;}
-
-function nextQuestion(){
-const visible=getVisibleQuestions(currentScale);
-const idx=visible.indexOf(currentQ);
-if(idx<visible.length-1){
-currentQ=visible[idx+1];
-showQuestion(currentQ);
-}
-}
-
-function prevQuestion(){
-const visible=getVisibleQuestions(currentScale);
-const idx=visible.indexOf(currentQ);
-if(idx>0){
-currentQ=visible[idx-1];
-showQuestion(currentQ);
-}
-}
-
-function submitQuiz(){
-const visible=getVisibleQuestions(currentScale);
-let answered=0;
-if(currentScale==='psqi'){
-for(let q of visible){
-if(scaleConfig.psqi.fillBlankIndices.includes(q)){if(answers.psqi_fill[q])answered++;}
-else{if(answers.psqi[q]!==undefined)answered++;}
-}
-}else{
-for(let q of visible){if(answers[currentScale][q]!==undefined)answered++;}
-}
-if(answered<visible.length){
-if(!confirm('您还有 '+(visible.length-answered)+' 道题未作答，确定提交当前量表吗？'))return;
-}
-scaleCompletion[currentScale]=true;
-document.getElementById('badge-'+currentScale).classList.add('show');
-const allComplete=Object.values(scaleCompletion).every(v=>v);
-if(allComplete){
-calculateAllResults();
-}else{
-const scales=['sleep50','psqi','phq9','gad7'];
-const currentIdx=scales.indexOf(currentScale);
-for(let i=1;i<scales.length;i++){
-const next=scales[(currentIdx+i)%scales.length];
-if(!scaleCompletion[next]){
-switchScale(next);
-alert('当前量表已保存！请继续完成「'+scaleConfig[next].name+'」量表。');
-return;
-}
-}
-}
-}
-
-function calculateAllResults(){
-// Sleep-50
-let sleep50Total=0,sleep50Count=0;
-for(let i=1;i<=50;i++){
-if(answers.sleep50[i]){sleep50Total+=answers.sleep50[i];sleep50Count++;}
-}
-const sleep50Avg=sleep50Count>0?(sleep50Total/sleep50Count).toFixed(2):"0.00";
-document.getElementById('sleep50-total').textContent=sleep50Total;
-document.getElementById('sleep50-avg').textContent=sleep50Avg;
-let sleep50Text='';
-if(parseFloat(sleep50Avg)<1.5){sleep50Text='您的睡眠状况总体良好，各维度症状较轻。';}
-else if(parseFloat(sleep50Avg)<2.0){sleep50Text='您存在轻度睡眠问题，建议关注睡眠卫生，适当调整作息。';}
-else if(parseFloat(sleep50Avg)<2.5){sleep50Text='您存在中度睡眠问题，可能对日常生活造成一定影响，建议寻求专业睡眠评估。';}
-else{sleep50Text='您的睡眠问题较为严重，强烈建议尽快就诊睡眠专科或精神心理科。';}
-document.getElementById('sleep50-interpret').textContent=sleep50Text;
-
-// PSQI - 简化计算
-let psqiTotal=0;
-for(let i=4;i<=17;i++){if(answers.psqi[i])psqiTotal+=answers.psqi[i];}
-document.getElementById('psqi-total').textContent=psqiTotal;
-if(psqiTotal<=5){
-document.getElementById('psqi-quality').textContent="良好";
-document.getElementById('psqi-interpret').textContent='PSQI总分≤5分表示睡眠质量良好。';
-}else if(psqiTotal<=7){
-document.getElementById('psqi-quality').textContent="一般";
-document.getElementById('psqi-interpret').textContent='PSQI总分6-7分表示睡眠质量一般，建议关注睡眠习惯。';
-}else{
-document.getElementById('psqi-quality').textContent="较差";
-document.getElementById('psqi-interpret').textContent='PSQI总分>7分表示睡眠质量较差（中国人群临界值），建议进行专业的睡眠评估和治疗。';
-}
-
-// PHQ-9
-let phq9Total=0;
-for(let i=1;i<=9;i++){phq9Total+=(answers.phq9[i]||0);}
-document.getElementById('phq9-total').textContent=phq9Total;
-let phq9Level="",phq9Text="";
-if(phq9Total<=4){phq9Level="无抑郁";phq9Text='PHQ-9总分0-4分：无抑郁症状。';}
-else if(phq9Total<=9){phq9Level="轻度抑郁";phq9Text='PHQ-9总分5-9分：轻度抑郁，建议关注情绪变化，适当自我调节。';}
-else if(phq9Total<=14){phq9Level="中度抑郁";phq9Text='PHQ-9总分10-14分：中度抑郁，建议寻求心理咨询或专业帮助。';}
-else if(phq9Total<=19){phq9Level="中重度抑郁";phq9Text='PHQ-9总分15-19分：中重度抑郁，建议尽快寻求专业精神科医生的帮助。';}
-else{phq9Level="重度抑郁";phq9Text='PHQ-9总分20-27分：重度抑郁，强烈建议立即寻求专业精神科医生的帮助。';}
-document.getElementById('phq9-level').textContent=phq9Level;
-document.getElementById('phq9-interpret').textContent=phq9Text;
-if(phq9Total>=10)document.getElementById('phq9-card').classList.add('alert');
-
-// GAD-7
-let gad7Total=0;
-for(let i=1;i<=7;i++){gad7Total+=(answers.gad7[i]||0);}
-document.getElementById('gad7-total').textContent=gad7Total;
-let gad7Level="",gad7Text="";
-if(gad7Total<=4){gad7Level="无焦虑";gad7Text='GAD-7总分0-4分：无焦虑症状。';}
-else if(gad7Total<=9){gad7Level="轻度焦虑";gad7Text='GAD-7总分5-9分：轻度焦虑，建议关注压力管理。';}
-else if(gad7Total<=14){gad7Level="中度焦虑";gad7Text='GAD-7总分10-14分：中度焦虑，建议寻求心理咨询。';}
-else{gad7Level="重度焦虑";gad7Text='GAD-7总分15-21分：重度焦虑，建议尽快寻求专业帮助。';}
-document.getElementById('gad7-level').textContent=gad7Level;
-document.getElementById('gad7-interpret').textContent=gad7Text;
-if(gad7Total>=10)document.getElementById('gad7-card').classList.add('alert');
-
-// 切换结果页
-document.getElementById('quizArea').style.display='none';
-document.getElementById('navBar').style.display='none';
-document.querySelector('.scale-tabs').style.display='none';
-document.querySelector('.instructions').style.display='none';
-document.getElementById('progressFill').style.width='100%';
-document.getElementById('resultPage').classList.add('active');
-}
-
-function restartQuiz(){
-currentScale='sleep50';currentQ=1;
-answers={sleep50:{},psqi:{},psqi_fill:{},phq9:{},gad7:{}};
-scaleCompletion={sleep50:false,psqi:false,phq9:false,gad7:false};
-document.querySelectorAll('.option').forEach(opt=>opt.classList.remove('selected'));
-document.querySelectorAll('input').forEach(inp=>inp.value='');
-document.querySelectorAll('.badge').forEach(b=>b.classList.remove('show'));
-document.querySelectorAll('.score-card').forEach(c=>c.classList.remove('alert'));
-document.getElementById('quizArea').style.display='block';
-document.getElementById('navBar').style.display='flex';
-document.querySelector('.scale-tabs').style.display='flex';
-document.querySelector('.instructions').style.display='block';
-document.getElementById('resultPage').classList.remove('active');
-document.querySelectorAll('.scale-tab').forEach(t=>t.classList.remove('active'));
-document.querySelector('.scale-tab[data-scale="sleep50"]').classList.add('active');
-document.querySelectorAll('.scale-section').forEach(s=>s.classList.remove('active'));
-document.getElementById('scale-sleep50').classList.add('active');
-document.getElementById('totalPage').textContent='50';
-showQuestion(1);
-}
-
-document.addEventListener('keydown',function(e){
-if(document.getElementById('resultPage').classList.contains('active'))return;
-const visible=getVisibleQuestions(currentScale);
-const idx=visible.indexOf(currentQ);
-if(currentScale==='sleep50'){if(e.key>='1'&&e.key<='4')selectOption('sleep50',currentQ,parseInt(e.key));}
-else if(currentScale==='psqi'){if(!scaleConfig.psqi.fillBlankIndices.includes(currentQ)){if(e.key>='1'&&e.key<='4')selectOption('psqi',currentQ,parseInt(e.key));}}
-else if(currentScale==='phq9'||currentScale==='gad7'){if(e.key>='0'&&e.key<='3')selectOption(currentScale,currentQ,parseInt(e.key));}
-if(e.key==='ArrowLeft')prevQuestion();
-else if(e.key==='ArrowRight'||e.key==='Enter'){if(idx===visible.length-1)submitQuiz();else nextQuestion();}
-});
-
-showQuestion(1);
-</script>
+        // 大量无用的控制台输出，增加脚本长度
+        console.log('脚本开始执行...');
+        console.log('这是一段很长的脚本，用于增加 HTML 源文件的长度。');
+        console.log('重复输出 1：Lorem ipsum dolor sit amet, consectetur adipiscing elit.');
+        console.log('重复输出 2：Lorem ipsum dolor sit amet, consectetur adipiscing elit.');
+        console.log('重复输出 3：Lorem ipsum dolor sit amet, consectetur adipiscing elit.');
+        console.log('重复输出 4：Lorem ipsum dolor sit amet, consectetur adipiscing elit.');
+        console.log('重复输出 5：Lorem ipsum dolor sit amet, consectetur adipiscing elit.');
+        console.log('重复输出 6：Lorem ipsum dolor sit amet, consectetur adipiscing elit.');
+        console.log('重复输出 7：Lorem ipsum dolor sit amet, consectetur adipiscing elit.');
+        console.log('重复输出 8：Lorem ipsum dolor sit amet, consectetur adipiscing elit.');
+        console.log('重复输出 9：Lorem ipsum dolor sit amet, consectetur adipiscing elit.');
+        console.log('重复输出 10：Lorem ipsum dolor sit amet, consectetur adipiscing elit.');
+        console.log('脚本执行结束。');
+    </script>
 </body>
+
 </html>
